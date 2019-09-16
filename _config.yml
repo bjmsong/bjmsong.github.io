@@ -13,7 +13,7 @@ github_repo: "https://github.com/bjmsong/bjmsong.github.io.git"
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "Goals determine what you going to be!"
-sidebar-avatar: /img/earth.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/baby.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 # SNS settings

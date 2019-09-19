@@ -38,6 +38,7 @@ https://blog.csdn.net/Jerr__y/article/details/70809528
 - variable_scope: 大大大部分情况下，跟 tf.get_variable() 配合使用，实现变量共享的功能。
 
 ## 参考资料
+https://github.com/aymericdamien/TensorFlow-Examples
 - https://github.com/machinelearningmindset/TensorFlow-Course
 - tensorflow 2.0 快速入门 (by Chollet) 
 https://threader.app/thread/1105139360226140160
@@ -46,7 +47,6 @@ https://threader.app/thread/1105139360226140160
 - 《Tensorflow 实战google深度学习框架》
 http://www.tensorflow.org/
 
-https://github.com/aymericdamien/TensorFlow-Examples
 https://www.tensorflow.org/tutorials/
 https://github.com/open-source-for-science/TensorFlow-Course
 

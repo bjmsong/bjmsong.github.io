@@ -268,20 +268,20 @@ next_item = slices.make_one_shot_iterator().get_next()
 ```
 
 #### 层(tf.layers)
-1. 创建层
+##### 创建层
 
 ```
 x = tf.placeholder(tf.float32, shape=[None, 3])
 linear_model = tf.layers.Dense(units=1)
 y = linear_model(x)
 ```
-2. 初始化层
+##### 初始化层
 
 ```
 init = tf.global_variables_initializer()
 sess.run(init)
 ```
-3. 执行层
+##### 执行层
 
 ```
 print(sess.run(y, {x: [[1, 2, 3],[4, 5, 6]]}))

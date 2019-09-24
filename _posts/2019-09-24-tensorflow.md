@@ -9,6 +9,14 @@ catalog: true
 tags:
     - 深度学习
 ---
+tf.Tensor 对象的阶是它本身的维数。阶的同义词包括：秩、等级或 n 维。
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/dl/learntf.png) 
+</li> 
+</ul>
+
+
 ### 历史
 TensorFlow 是由 Google Brain 团队在谷歌内部第一代 DL 系统 DistBelief 的基础上改进而得到的，这一通用计算框架目前已经成为最流行的机器学习开源工具。
 
@@ -337,6 +345,13 @@ print(sess.run(y_pred))
 tf.Tensor 具有以下属性：
 - 数据类型（例如 float32、int32 或 string）
 - 形状
+
+tf.Tensor 对象的阶是它本身的维数。阶的同义词包括：秩、等级或 n 维。
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/dl/tensor.png) 
+</li> 
+</ul> 
 
 特殊张量：
 - tf.Variable

@@ -37,26 +37,24 @@ https://blog.csdn.net/Jerr__y/article/details/70809528
 
 
 
-- deeplearning.ai
-- github热门教程
+- code 1.0 & 2.0 
 https://github.com/aymericdamien/TensorFlow-Examples
+- Standford公开课
+CS 20SI: Tensorflow for Deep Learning Research （b站）
+- 2.0 教程
+https://github.com/czy36mengfei/tensorflow2_tutorials_chinese
+- 官方模型
+https://github.com/tensorflow/models
+- 其它
 https://github.com/machinelearningmindset/TensorFlow-Course
 https://github.com/pkmital/tensorflow_tutorials
-- CS 20SI: Tensorflow for Deep Learning Research （b站）
+https://github.com/taki0112/Tensorflow-Cookbook
 
-
-https://github.com/tensorflow/models
 
 - tensorflow 2.0 快速入门 (by Chollet) 
 https://threader.app/thread/1105139360226140160
 - deeplearning.ai 《Introduction to TensorFlow for AI,ML and DL》
 - Udacity 《Intro to TensorFlow for Deep Learning》
 - 《Tensorflow 实战google深度学习框架》
-https://github.com/open-source-for-science/TensorFlow-Course
 
-https://mp.weixin.qq.com/s?__biz=Mzg5ODAzMTkyMg==&mid=2247485526&idx=1&sn=1336d073b32606ce3e30ab493c550b6e&chksm=c069800bf71e091de2e0bd528d4bd511ce5c2f9ab262d3d9f61214abb3ce86e965c8337d5670&mpshare=1&scene=1&srcid=0402yRddQqeIPrG7ISjbxe8d&key=a4b793bdb8f1ac928bc12df678d75c7a1acbb0e5f4330732111c5ac55bd0b0f3e911aa814830e43fcd042f9e8d91df5f68b4185befa656b982b1205baeffedeb2df5c7e50e934cd0f2d1100d0aad872f&ascene=1&uin=MjM1OTMwMzkwMA%3D%3D&devicetype=Windows+7&version=62060739&lang=zh_CN&pass_ticket=EbeRSFDHPEiyssEtBnc0InRbRW%2BHNu0QF5ryCTQpFOD6COzOY%2BH%2F9Q3Xqwl5u1cH
-https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652042006&idx=4&sn=1ffa0bf4dc8c879150aeeea1756ef938&chksm=f12187e7c6560ef1be3cea7289f66ddcf7df55647f83a9c4963d91fa323e0c3276b9824328cd&mpshare=1&scene=1&srcid=&key=3ced8d6e9f21461a80ec1844ddf4bed938b54f25fd2729db4abf80f13e433df13e9df1b00410b0caf847b0fc30577ec020cbe01da7968db26b3f107104d5c80b2db25a727414dd5c9d9d6e07f31d325e&ascene=1&uin=MjM1OTMwMzkwMA%3D%3D&devicetype=Windows+7&version=62060739&lang=zh_CN&pass_ticket=k%2BDwQUGMalJBoJr0NlWCUv0JX%2BaZPg%2B14DPHXkP7fNoOmY6S0Zm7FygiY2Gh97fp
 
-- 常用模块代码
-    https://github.com/taki0112/Tensorflow-Cookbook
-    https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2650757267&idx=4&sn=31cfed7163a6c049001b0a7a69a30eb2&chksm=871a9cedb06d15fbda2858747a4de2fee0cc8767beb019bc035ed71bd7a32fe1a43700a6bdf3&mpshare=1&scene=1&srcid=#rd

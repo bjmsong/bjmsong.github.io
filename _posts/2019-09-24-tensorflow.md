@@ -91,6 +91,7 @@ print(dataset.output_shapes)  # ==> "{'a': (), 'b': (100,)}"
 
 1. 单次迭代器
 是最简单的迭代器形式，仅支持对数据集进行一次迭代，不需要显式初始化。单次迭代器可以处理基于队列的现有输入管道支持的几乎所有情况，但它们不支持参数化。
+
 ```
 dataset = tf.data.Dataset.range(100)
 iterator = dataset.make_one_shot_iterator()
@@ -103,6 +104,7 @@ for i in range(100):
 
 2. 可初始化迭代器
 您需要先运行显式 iterator.initializer 操作，然后才能使用可初始化迭代器。虽然有些不便，但它允许您使用一个或多个 tf.placeholder() 张量（可在初始化迭代器时馈送）参数化数据集的定义。
+
 ```
 max_value = tf.placeholder(tf.int64, shape=[])
 dataset = tf.data.Dataset.range(max_value)
@@ -124,6 +126,7 @@ for i in range(100):
 
 3. 可重新初始化迭代器
 可以通过多个不同的Dataset对象进行初始化。例如，您可能有一个训练输入管道，它会对输入图片进行随机扰动来改善泛化；还有一个验证输入管道，它会评估对未修改数据的预测。这些管道通常会使用不同的 Dataset 对象，这些对象具有相同的结构（即每个组件具有相同类型和兼容形状）。
+
 ```
 # Define training and validation datasets with the same structure.
 training_dataset = tf.data.Dataset.range(100).map(
@@ -174,6 +177,7 @@ while True:
 
 #### 读取输入数据
 - numpy
+
 ```
 # Load the training data into two NumPy arrays, for example using `np.load()`.
 with np.load("/var/data/training_data.npy") as data:
@@ -185,8 +189,10 @@ assert features.shape[0] == labels.shape[0]
 
 dataset = tf.data.Dataset.from_tensor_slices((features, labels))
 ```
+
 请注意，上面的代码段会将 features 和 labels 数组作为 tf.constant() 指令嵌入在 TensorFlow 图中。这样非常适合小型数据集，但会浪费内存，因为会多次复制数组的内容，并可能会达到 tf.GraphDef 协议缓冲区的 2GB 上限。
 作为替代方案，您可以根据 tf.placeholder() 张量定义 Dataset，并在对数据集初始化 Iterator 时馈送 NumPy 数组。
+
 ```
 # Load the training data into two NumPy arrays, for example using `np.load()`.
 with np.load("/var/data/training_data.npy") as data:
@@ -207,6 +213,7 @@ iterator = dataset.make_initializable_iterator()
 sess.run(iterator.initializer, feed_dict={features_placeholder: features,
                                           labels_placeholder: labels})
 ```
+
 - TFRecord（tf.data.TFRecordDataset）
 - 文本（tf.data.TextLineDataset）
 - csv（tf.contrib.data.CsvDataset）
@@ -215,6 +222,7 @@ sess.run(iterator.initializer, feed_dict={features_placeholder: features,
 #### tf.Graph : 构建计算图
 - 操作(op)
 - 张量(tf.Tensors): 不具有值，它们只是计算图中元素的手柄
+
 ```
 a = tf.constant(3.0, dtype=tf.float32)
 b = tf.constant(4.0) # also tf.float32 implicitly
@@ -225,6 +233,7 @@ print(total)
 ```
 
 #### tf.Session ： 运行计算图
+
 ```
 sess = tf.Session()
 print(sess.run(total))
@@ -234,6 +243,7 @@ print(sess.run(total))
 将计算图可视化
 
 #### 占位符
+
 ```
 x = tf.placeholder(tf.float32)
 y = tf.placeholder(tf.float32)
@@ -242,8 +252,10 @@ z = x + y
 print(sess.run(z, feed_dict={x: 3, y: 4.5}))
 print(sess.run(z, feed_dict={x: [1, 3], y: [2, 4]}))
 ```
+
 #### 数据集
 **占位符适用于简单的实验，而数据集是将数据流式传输到模型的首选方法。**要从数据集中获取可运行的tf.Tensor，您必须先将其转换成 tf.data.Iterator，然后调用迭代器的 get_next 方法。
+
 ```
 my_data = [
 [0, 1,],
@@ -257,23 +269,27 @@ next_item = slices.make_one_shot_iterator().get_next()
 
 #### 层(tf.layers)
 1. 创建层
+
 ```
 x = tf.placeholder(tf.float32, shape=[None, 3])
 linear_model = tf.layers.Dense(units=1)
 y = linear_model(x)
 ```
 2. 初始化层
+
 ```
 init = tf.global_variables_initializer()
 sess.run(init)
 ```
 3. 执行层
+
 ```
 print(sess.run(y, {x: [[1, 2, 3],[4, 5, 6]]}))
 ```
 
 #### 特征列
 tf.feature_column.input_layer，此函数只接受密集列作为输入，因此要查看类别列的结果，您必须将其封装在 tf.feature_column.indicator_column 中。
+
 ```
 features = {
 'sales' : [[5], [10], [8], [9]],
@@ -292,6 +308,7 @@ inputs = tf.feature_column.input_layer(features, columns)
 ```
 
 #### 小型回归模型
+
 ```
 x = tf.constant([[1], [2], [3], [4]], dtype=tf.float32)
 y_true = tf.constant([[0], [-1], [-2], [-3]], dtype=tf.float32)

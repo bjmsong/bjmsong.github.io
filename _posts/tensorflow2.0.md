@@ -58,5 +58,7 @@ https://threader.app/thread/1105139360226140160
 - deeplearning.ai 《Introduction to TensorFlow for AI,ML and DL》
 - Udacity 《Intro to TensorFlow for Deep Learning》
 - 《Tensorflow 实战google深度学习框架》（应该是1.0吧，已经落后了）
+- deeplearning.ai
+- 莫烦python
 
 

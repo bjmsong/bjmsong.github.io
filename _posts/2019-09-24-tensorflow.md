@@ -337,6 +337,7 @@ print(sess.run(y_pred))
 tf.Tensor 具有以下属性：
 - 数据类型（例如 float32、int32 或 string）
 - 形状
+
 特殊张量：
 - tf.Variable
 - tf.constant

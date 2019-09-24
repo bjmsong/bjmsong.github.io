@@ -32,7 +32,7 @@ https://blog.csdn.net/Jerr__y/article/details/70809528
 
 
 ### 参考资料
-- https://tensorflow.google.cn/guide/
+- https://tensorflow.google.cn/beta
 - https://mp.weixin.qq.com/s/EUICEJ-LTY28N6RTrp5HSg
 
 

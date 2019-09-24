@@ -9,7 +9,6 @@ catalog: true
 tags:
     - 深度学习
 ---
-tf.Tensor 对象的阶是它本身的维数。阶的同义词包括：秩、等级或 n 维。
 <ul> 
 <li markdown="1"> 
 ![]({{site.baseurl}}/img/dl/learntf.png) 

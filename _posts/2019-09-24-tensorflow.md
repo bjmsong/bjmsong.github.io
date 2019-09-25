@@ -48,6 +48,7 @@ TensorFlow™ 是一个采用数据流图（data flow graphs），用于数值�
 ### 高阶API
 - tf.keras
 - Eager Execution
+
 命令式编程环境，可立即评估操作，无需构建图：操作会返回具体的值，而不是构建以后再运行的计算图。
 - tf.estimator
 

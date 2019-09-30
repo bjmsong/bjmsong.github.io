@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      【笔记】deeplearning.ai之三
+title:      deeplearning.ai之三
 subtitle:   Structuring your Machine Learning project
 date:       2019-09-16
 author:     bjmsong

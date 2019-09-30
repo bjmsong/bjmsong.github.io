@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      【笔记】deeplearning.ai之一
+title:      deeplearning.ai之一
 subtitle:   Neural Networks and Deep Learning
 date:       2019-09-16
 author:     bjmsong

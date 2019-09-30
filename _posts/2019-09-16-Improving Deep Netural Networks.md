@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      【笔记】deeplearning.ai之二
+title:      deeplearning.ai之二
 subtitle:   Improving Deep Netural Networks
 date:       2019-09-16
 author:     bjmsong

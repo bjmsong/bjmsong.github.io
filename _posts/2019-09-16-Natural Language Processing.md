@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      【笔记】deeplearning.ai之五
+title:      deeplearning.ai之五
 subtitle:   Natural Language Processing
 date:       2019-09-16
 author:     bjmsong

@@ -2,7 +2,7 @@
 layout:     post
 title:      TensorFLow 2.0
 subtitle:   
-date:       2019-09-24
+date:       2019-10-08
 author:     bjmsong
 header-img: img/dl/tf2.0.png
 catalog: true
@@ -40,9 +40,8 @@ https://www.jianshu.com/p/2fffd0e332bc
 ### 参考资料
 - https://tensorflow.google.cn/beta
 - https://mp.weixin.qq.com/s/EUICEJ-LTY28N6RTrp5HSg
-
-
-
+- **Hands-On Machine Learning with Scikit-Learn and TensorFlow**
+- 《tensorflow 实战》
 - code 1.0 & 2.0 （直接看2.0的code）
 https://github.com/aymericdamien/TensorFlow-Examples
 - Standford公开课

@@ -16,7 +16,7 @@ tags:
 </ul>
 
 
-### 历史
+### 发展历史
 TensorFlow 是由 Google Brain 团队在谷歌内部第一代 DL 系统 DistBelief 的基础上改进而得到的，这一通用计算框架目前已经成为最流行的机器学习开源工具。
 
 TensorFlow 的前身 DistBelief 是谷歌 2011 年开发的内部 DL 工具，基于 DistBelief 的 Inception 网络获得了 2014 年的 ImageNet 挑战赛冠军。虽然 DistBelief 当时在谷歌内部已经应用于非常多的产品，但它过度依赖于谷歌内部的系统架构，因此很难对外开源。经过对 DistBelief 的改进与调整，谷歌于 2015 年 11 月正式发布了开源计算框架 TensorFlow 0.5.0。相比于 DistBelief，TensorFlow 的计算框架更加通用、计算资源安排更加合理，同时支持更多的深度学习算法与平台。
@@ -27,7 +27,9 @@ TensorFlow 的前身 DistBelief 是谷歌 2011 年开发的内部 DL 工具，�
 
 在 TensorFlow 2.0 的规划中，Eager Execution 变为默认执行模式可能对开发者有比较大的影响，因为我们不再需要编写完整的静态计算图，并打开会话（Session）运行它。相反，与 PyTorch 一样，Eager Execution 是一个由运行定义的接口，这意味着我们在 Python 上调用它进行计算可以直接得出结果。这种方式非常符合人类直觉，因此可以预想 TensorFlow 的入门在以后会简单地多。
 
-### 介绍
+但是由于很多历史代码是Tensorflow1.0写的，也很有必要学习下1.0的写法，本文主要介绍Tensorflow1.0。
+
+### 概况
 TensorFlow™ 是一个采用数据流图（data flow graphs），用于数值计算的开源软件库。节点（Nodes）在图中表示数学操作，图中的线（edges）则表示在节点间相互联系的多维数据数组，即张量（tensor）。
 - 使用图(graph)来表示计算任务
     - 节点称之为op(operator),一个op获得0个或多个Tensor，执行计算，返回0个或多个Tensor
@@ -50,6 +52,7 @@ TensorFlow™ 是一个采用数据流图（data flow graphs），用于数值�
 - Eager Execution
 
 命令式编程环境，可立即评估操作，无需构建图：操作会返回具体的值，而不是构建以后再运行的计算图。
+
 - tf.estimator
 
 

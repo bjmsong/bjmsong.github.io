@@ -52,18 +52,17 @@ TensorFlow™ 是一个采用数据流图（data flow graphs），用于数值�
 - Eager Execution
 
 命令式编程环境，可立即评估操作，无需构建图：操作会返回具体的值，而不是构建以后再运行的计算图。
-
 - tf.estimator
 
 
 ### 导入数据（tf.data）
 #### 两个抽象类
 - tf.data.Dataset : 表示一系列元素，其中每个元素包含一个或多个Tensor对象。可以通过两种不同的方式来创建数据集：
-    - 创建（Dataset.from_tensor_slices(),tf.data.Dataset.from_tensors()），以通过一个或多个 tf.Tensor 对象构建数据集。
-    - 转换（例如 Dataset.batch()），以通过一个或多个 tf.data.Dataset 对象构建数据集。
-- tf.data.Iterator : 消耗 Dataset 中值的最常见方法是构建迭代器对象。通过此对象，可以一次访问数据集中的一个元素（例如通过调用 Dataset.make_one_shot_iterator()）。tf.data.Iterator 提供了两个操作
+    - 创建（Dataset.from_tensor_slices,tf.data.Dataset.from_tensors），以通过一个或多个 tf.Tensor 对象构建数据集。
+    - 转换（例如 Dataset.batch），以通过一个或多个 tf.data.Dataset 对象构建数据集。
+- tf.data.Iterator : 消耗 Dataset 中值的最常见方法是构建迭代器对象。通过此对象，可以一次访问数据集中的一个元素（例如通过调用 Dataset.make_one_shot_iterator）。tf.data.Iterator 提供了两个操作
     - Iterator.initializer，可以通过此操作（重新）初始化迭代器的状态；
-    - Iterator.get_next()，此操作返回对应于有符号下一个元素的 tf.Tensor 对象。根据您的使用情形，您可以选择不同类型的迭代器。
+    - Iterator.get_next，此操作返回对应于有符号下一个元素的 tf.Tensor 对象。根据您的使用情形，您可以选择不同类型的迭代器。
 
 #### 数据集结构
 - 一个数据集包含多个元素，每个元素的结构都相同。一个元素包含一个或多个 tf.Tensor 对象，这些对象称为组件。每个组件都有一个 tf.DType，表示张量中元素的类型；以及一个 tf.TensorShape，表示每个元素（可能部分指定）的静态形状。
@@ -95,10 +94,10 @@ print(dataset.output_shapes)  # ==> "{'a': (), 'b': (100,)}"
 
 #### 创建迭代器
 构建了表示输入数据的 Dataset 后，下一步就是创建 Iterator 来访问该数据集中的元素。tf.data API 目前支持下列迭代器，复杂程度逐渐增大：
-- 单次
-- 可初始化
-- 可重新初始化，以及
-- 可馈送
+- 单次迭代器
+- 可初始化迭代器
+- 可重新初始化迭代器
+- 可馈送迭代器
 
 ##### 单次迭代器
 是最简单的迭代器形式，仅支持对数据集进行一次迭代，不需要显式初始化。单次迭代器可以处理基于队列的现有输入管道支持的几乎所有情况，但它们不支持参数化。

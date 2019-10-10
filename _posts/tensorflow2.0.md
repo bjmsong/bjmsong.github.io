@@ -11,11 +11,158 @@ tags:
 ---
 > from 官方教程
 
-### 
+### tf.keras
+tf.keras已经成为tensorflow的一个高级API，keras有sequential和functional两种API方式。
+
+#### sequential API
+可以像搭积木一样搭建神经网络，搭建流程是这样的
+```
+import tensorflow as tf
+
+mnist = tf.keras.datasets.mnist
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+x_train, x_test = x_train / 255.0, x_test / 255.0
+model = tf.keras.models.Sequential([
+  tf.keras.layers.Flatten(input_shape=(28, 28)),
+  tf.keras.layers.Dense(128, activation='relu'),
+  tf.keras.layers.Dropout(0.2),
+  tf.keras.layers.Dense(10, activation='softmax')
+])
+
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+model.fit(x_train, y_train, epochs=5)
+model.evaluate(x_test,  y_test, verbose=2)
+```
+
+#### functional and subclassing APIs 
+可以更灵活的构建定制化模型，比如：多个输入和输出，共享网络层等
+```
+import tensorflow as tf
+from tensorflow.keras.layers import Dense, Flatten, Conv2D
+from tensorflow.keras import Model
+
+mnist = tf.keras.datasets.mnist
+
+# prepare data
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+x_train, x_test = x_train / 255.0, x_test / 255.0
+# Add a channels dimension
+x_train = x_train[..., tf.newaxis]
+x_test = x_test[..., tf.newaxis]
+
+train_ds = tf.data.Dataset.from_tensor_slices(
+    (x_train, y_train)).shuffle(10000).batch(32)
+test_ds = tf.data.Dataset.from_tensor_slices((x_test, y_test)).batch(32)
+
+# build model
+class MyModel(Model):
+  def __init__(self):
+    super(MyModel, self).__init__()
+    self.conv1 = Conv2D(32, 3, activation='relu')
+    self.flatten = Flatten()
+    self.d1 = Dense(128, activation='relu')
+    self.d2 = Dense(10, activation='softmax')
+
+  def call(self, x):
+    x = self.conv1(x)
+    x = self.flatten(x)
+    x = self.d1(x)
+    return self.d2(x)
+
+model = MyModel()
+
+loss_object = tf.keras.losses.SparseCategoricalCrossentropy()
+optimizer = tf.keras.optimizers.Adam()
+
+train_loss = tf.keras.metrics.Mean(name='train_loss')
+train_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(name='train_accuracy')
+test_loss = tf.keras.metrics.Mean(name='test_loss')
+test_accuracy = tf.keras.metrics.SparseCategoricalAccuracy(name='test_accuracy')
+
+# train & test
+@tf.function
+def train_step(images, labels):
+  with tf.GradientTape() as tape:
+    predictions = model(images)
+    loss = loss_object(labels, predictions)
+  gradients = tape.gradient(loss, model.trainable_variables)
+  optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+
+  train_loss(loss)
+  train_accuracy(labels, predictions)
+
+@tf.function
+def test_step(images, labels):
+  predictions = model(images)
+  t_loss = loss_object(labels, predictions)
+
+  test_loss(t_loss)
+  test_accuracy(labels, predictions)
+
+EPOCHS = 5
+for epoch in range(EPOCHS):
+  for images, labels in train_ds:
+    train_step(images, labels)
+
+  for test_images, test_labels in test_ds:
+    test_step(test_images, test_labels)
+
+  template = 'Epoch {}, Loss: {}, Accuracy: {}, Test Loss: {}, Test Accuracy: {}'
+  print (template.format(epoch+1,
+                         train_loss.result(),
+                         train_accuracy.result()*100,
+                         test_loss.result(),
+                         test_accuracy.result()*100))
+
+```
+
+
+### 数据加载和预处理
+可以将各种格式数据加载进tf.data.Dataset，包括：csv，numpy，pandas.DataFrame等。
+
+### Estimators
+Estimators是TensorFlow的高阶API，
+特征列是原始数据和 Estimator 之间的媒介， 特征列内容丰富，使您可以将各种原始数据转换为 Estimator 可以使用的格式，从而可以轻松地进行实验。
+
+
+
+
+### 官方模型和数据集
+>[官方模型和数据集](https://tensorflow.google.cn/resources/models-datasets)
+
+#### 官方模型样例
+[官方模型](https://github.com/tensorflow/models/tree/master/official)使用的是TensorFLow的高阶API。这些模型可读性好，紧跟最新的Tensorflow API，被良好维护，经过官方测试，同时性能上也做了很好的优化。提供的模型有：
+- nlp：bert、transformer， xlnet
+- cv：resnet
+- recommendation：ncf
+- 还有一些模型不更新到TensorFlow 2.x（在R1文件夹中）：boosted_trees, wide&deep
+
+另外还有一大波模型正在袭来：GPT2，更多的transforme，、EfficientNet, MnasNet。。。
+
+#### Tensorflow Hub
+[TensorFlow Hub](https://tensorflow.google.cn/hub/)是一个通过复用机器学习模块可用于迁移学习的库，致力于TensorFlow机器学习模型的组件化。迁移学习可以：
+- 使用较小的数据集训练模型，
+- 改善泛化效果，以及
+- 加快训练速度。
+TensorFlow Hub是一个共享可重用机器学习模型的平台，其愿景是为研究人员和开发人员提供一种方便的方式分享他们的工作。可以通过Tensorflow Hub直接导入已经训练好的模型。
+
+
+#### 数据集
+- [TensorFlow官方数据集](https://tensorflow.google.cn/datasets/)：可用于TensorFlow的一系列数据集的集合, 所有数据集都显示为tf.data.Datasets，可以提供易于使用且具有高性能的输入流水线。
+- Google研究数据集
+- 其他数据集资源
+
+
+### 工具
+- Colab：免费的Jupyter笔记本环境，不需要任何设置就可以使用，可以在浏览器中方便地执行Tensorflow代码。
+- [Tensorboard](https://tensorflow.google.cn/tensorboard)：一套可视化工具，用于理解、调试和优化TensorFlow程序。
+- [What-if](https://pair-code.github.io/what-if-tool/):一种以无代码方式探究机器学习模型的工具，对模型的理解、调试和公平性很有帮助，可以在TensorBoard或Colab中使用。
 - 
-
-
-
+- 
+- TensorFlow PlayGround
 
 ### TensorFlow 2.0变化
 - 删除了冗余API，部分API被2.0的新API替代，还有参数变化等。**可以使用官方提供的[升级脚本](https://tensorflow.google.cn/guide/upgrade)自动升级1.0代码**。
@@ -53,6 +200,10 @@ https://www.jianshu.com/p/2fffd0e332bc
 
 ### 参考资料
 - https://tensorflow.google.cn/tutorials
+- https://blog.csdn.net/mogoweb/article/details/97722478
+
+
+
 - https://tensorflow.google.cn/guide
 - https://github.com/snowkylin/tensorflow-handbook
 - tensorflow 2.0 快速入门 (by Chollet) 
@@ -62,8 +213,6 @@ https://threader.app/thread/1105139360226140160
 - TensorFlow is dead, long live TensorFlow!
 https://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652042006&idx=4&sn=1ffa0bf4dc8c879150aeeea1756ef938&chksm=f12187e7c6560ef1be3cea7289f66ddcf7df55647f83a9c4963d91fa323e0c3276b9824328cd&mpshare=1&scene=1&srcid=&key=3ced8d6e9f21461a80ec1844ddf4bed938b54f25fd2729db4abf80f13e433df13e9df1b00410b0caf847b0fc30577ec020cbe01da7968db26b3f107104d5c80b2db25a727414dd5c9d9d6e07f31d325e&ascene=1&uin=MjM1OTMwMzkwMA==&devicetype=Windows+7&version=62060739&lang=zh_CN&pass_ticket=k+DwQUGMalJBoJr0NlWCUv0JX+aZPg+14DPHXkP7fNoOmY6S0Zm7FygiY2Gh97fp
 - https://github.com/czy36mengfei/tensorflow2_tutorials_chinese
-- 官方搭建的经典模型
-https://github.com/tensorflow/models
 - 教程&code
 https://github.com/machinelearningmindset/TensorFlow-Course
 https://github.com/pkmital/tensorflow_tutorials

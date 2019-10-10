@@ -15,7 +15,7 @@ tags:
 tf.keras已经成为tensorflow的一个高级API，keras有sequential和functional两种API方式。
 
 #### sequential API
-可以像搭积木一样搭建神经网络，搭建流程是这样的
+可以像搭积木一样搭建神经网络，搭建流程是这样的：
 ```
 import tensorflow as tf
 
@@ -159,7 +159,7 @@ TensorFlow Hub是一个共享可重用机器学习模型的平台，其愿景是
 ### 工具
 - Colab：免费的Jupyter笔记本环境，不需要任何设置就可以使用，可以在浏览器中方便地执行Tensorflow代码。
 - [Tensorboard](https://tensorflow.google.cn/tensorboard)：一套可视化工具，用于理解、调试和优化TensorFlow程序。
-- [What-if](https://pair-code.github.io/what-if-tool/):一种以无代码方式探究机器学习模型的工具，对模型的理解、调试和公平性很有帮助，可以在TensorBoard或Colab中使用。
+- [What-if](https://pair-code.github.io/what-if-tool/)：一种以无代码方式探究机器学习模型的工具，对模型的理解、调试和公平性很有帮助，可以在TensorBoard或Colab中使用。
 - 
 - 
 - TensorFlow PlayGround

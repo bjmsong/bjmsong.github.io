@@ -2,7 +2,7 @@
 layout:     post
 title:      TensorFLow 2.0
 subtitle:   
-date:       2019-10-08
+date:       2019-10-10
 author:     bjmsong
 header-img: img/dl/tf2.0.png
 catalog: true

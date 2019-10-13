@@ -2,7 +2,7 @@
 layout:     post
 title:      TensorFLow 2.0
 subtitle:   
-date:       2019-10-10
+date:       2019-10-11
 author:     bjmsong
 header-img: img/dl/tf2.0.png
 catalog: true
@@ -11,7 +11,10 @@ tags:
 ---
 > from 官方教程
 
+
+
 ### tf.keras
+
 tf.keras已经成为tensorflow的一个高级API，keras有sequential和functional两种API方式。
 
 #### sequential API
@@ -120,12 +123,31 @@ for epoch in range(EPOCHS):
 ```
 
 
+
 ### 数据加载和预处理
+
 可以将各种格式数据加载进tf.data.Dataset，包括：csv，numpy，pandas.DataFrame等。
 
+
+
 ### Estimators
+
 Estimators是TensorFlow的高阶API，
 特征列是原始数据和 Estimator 之间的媒介， 特征列内容丰富，使您可以将各种原始数据转换为 Estimator 可以使用的格式，从而可以轻松地进行实验。
+
+
+
+### Customization
+
+
+
+### Distributed training
+
+
+
+### 保存模型的三种方式
+
+
 
 
 
@@ -156,15 +178,46 @@ TensorFlow Hub是一个共享可重用机器学习模型的平台，其愿景是
 - 其他数据集资源
 
 
+
+
 ### 工具
 - Colab：免费的Jupyter笔记本环境，不需要任何设置就可以使用，可以在浏览器中方便地执行Tensorflow代码。
 - [Tensorboard](https://tensorflow.google.cn/tensorboard)：一套可视化工具，用于理解、调试和优化TensorFlow程序。
 - [What-if](https://pair-code.github.io/what-if-tool/)：一种以无代码方式探究机器学习模型的工具，对模型的理解、调试和公平性很有帮助，可以在TensorBoard或Colab中使用。
-- 
-- 
-- TensorFlow PlayGround
+- [ML Perf](https://mlperf.org/)：全面的机器学习基准测试套件，用于衡量机器学习软件框架、机器学习硬件加速器和机器学习云端平台的性能。
+- [XLA](https://tensorflow.google.cn/xla/)：加速线性代数，是一种特定里关于的线性代数编译器，能够优化TensorFlow计算，它可以提高服务器和移动平台的运行速度并改进内存使用情况和可移植性。
+- [TensorFlow PlayGround](https://github.com/fengdu78/deeplearning_ai_books)：在浏览器中设计神经网络
+- TensorFlow Research Cloud
+- MLIR
+
+
+
+### [库和扩展程序](https://tensorflow.google.cn/resources/libraries-extensions)
+
+探索使用 TensorFlow 构建高级模型或方法的库，并访问可扩展 TensorFlow 的特定领域的应用软件包。如：
+
+- TensorFlow Ranking：用于在TensorFlow平台上实现learning to rank
+- Tensor2Tensor：包含深度学习模型和数据集，旨在降低深度学习的接触门槛并加速机器学习方面的研究
+- TensorFlow Agents：TensorFlow的强化学习库
+- Neural Structured Learning：将图的结构化信息用于神经网络训练
+- 。。。。。。
+
+
+
+### [TensorFlow lite](https://tensorflow.google.cn/lite/)
+
+- **在移动设备和 IoT 设备上部署机器学习模型**
+
+
+
+### [TensorFlow Serving](https://tensorflow.google.cn/tfx/guide/serving)
+
+
+
+
 
 ### TensorFlow 2.0变化
+
 - 删除了冗余API，部分API被2.0的新API替代，还有参数变化等。**可以使用官方提供的[升级脚本](https://tensorflow.google.cn/guide/upgrade)自动升级1.0代码**。
 - Eager Execution 变为 TensorFlow 2.0 默认的执行模式。这意味着 TensorFlow 如同 PyTorch 那样，由编写静态计算图全面转向了动态计算图。不再需要编写完整的静态计算图，并打开会话（Session）运行它。
     - Eager 模式变为默认设置之后，开发者可以在原型搭建完成后，利用 AutoGraph 把在 Eager 模式下搭建的模型自动变成计算图。
@@ -176,9 +229,11 @@ outputs = session.run(f(placeholder), feed_dict={placeholder: input})
 # TensorFlow 2.0
 outputs = f(input)
 ```
-    
+
+
 
 ### Google官方建议的最佳实践
+
 - 用 Eager 模式搭建原型
 - 用 Datasets 处理数据
 - 用 Feature Columns 提取特征
@@ -198,7 +253,10 @@ https://blog.csdn.net/shin627077/article/details/78592729
 https://blog.csdn.net/heyc861221/article/details/80129169
 https://www.jianshu.com/p/2fffd0e332bc
 
+
+
 ### 参考资料
+
 - https://tensorflow.google.cn/tutorials
 - https://blog.csdn.net/mogoweb/article/details/97722478
 

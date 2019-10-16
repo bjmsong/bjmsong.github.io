@@ -1,4 +1,14 @@
-
+---
+layout:     post
+title:      TEnsorFLow2.0
+subtitle:   
+date:       2019-10-16
+author:     bjmsong
+header-img: img/dl/tf2.0.png
+catalog: true
+tags:
+    - 机器学习
+---
 
 > from 官方教程
 

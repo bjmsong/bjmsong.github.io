@@ -224,13 +224,16 @@ TensorFlow Hub是一个共享可重用机器学习模型的平台，其愿景是
 
   </li> 
 
-- TFX组件
+- 流水线
+
+- 组件
 
   <li markdown="1"> 
 
   ![]({{site.baseurl}}/img/dl/tfx组件.png) 
 
   </li> 
+
 
 - TensorFlow Transform
 

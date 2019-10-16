@@ -1,14 +1,5 @@
----
-layout:     post
-title:      TensorFLow 2.0
-subtitle:   
-date:       2019-10-11
-author:     bjmsong
-header-img: img/dl/tf2.0.png
-catalog: true
-tags:
-    - 深度学习
----
+
+
 > from 官方教程
 
 
@@ -210,7 +201,39 @@ TensorFlow Hub是一个共享可重用机器学习模型的平台，其愿景是
 
 
 
-### [TensorFlow Serving](https://tensorflow.google.cn/tfx/guide/serving)
+### 
+
+
+
+
+
+### [TensorFlow Extended（TFX）](https://tensorflow.google.cn/tfx)
+
+- 解决机器学习模型部署到生产环境的问题
+
+  <li markdown="1"> 
+
+  ![](C:/Users/宋伟清/gitrepository/bjmsong.github.io/_posts/{{site.baseurl}}/img/dl/mlcode_tiny_part.png) 
+
+  </li> 
+
+  </ul>
+
+- TFX组件
+
+  <li markdown="1"> 
+
+  ![](C:/Users/宋伟清/gitrepository/bjmsong.github.io/_posts/{{site.baseurl}}/img/dl/TFX组件.png) 
+
+  </li> 
+
+  </ul>
+
+- TensorFlow Transform
+
+- [TensorFlow Serving](https://tensorflow.google.cn/tfx/guide/serving)
+
+  
 
 
 

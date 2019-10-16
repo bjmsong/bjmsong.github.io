@@ -213,7 +213,7 @@ TensorFlow Hub是一个共享可重用机器学习模型的平台，其愿景是
 
   <li markdown="1"> 
 
-  ![](C:/Users/宋伟清/gitrepository/bjmsong.github.io/_posts/{{site.baseurl}}/img/dl/mlcode_tiny_part.png) 
+  ![]({{site.baseurl}}/img/dl/mlcode_tiny_part.png) 
 
   </li> 
 
@@ -223,7 +223,7 @@ TensorFlow Hub是一个共享可重用机器学习模型的平台，其愿景是
 
   <li markdown="1"> 
 
-  ![](C:/Users/宋伟清/gitrepository/bjmsong.github.io/_posts/{{site.baseurl}}/img/dl/TFX组件.png) 
+  ![]({{site.baseurl}}/img/dl/TFX组件.png) 
 
   </li> 
 

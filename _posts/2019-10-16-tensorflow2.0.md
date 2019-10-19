@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      TEnsorFLow2.0
+title:      TensorFLow2.0
 subtitle:   
 date:       2019-10-16
 author:     bjmsong
@@ -288,8 +288,6 @@ https://www.jianshu.com/p/2fffd0e332bc
 
 - https://tensorflow.google.cn/tutorials
 - https://blog.csdn.net/mogoweb/article/details/97722478
-
-
 
 - https://tensorflow.google.cn/guide
 - https://github.com/snowkylin/tensorflow-handbook

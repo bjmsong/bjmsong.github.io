@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Onlne Learning
+title:      Online Learning
 subtitle:   
 date:       2019-10-24
 author:     bjmsong

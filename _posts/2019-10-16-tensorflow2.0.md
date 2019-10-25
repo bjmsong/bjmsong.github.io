@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      TensorFLow2.0
+title:      TensorFlow2.0
 subtitle:   
 date:       2019-10-16
 author:     bjmsong

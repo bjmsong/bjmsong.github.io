@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: img/Algo/algorithms.jpg
 catalog: true
 tags:
-    - 推荐系统
+    - 算法
 ---
 
 

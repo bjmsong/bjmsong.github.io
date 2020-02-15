@@ -15,17 +15,24 @@ Spark SQL是Spark的基本组件之一，主要用于结构化数据处理。可
 ### SQL
 可以执行sql语句直接和Hive交互，或者通过JDBC/ODBC和mysql、oracle等数据库交互。
 
+
+
 ### Datasets and DataFrames
+
 Dataset是Spark 1.6引入的，具备RDD强类型、可以使用匿名函数等优点，同时又获得了Spark SQL的优化执行引擎。Dataset API目前只有Scala和Java，尚不支持Python。
 DataFrame
 
 
+
 ### UDF
+
 https://www.jianshu.com/p/b1e9d5cc6193
 https://acadgild.com/blog/writing-a-custom-udf-in-spark
 
 
+
 ### Dataset,DataFrame,RDD
+
 ![rdd_dataframe_dataset]({{site.baseurl}}/img/spark/rdd_dataframe_dataset.png)
 
 https://medium.zenika.com/a-comparison-between-rdd-dataframe-and-dataset-in-spark-from-a-developers-point-of-view-a539b5acf734
@@ -67,5 +74,8 @@ printing elements of RDD：rddforeach(println)---print to the executor's stdout,
 ```
 - 优劣
 
+
+
 #### 参考资料
+
 https://spark.apache.org/docs/latest/sql-programming-guide.html

@@ -11,7 +11,7 @@ tags:
 ---
 
 
-## week1 深度学习的实用层面
+### week1 深度学习的实用层面
 1.1. train/dev/test
 - 数据量如果很大，可以降低dev/test的数据比例 -- 98%/1%/1%
 - 验证集和测试集should come from same distribution
@@ -19,6 +19,7 @@ tags:
 - 也可以不要测试集
 
 1.2 Bias and Variance
+
 - 如何判断bias、variance
   假设最优误差是0% -- 一般用人类误差水平作为替代
   训练集误差1%，验证集误差15% -- high variance
@@ -69,7 +70,10 @@ tags:
 1.6 梯度的数值逼近
 - 双边误差比单边误差更精确
 
-## week2 优化算法
+
+
+### week2 优化算法
+
 https://zhuanlan.zhihu.com/p/32230623
 《An overview of gradient descent optimization algorithms》
 2.1 mini-batch
@@ -77,6 +81,7 @@ https://zhuanlan.zhihu.com/p/32230623
 - choose mini-batch size：64~512
 - if training set is small ：use batch gradient descent
   
+
 2.2 指数加权平均
 $$v_t=\beta*v_{t-1}+(1-\beta)\theta_t$$
 - $\beta=0.1$近似等于计算最近10天的平均值，优点是占内存很小
@@ -120,7 +125,9 @@ $$w:=w-\alpha*\frac{v_{dw}}{\sqrt{s_{dw}}+\epsilon}$$
       - Momentum、RMSprop、Adam可以加快学习
 
 
-## week3 超参数调试、Batch Normalization和程序框架
+
+### week3 超参数调试、Batch Normalization和程序框架
+
 3.1 超参数调试
 - 超参数重要性排序
   - 最重要：

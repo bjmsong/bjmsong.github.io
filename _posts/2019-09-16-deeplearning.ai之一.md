@@ -17,7 +17,10 @@ tags:
     - computation
     - algorithms
 
+
+
 ### week2. 神经网络基础
+
 2.1 符号说明
 - X：(nx,m), 一列是一个样本
     - nx个维度/特征（例如图像：64*64*3），m个样本
@@ -66,7 +69,10 @@ use:```np.random.randn(5,1) or np.random.randn(1,5)```
 - 通过assert 确定使用的是n×1、1×n的矩阵
 - np.sum(...,keepdims=Ture):防止输出秩为1的数组
 
+
+
 ### week3. 浅层神经网络
+
 3.1 概念
 - input layer （第0层）
 - hidden layer
@@ -98,7 +104,10 @@ use:```np.random.randn(5,1) or np.random.randn(1,5)```
 - 不要全零
 - Xaiver initialization
 
+
+
 ### week4. 深层神经网络
+
 4.1 核对矩阵的维数
 W[l] = (n[l],n[l-1]) , l:layer number,n:units in layer
 b[l] = (n[l],1)

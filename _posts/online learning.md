@@ -14,17 +14,25 @@ tags:
 - SGD算法是常用的online learning算法，它能学习出不错的模型，但学出的模型不是稀疏的。
 
 
+
 ### 算法
+
 - SGD
 - FTRL（Follow The Regularized Leader）
 http://vividfree.github.io/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2015/12/05/understanding-FTRL-algorithm
 https://www.cnblogs.com/EE-NovRain/p/3810737.html
 
+
+
 ### FTRL工程实现
+
 - Google 《Ad Click Prediction:a View from the Trenches》 
 - 腾讯Angel https://github.com/Angel-ML/angel/blob/master/docs/algo/ftrl_lr_spark.md
 
+
+
 ### 参考资料
+
 - 《在线最优化求解》 有pdf
 - https://zhuanlan.zhihu.com/p/36410780
 

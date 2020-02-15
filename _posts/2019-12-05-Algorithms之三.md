@@ -2,7 +2,7 @@
 layout:     post
 title:      算法与数据结构之三
 subtitle:   查找
-date:       2020-02-13
+date:       2019-12-05
 author:     bjmsong
 header-img: img/Algo/algorithms.jpg
 catalog: true
@@ -161,28 +161,19 @@ tags:
 - one-way hash function
     - "Hard" to find a key that will hash to a desired value (or two keys that hash to same value)
     
-- 缺点：生成代价昂贵
-  
+    - 缺点：生成代价昂贵
     - 特点
     
       - 信息相同，字符串也相同
-
+    
       - 信息相似不会影响字符串相同
     
       - 可以生成无数的信息，但是字符串的种类是一定的，所以是不可逆的
-
-    - 用途
     
-      - 文件校验
+    - 用途：文件校验，数字签名，储存密码
     
-      - 数字签名
-      - 储存密码
+    - 算法：MD5，SHA
     
-    - 算法
-    
-      - MD5
-    
-      - SHA
 
 
 
@@ -201,8 +192,3 @@ tags:
 - 稀疏向量
 
 
-
-### 参考资料
-
-- Algorithms，Robert Sedgewick
-- **https://www.bilibili.com/video/av9058217?p=2**

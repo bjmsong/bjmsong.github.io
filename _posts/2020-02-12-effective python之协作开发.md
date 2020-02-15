@@ -33,31 +33,26 @@ tags:
   - Sphinx
   - Read the Docs
 
-- docstring要及时更新，通过内置的doctest模块，可以运行docstring中的范例代码，以确保源代码和文档不会产生偏差
+- docstring使用三重双引号（"""）把它括起来，要及时更新，通过内置的doctest模块，可以运行docstring中的范例代码，以确保源代码和文档不会产生偏差
 
 - 为模块编写文档
 
-  - 每个模块都应该有顶级的docstring，使用三重双引号（"""）把它括起来
-  - 目的：介绍当前这个模块，以及模块中的内容
-  - 内容
-    - 描述本模块的用途
-    - 介绍本模块的操作有关的内容
-    - 强调本模块里面比较重要的类和函数
-
+  - 描述本模块的用途
+  - 介绍本模块的操作有关的内容
+  - 强调本模块里面比较重要的类和函数
+  
 - 为类编写文档
 
-  - 内容
-    - 描述本类的用途
-    - 介绍该类的操作方式
-    - 介绍public属性及方法
-    - 介绍如何与protected属性，超类方法交互
-
+  - 描述本类的用途
+  - 介绍该类的操作方式
+  - 介绍public属性及方法
+  - 介绍如何与protected属性，超类方法交互
+  
 - 为函数编写文档
 
-  - 内容
-    - 描述本函数的功能
-    - 描述具体的行为和函数的参数，返回值
-    - 描述可能抛出的异常
+  - 描述本函数的功能
+  - 描述具体的行为和函数的参数，返回值
+  - 描述可能抛出的异常
 
 
 
@@ -204,15 +199,13 @@ tags:
 
 
 ### 远程调试
-- pycharm
-https://zhuanlan.zhihu.com/p/36843200
+- [pycharm](https://zhuanlan.zhihu.com/p/36843200)
 - vscode
-- pdb,ipdb
+- pdb, ipdb
 - vim
-https://zhuanlan.zhihu.com/p/30022074
-https://zhuanlan.zhihu.com/p/39008816
-- pysnooper
-https://zhuanlan.zhihu.com/p/63397849
+- https://zhuanlan.zhihu.com/p/30022074
+- https://zhuanlan.zhihu.com/p/39008816
+- [pysnooper](https://zhuanlan.zhihu.com/p/63397849)
 
 
 

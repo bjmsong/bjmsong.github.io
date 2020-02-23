@@ -15,53 +15,77 @@ tags:
 
 ### XGBoost
 
-- <ul> 
-  <li markdown="1"> 
-  ![]({{site.baseurl}}/img/machineLearning/xgboost.png) 
-  </li> 
-  </ul> 
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/xgboost.png) 
+</li> 
+</ul> 
 
-- <ul> 
-  <li markdown="1"> 
-  ![]({{site.baseurl}}/img/machineLearning/xgboost advantage.png) 
-  </li> 
-  </ul> 
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/xgboost advantage.png) 
+</li> 
+</ul> 
 
-- <ul> 
-  <li markdown="1"> 
-  ![]({{site.baseurl}}/img/machineLearning/bias-variance.png) 
-  </li> 
-  </ul> 
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/bias-variance.png) 
+</li> 
+</ul> 
 
-- <ul> 
-  <li markdown="1"> 
-  ![]({{site.baseurl}}/img/machineLearning/regression tree.png) 
-  </li> 
-  </ul> 
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/regression tree.png) 
+</li> 
+</ul> 
 
-  <ul> 
-  <li markdown="1"> 
-  ![]({{site.baseurl}}/img/machineLearning/regression tree not just for regression.png) 
-  </li> 
-  </ul> 
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/regression tree not just for regression.png) 
+</li> 
+</ul> 
 
-- <ul> 
-  <li markdown="1"> 
-  ![]({{site.baseurl}}/img/machineLearning/regression tree ensemble.png) 
-  </li> 
-  </ul> 
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/regression tree ensemble.png) 
+</li> 
+</ul> 
 
-- <ul> 
-  <li markdown="1"> 
-  ![]({{site.baseurl}}/img/machineLearning/tree ensemble methods.png) 
-  </li> 
-  </ul> 
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/tree ensemble methods.png) 
+</li> 
+</ul> 
 
-- <ul> 
-  <li markdown="1"> 
-  ![]({{site.baseurl}}/img/machineLearning/objective vs heuristic.png) 
-  </li> 
-  </ul> 
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/objective vs heuristic.png) 
+</li> 
+</ul> 
+
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/boosting.png) 
+</li> 
+</ul> 
+
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/boosting2.png) 
+</li> 
+</ul> 
+
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/boosting3.png) 
+</li> 
+</ul> 
+
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/boosting4.png) 
+</li> 
+</ul> 
 
 - 官方的定义
 
@@ -83,11 +107,11 @@ tags:
 
 ### 参考资料
 
-- [XGBoost官方文档](https://xgboost.readthedocs.io/en/latest/index.html)
-
 - Introduction to Boosted Trees , Tianqi Chen
 
 - XGBoost.pdf , Tong He
+
+- [XGBoost官方文档](https://xgboost.readthedocs.io/en/latest/index.html)
 
 - [LightGBM官方文档](https://lightgbm.readthedocs.io/en/latest/)
 

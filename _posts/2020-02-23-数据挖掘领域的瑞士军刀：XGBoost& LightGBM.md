@@ -87,6 +87,48 @@ tags:
 </li> 
 </ul> 
 
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/search algo.png) 
+</li> 
+</ul> 
+
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/search algo2.png) 
+</li> 
+</ul> 
+
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/search algo3.png) 
+</li> 
+</ul>
+
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/search algo4.png) 
+</li> 
+</ul>
+
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/category feature.png) 
+</li> 
+</ul>
+
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/recap.png) 
+</li> 
+</ul>
+
+<ul> 
+<li markdown="1"> 
+![]({{site.baseurl}}/img/machineLearning/xgboost/weighted.png) 
+</li> 
+</ul>
+
 - 官方的定义
 
   > XGBoost is an optimized distributed gradient boosting library designed to be highly efficient, flexible and portable

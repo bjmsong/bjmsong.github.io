@@ -217,10 +217,12 @@ tags:
 
 
 
-### [Python Client](https://elasticsearch-py.readthedocs.io/en/master/#)
+### [Python Client -- elasticsearch](https://elasticsearch-py.readthedocs.io/en/master/#)
 
 - Official low-level client for Elasticsearch
 - For a more high level client library with more limited scope, have a look at elasticsearch-dsl
+- ES中的高性能的部分大部分在helpers中实现
+  - 如果要批量查询大量的数据，建议使用helpers.scan，helpers.scan返回的数据对象时迭代器，很大节省内存空间，而且查询速度要远远大于search；search在利用from、size参数控制返回数据的条数，scroll进行数据分页，也可以返回大数据，但是search返回的数据是以list的形式，如果一次需要返回的数据量比较大的话，则会十分耗费内存，而且数据传输速度也会比较慢
 - [python操作es](https://www.jianshu.com/p/462007422e65)
 - [getting-started-with-elasticsearch-in-python](https://towardsdatascience.com/getting-started-with-elasticsearch-in-python-c3598e718380)
 

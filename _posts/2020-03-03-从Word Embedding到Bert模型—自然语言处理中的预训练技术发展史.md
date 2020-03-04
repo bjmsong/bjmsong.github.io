@@ -8,15 +8,17 @@ header-img: img/nlp/nlp.jpg
 catalog: true
 tags:
     - NLP
-
 ---
+
+> [本文大纲来自于张俊林老师的文章](https://zhuanlan.zhihu.com/p/49271699)
 
 
 
 ### 预训练（Pre-training） 
+
 - 借鉴于图像领域
 - 不同方式  
-    - Fine tunning 
+    - Fine tunning ： 用新的训练数据微调后面几层神经网络
     - Frozen
 - transfer learning
 - NLP：word2vec，ELMO，Bert
@@ -32,12 +34,21 @@ tags:
 </ul>
 
 - 每个词独热表示，词之间无法表示相似性
+
 - measures how likely a valid sentence c
-    - P(w1,w2,,,wd) = P(w1)*P(w2|w1)*P(w3|w1,w2)*...*P(wd|w1,w2...wd-1)
-    - N-gram：假设第N个词只跟前N-1个词有关
-        - N=2：P(w1,w2,,,wd) = P(w1)*P(w2|w1)*P(w3|w2)*...*P(wd|wd-1)
+    $$
+    P(w1,w2,,,wd) = P(w1)*P(w2|w1)*P(w3|w1,w2)*...*P(wd|w1,w2...wd-1)
+    $$
+    
+    - N-gram：假设第N个词只跟前N-1个词有关，如N=2
+        $$
+        P(w1,w2,,,wd) = P(w1)*P(w2|w1)*P(w3|w2)*...*P(wd|wd-1)
+        $$
+        
         - 每个概率以通过直接从语料中统计2个词同时出现的次数得到：需要大量训练语料
+    
 - LSTM 非常适合来建模
+
 - https://zhuanlan.zhihu.com/p/32829048
 
 

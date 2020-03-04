@@ -13,7 +13,7 @@ tags:
 
 
 
-### 预训练（Pre-trained） 
+### 预训练（Pre-training） 
 - 借鉴于图像领域
 - 不同方式  
     - Fine tunning 
@@ -50,16 +50,17 @@ tags:
     - 获得语义上的相似度 semantic similarity
 - Some Good Word Embedding
     - NNLM（Netural Network Language Model）
+        
         - 语言模型
         
     - 只考虑前面的n个单词
-        
-          <ul> 
-          <li markdown="1"> 
-          ![]({{site.baseurl}}/img/nlp/NNLM.jpg) 
-          </li> 
-          </ul>
-        
+      
+      <ul> 
+      <li markdown="1"> 
+      ![]({{site.baseurl}}/img/nlp/NNLM.jpg) 
+      </li> 
+      </ul>
+      
     - Word2Vec：CBOW,SkipGram 
     
       <ul> 

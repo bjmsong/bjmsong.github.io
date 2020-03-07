@@ -10,16 +10,26 @@ tags:
     - NLP
 ---
 
-> [本文大纲来自于张俊林老师的文章](https://zhuanlan.zhihu.com/p/49271699)
+> [本文主体来源于张俊林老师的文章](https://zhuanlan.zhihu.com/p/49271699)
 
 
 
 ### 预训练（Pre-training） 
 
-- 借鉴于图像领域
-- 不同方式  
-    - Fine tunning ： 用新的训练数据微调后面几层神经网络
-    - Frozen
+- 借鉴于图像领域，优点：
+    - 训练数据小，不足以训练复杂网络
+    - 加快训练速度
+      - 参数初始化，先找到好的初始点，有利于优化
+- 两种做法 
+    - 在A任务上或者B任务上学会网络参数，然后存起来以备后用。
+    - 假设我们面临第三个任务C，网络结构采取相同的网络结构，在比较浅的几层CNN结构，网络参数初始化的时候可以加载A任务或者B任务学习好的参数，其它CNN高层参数仍然随机初始化。
+    - 之后我们用C任务的训练数据来训练网络，此时有两种做法
+      - 一种是浅层加载的参数在训练C任务过程中不动，这种方法被称为“Frozen”;
+      - 另外一种是底层网络参数尽管被初始化了，在C任务训练过程中仍然随着训练的进程不断改变，这种一般叫“Fine-Tuning”
+- 为什么预训练的思路是可行的
+    - 对于层级的CNN结构来说，不同层级的神经元学习到了不同类型的图像特征，由底向上特征形成层级结构
+    - 越是底层的特征越是所有不论什么领域的图像都会具备的比如边角线弧线等底层基础特征，越往上抽取出的特征越与手头任务相关
+    - 正因为此，所以预训练好的网络参数，尤其是底层的网络参数抽取出特征跟具体任务越无关，越具备任务的通用性，所以这是为何一般用底层预训练好的参数初始化新任务网络参数的原因
 - transfer learning
 - NLP：word2vec，ELMO，Bert
 
@@ -33,46 +43,47 @@ tags:
 </li> 
 </ul>
 
-- 每个词独热表示，词之间无法表示相似性
-
 - measures how likely a valid sentence c
     $$
     P(w1,w2,,,wd) = P(w1)*P(w2|w1)*P(w3|w1,w2)*...*P(wd|w1,w2...wd-1)
     $$
-    
+
     - N-gram：假设第N个词只跟前N-1个词有关，如N=2
         $$
         P(w1,w2,,,wd) = P(w1)*P(w2|w1)*P(w3|w2)*...*P(wd|wd-1)
         $$
         
         - 每个概率以通过直接从语料中统计2个词同时出现的次数得到：需要大量训练语料
-    
+
+- 每个词独热表示，词之间无法表示相似性
+
 - LSTM 非常适合来建模
 
-- https://zhuanlan.zhihu.com/p/32829048
+- [自然语言处理中N-Gram模型介绍](https://zhuanlan.zhihu.com/p/32829048)
 
 
 
 ### Word Embedding
 
-- 《Efficient Estimation of Word Representations in Vector Space》
 - Distributed Representation
+
     - distributed vectors
     - 获得语义上的相似度 semantic similarity
+
 - Some Good Word Embedding
-    - NNLM（Netural Network Language Model）
-        
+    - NNLM（Netural Network Language Mode，2003l）
+      
         - 语言模型
+        - 只考虑前面的n个单词
+        - 缺点是训练速度，因为词汇表往往很大, 训练起来就很耗时, Bengo仅仅训练5个epoch就花了3周, 这还是40个CPU并行训练的结果. 因此才会有了后续好多的优化工作, word2vec便是其中一个
         
-    - 只考虑前面的n个单词
-      
-      <ul> 
-      <li markdown="1"> 
-      ![]({{site.baseurl}}/img/nlp/NNLM.jpg) 
-      </li> 
-      </ul>
-      
-    - Word2Vec：CBOW,SkipGram 
+        <ul> 
+        <li markdown="1"> 
+        ![]({{site.baseurl}}/img/nlp/NNLM.jpg) 
+        </li> 
+        </ul>
+        
+    - Word2Vec(2013)
     
       <ul> 
       <li markdown="1"> 
@@ -80,20 +91,30 @@ tags:
       </li> 
       </ul>
       
+        - 基本出发点是上下文相似的两个词,它们的词向量也应该相似
         - 也是做语言模型任务
         - CBOW : 根据前后的几个单词，预测中心单词
         - SkipGram：根据中心单词，预测前后的单词
       
     - Glove
     
-    - 缺点：    
+    - 缺点 
         - not distinguish contextualized (同一个词，不同上下文都一样的)
         - does not capture long-term dependency
         - Shallow Model，could not learn hierarchical representation (层次结构的表示)
             - 例如：深度图像模型，每一层能学到不同的特征
+    
 - Better Ways:Deep Model,contextualized,语言模型
     - ELMO:LSTM
     - Bert:Transformer
+    
+- 参考
+
+    - Efficient Estimation of Word Representations in Vector Space
+    - https://shomy.top/2017/07/28/word2vec-all/
+    - https://zhuanlan.zhihu.com/p/30302498
+
+    
 
 
 
@@ -248,6 +269,6 @@ https://mp.weixin.qq.com/s?__biz=MzU1NTMyOTI4Mw==&mid=2247491563&idx=1&sn=b139fa
 - https://zhuanlan.zhihu.com/p/47488095?utm_source=wechat_session&utm_medium=social&utm_oi=30249563717632&from=singlemessage
 - https://zhuanlan.zhihu.com/p/66676144?utm_source=wechat_session&utm_medium=social&utm_oi=1114227199359782912&from=singlemessage&s_s_i=fg41NsREUSsyBOQAo%2Flk%2BHPO5qCB2tw7PkZHF1Yx0cA%3D&s_r=1
 - 中文Bert预训练模型
-https://github.com/ymcui/Chinese-BERT-wwm
-- https://shomy.top/2017/07/28/word2vec-all/
-- https://zhuanlan.zhihu.com/p/30302498
+  https://github.com/ymcui/Chinese-BERT-wwm
+
+  

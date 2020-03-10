@@ -67,17 +67,6 @@ tags:
 
 
 
-
-### Query DSL
-
-- Elasticsearch提供基于JSON的完整Query DSL（域特定语言）来定义查询。可以将查询DSL看作查询的AST（抽象语法树），它由两类子句组成：
-
-  - 叶查询子句：叶查询子句在特定字段中查找特定值，如 match，term或 range查询。这些查询可以自己使用
-  - 复合查询子句：复合查询子句包装其他叶或复合查询，并用于以逻辑方式组合多个查询（如bool或dis_max查询），或更改它们的行为（如constant_score查询）
-- 查询和过滤
-
-
-
 ### Elasticsearch分布式原理
 
 - master-slave架构

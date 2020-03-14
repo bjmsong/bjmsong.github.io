@@ -56,18 +56,12 @@ tags:
 - field
 
   - 字段
+  
+- Shards & Replicas
 
 
 
-#### 字符串类型
-
-- keyword：不会分词，直接根据字符串内容建立反向索引
-
-- text：先分词，然后根据分词后的内容建立反向索引
-
-
-
-### Elasticsearch分布式原理
+#### Elasticsearch分布式原理
 
 - master-slave架构
   - 在 Elasticsearch 中，节点是对等的，节点间会通过自己的一些规则选取集群的 Master，Master 会负责集群状态信息的改变，并同步给其他节点
@@ -75,7 +69,7 @@ tags:
 
 
 
-### REST API
+### 与ES交互 -- REST API
 
 - 创建索引：索引名为poems
 

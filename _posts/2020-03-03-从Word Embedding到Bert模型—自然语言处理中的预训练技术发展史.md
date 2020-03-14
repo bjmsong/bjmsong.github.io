@@ -161,12 +161,13 @@ https://zhuanlan.zhihu.com/p/37601161
         - 优于LSTM
 
 
-
 ### Transformer
 
 - 目前最强的特征抽取器，替代RNN,可并行
 **https://jalammar.github.io/illustrated-transformer/ （解释得很清楚）**
 **http://nlp.seas.harvard.edu/2018/04/03/attention.html （代码 !）**
+github: attention-is-all-you-need-pytorch 
+https://github.com/ongunuzaymacar/attention-mechanisms
 https://zhuanlan.zhihu.com/p/48508221
 - paper：
     - Attention is All you need (不好懂)

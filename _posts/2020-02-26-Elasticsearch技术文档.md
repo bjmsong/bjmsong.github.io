@@ -31,7 +31,7 @@ tags:
   -  calculates a _score representing how well the document matches, relative to other documents
   - 也可以实现精确匹配？
     - match_phase
-  - 关键字：match，match_all，
+  - 关键字：match，match_all，match_phrase
 
 - Filter 
 
@@ -100,11 +100,11 @@ https://zhuanlan.zhihu.com/p/37500880
 
 ### Scroll
 
-https://www.jianshu.com/p/14aa8b09c789?spm=a2c4e.11153940.blogcont326326.7.a8245169dIV2xx
+- https://www.jianshu.com/p/14aa8b09c789?spm=a2c4e.11153940.blogcont326326.7.a8245169dIV2xx
 
-https://blog.csdn.net/u012089823/article/details/82258738
+- https://blog.csdn.net/u012089823/article/details/82258738
 
-https://blog.csdn.net/qq_32502511/article/details/93719442
+- https://blog.csdn.net/qq_32502511/article/details/93719442
 
 
 

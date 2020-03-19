@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: img/dl/tf2.0.png
 catalog: true
 tags:
-    - 机器学习
+    - 深度学习
 ---
 
 > from 官方教程

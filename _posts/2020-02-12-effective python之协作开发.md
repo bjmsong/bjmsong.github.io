@@ -4,7 +4,7 @@ title:      effective python之协作开发
 subtitle:   
 date:       2020-02-12
 author:     bjmsong
-header-img: img/python.jpg
+header-img: img/language/python.jpg
 catalog: true
 tags:
     - python
@@ -190,9 +190,10 @@ tags:
     pip install package_name upgrade
     ```
     
-- 服务器多用户场景，权限
+- 服务器多用户场景，非root权限
 
     - sudo pip install package_name --user
+    - [其它方案（略麻烦）](https://zcdll.github.io/2018/01/29/own-python-pip/)
 
 - 也可以使用setuptools：setuptools管理Python的第三方包，将包安装到site-package下，安装的包后缀一般为.egg，实际为ZIP格式。默认从 http://pypi.python.org/pypi 下载包，能够解决Python包的依赖关系；安装了setuptools之后即可用 easy_install 命令安装包，有多种安装方式可以选择
 
@@ -208,20 +209,9 @@ tags:
 
 
 
-### 在当前用户组(非root)创建环境
+#### 安装python
 
-- 最佳实践：安装到当前用户路径
-
-pip install --user
-
-- 其它方案（略麻烦）
-
-https://zcdll.github.io/2018/01/29/own-python-pip/
-
-
-
-1.1 安装python
-
+```
 wget https://www.python.org/ftp/python/3.5.0/Python-3.5.0.tgz
 
 tar -xzf Python-3.5.0.tgz
@@ -235,11 +225,13 @@ mkdir -p /home/weiqing.song/software/python35
 make
 
 make install
+```
 
 
 
-1.2 add python 路径到PATH
+#### add python 路径到PATH
 
+```
 vi .bashrc
 
 alias mypython=/home/weiqing.song/software/python35/bin/python3
@@ -248,28 +240,26 @@ alias mypython=/home/weiqing.song/software/python35/bin/python3
 
 source .bashrc
 
-
-
 如果只用于当前终端，终端中输入：
 
 export PATH=$PATH:/home/weiqing.song/software/python35/bin
 
-
-
-***\*不要修改全局变量（影响所有用户）\****
+不要修改全局变量,会影响所有用户
 
 /etc/profile 
 
 
 
-查看环境变量
-
-echo $PATH
-
+echo $PATH # 查看环境变量
+```
 
 
-\2. 安装pip3
 
+
+
+#### 安装pip3
+
+```
 wget --no-check-certificate https://github.com/pypa/pip/archive/9.0.1.tar.gz
 
 tar -zvxf 9.0.1.tar.gz
@@ -285,6 +275,7 @@ vi ~/.bashrc  # 添加下面内容
 alias mypip=/home/weiqing.song/software/python35/bin/pip3
 
 pip install --upgrade pip  # 升级 pip
+```
 
 
 

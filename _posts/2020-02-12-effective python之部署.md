@@ -4,7 +4,7 @@ title:      effective python之部署
 subtitle:   
 date:       2020-02-12
 author:     bjmsong
-header-img: img/python.jpg
+header-img: img/language/python.jpg
 catalog: true
 tags:
     - python

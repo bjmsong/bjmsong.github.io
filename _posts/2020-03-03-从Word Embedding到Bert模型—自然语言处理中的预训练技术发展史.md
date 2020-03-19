@@ -99,7 +99,7 @@ tags:
     - Glove
     
     - 缺点 
-        - not distinguish contextualized (同一个词，不同上下文都一样的)
+        - not distinguish contextualized ：同义词问题，同一个词，不同上下文的含义可能是不一样的，如`bank`
         - does not capture long-term dependency
         - Shallow Model，could not learn hierarchical representation (层次结构的表示)
             - 例如：深度图像模型，每一层能学到不同的特征
@@ -139,9 +139,8 @@ tags:
 
 
 
-### Attention（注意力机制）
+### [Attention(注意力机制)](https://zhuanlan.zhihu.com/p/37601161)
 
-https://zhuanlan.zhihu.com/p/37601161
 - soft attention
     - encoder-decoder
     - decoder阶段，分配不同输入位置的权重
@@ -161,17 +160,19 @@ https://zhuanlan.zhihu.com/p/37601161
         - 优于LSTM
 
 
+
 ### Transformer
 
 - 目前最强的特征抽取器，替代RNN,可并行
-**https://jalammar.github.io/illustrated-transformer/ （解释得很清楚）**
-**http://nlp.seas.harvard.edu/2018/04/03/attention.html （代码 !）**
-github: attention-is-all-you-need-pytorch 
-https://github.com/ongunuzaymacar/attention-mechanisms
-https://zhuanlan.zhihu.com/p/48508221
-- paper：
-    - Attention is All you need (不好懂)
-    - Netural Machine Translation by Jointly Learning to Align and Translate
+- 资料
+  - **https://jalammar.github.io/illustrated-transformer/ （解释得很清楚）**
+  - **http://nlp.seas.harvard.edu/2018/04/03/attention.html （代码 !）**
+  - github: attention-is-all-you-need-pytorch 
+  - https://github.com/ongunuzaymacar/attention-mechanisms
+  - https://zhuanlan.zhihu.com/p/48508221
+  - paper：
+      - Attention is All you need (不好懂)
+      - Netural Machine Translation by Jointly Learning to Align and Translate
 - Seq to Seq 结构
 - Stacked encoder + Stacked decoder
 - Encoder：
@@ -269,7 +270,6 @@ https://mp.weixin.qq.com/s?__biz=MzU1NTMyOTI4Mw==&mid=2247491563&idx=1&sn=b139fa
 - https://zhuanlan.zhihu.com/p/49271699
 - https://zhuanlan.zhihu.com/p/47488095?utm_source=wechat_session&utm_medium=social&utm_oi=30249563717632&from=singlemessage
 - https://zhuanlan.zhihu.com/p/66676144?utm_source=wechat_session&utm_medium=social&utm_oi=1114227199359782912&from=singlemessage&s_s_i=fg41NsREUSsyBOQAo%2Flk%2BHPO5qCB2tw7PkZHF1Yx0cA%3D&s_r=1
-- 中文Bert预训练模型
-  https://github.com/ymcui/Chinese-BERT-wwm
-
+- [中文Bert预训练模型](https://github.com/ymcui/Chinese-BERT-wwm)
   
+

@@ -10,22 +10,22 @@ tags:
     - 深度学习
 ---
 ### week1.卷积神经网络
-1.1 卷积(kernel/filter)
+1.1 卷积(kernel/filter/convolution)
+
 - 作用
-    - 提取图像特征,从浅层到深层
-        - 如边缘检测 
-    - 参数共享
-        - 图像维度太多，传统DNN参数太多，容易过拟合
+    - 提取图像特征,从浅层到深层：如边缘检测 
+    - 参数共享：图像维度太多，传统DNN参数太多，容易过拟合
 - 卷积：用卷积核跟图像像素进行乘法运算
     - 真正在数学中称作：“互相关”
 - 卷积核的值可以通过神经网络学习得到
-- 卷积核维度通常是奇数：3*3,5*5
+- 卷积核维度通常是奇数：3`*`3,5`*`5
 
 1.2 padding
+
 - 沿着图像边缘，填充像素
-- n*n维图像，经过f*f卷积后
-    - without padding，变为 (n-f+1)* (n-f+1)维图像
-    - with padding(p)，变为 (n+2p-f+1)* (n+2p-f+1)维图像
+- n`*`n维图像，经过f`*`f卷积后
+    - without padding，变为 (n-f+1)`*` (n-f+1)维图像
+    - with padding(p)，变为 (n+2p-f+1)`*` (n+2p-f+1)维图像
 - 原因
     - 图像经过卷积后会越来越小
     - 边缘的点被卷积的次数太少，信息丢失
@@ -36,7 +36,7 @@ tags:
 
 1.3 卷积步长(Stride)
 - 卷积核移动的步长
-- 卷积后的维度：1+(n+2p-f)/s * 1+(n+2p-f)/s
+- 卷积后的维度：1+(n+2p-f)/s `*` 1+(n+2p-f)/s
 
 1.4 当图像是多通道的情况(如：RGB)
 - 深度：depth
@@ -53,10 +53,13 @@ tags:
 - no parameters to learn
 
 1.7 为什么卷积层有效
-- Parameter sharing(参数共享):A feature detector (such as a vertical edge detector) that’s useful in one part of the image is probably useful in another part of the image.
-- Sparsity of connections(稀疏连接)：In each layer, each output value depends only on a small number of inputs.
+- **Parameter sharing(参数共享):**A feature detector (such as a vertical edge detector) that’s useful in one part of the image is probably useful in another part of the image.
+- **Sparsity of connections(稀疏连接)**：In each layer, each output value depends only on a small number of inputs.
+
+
 
 ### week2.深度卷积网络：实例探究
+
 2.1 经典网络结构
 - LeNet-5
     - 《Gradient-based learning applied to document recognition》
@@ -70,13 +73,14 @@ tags:
 - ResNet 
 - skip connection：可以把信息传到很远的层，解决了梯度消失/梯度爆炸，网络不能太深的问题
 
-2.3 1*1卷积核  
+2.3 `1*1`卷积核  
+
 - 降维
 
 2.4 Inception 
 - 把不同参数的卷积层，pooling层都放到一起，计算
 - 计算代价大 
-    - 1*1 卷积核可以减少计算
+    - 1`*`1 卷积核可以减少计算
 - 《Going deeper with convolutions》
 
 2.5 数据增强

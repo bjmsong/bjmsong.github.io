@@ -12,8 +12,8 @@ tags:
 
 
 ### week1.机器学习策略1
-1.1 正交化 
-按顺序调节以下目标，一个一个来，每个目标都有一组对应的方法
+1.1 **正交化** : 按顺序调节以下目标，一个一个来，每个目标都有一组对应的方法
+
 - 训练集上表现良好
     - bigger network，Adam。。
 - 验证集上表现良好
@@ -23,18 +23,19 @@ tags:
 - 真实场景中表现良好
     - change dev set or cost function
 
-“early stopping”不是很正交，会同时影响训练集和验证集的表现
+> “early stopping”不是很正交，会同时影响训练集和验证集的表现
 
 1.2 单一数字评价指标
-- 容易评估和比较
-    - 比如：F1 score 比 precision&recall 更直观
 
-1.3 优化指标&满足指标
+- **容易评估和比较**，比如：F1 score 比 precision&recall 更直观
+
+1.3 **优化指标&满足指标**
+
 - 优化指标：想要最大化的(比如F1)
-- 满足指标：满足一定标准就可以了，不比追求最大化(比如运行时间)
+- 满足指标：满足一定标准就可以了，不追求最大化，比如运行时间
 
 1.4 change metrics and dev/test set
-- 验证集、测试集：必须要来自同一个分布
+- **验证集、测试集：必须要来自同一个分布**
 - 训练集：验证集：测试集
     - 数据量非常大，验证集/测试集的比例可以降低 -- big enough to give high confidence in the overall performance of system
         - 0.98:0.01:0.01
@@ -73,7 +74,8 @@ tags:
     - 比如一直把白色的狗标记成猫
 - 如果标记错误严重影响了在开发集上评估算法的能力，就应该花精力去修正标记错误
 
-2.3 快速搭建系统，快速迭代
+2.3 **快速搭建系统，快速迭代**
+
 - 第一次处理某种问题，先实现完整的流程最重要
 - set up train/dev/test set and metric
 - build initial system quickly
@@ -104,13 +106,20 @@ tags:
 
 2.6 多任务学习(Multi-task learning)
 - 目标变量y是多维的，最后一层也是多维的
+
 - loss function(同时识别C个物体)
-    $$L = 1/m\sum_i^m\sum_j^C L(y,y^-)$$ 
+    $$
+    L = 1/m\sum_i^m\sum_j^C L(y,y^-)
+    $$
+     
+    
 - 可以适用于只有部分标记的数据集
+
 - when multi-task learning makes sense
     - Training on a set of tasks that could benefit from having shared lower-level features
     - Usually:Amount of data you have for each task is quite similar
     - Can train a big enough netural network to do well on all the tasks
+    
 - 物体检测任务
 
 2.7 end-to-end deep learning

@@ -374,8 +374,8 @@ AutoGraph 会在后台自动将普通的python代码转换为等效的 TensorFlo
 ### 参考资料
 - https://tensorflow.google.cn/guide/
 - https://mp.weixin.qq.com/s/EUICEJ-LTY28N6RTrp5HSg
-- 《简单粗暴 TensorFlow 2.0》
-https://tf.wiki/
+- 《简单粗暴 TensorFlow 2.0》https://tf.wiki/
+- https://www.infoq.cn/article/oJc3hmjjeE8bvwU*m4km
 
 
 

@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      算法与数据结构之二
+title:      Algorithms之二
 subtitle:   排序算法
 date:       2019-12-05
 author:     bjmsong
@@ -70,7 +70,7 @@ tags:
 
 - python有一个模块，专门提供了归并排序的方法，叫做“heapq”模块
 
-    ```
+    ```python
     from heapq import merge
     
     def merge_sort(lst):
@@ -127,7 +127,7 @@ tags:
 
 ### 优先队列
 
-- 计算topK，不需要全部排序
+- 场景：计算topK，不需要全部排序
 - 操作：删除最大元素和插入元素
 - 实现
     - 无序数组
@@ -150,7 +150,7 @@ tags:
         - 从右至左用sink()函数构造子堆
     - 下沉排序 
         - 从堆中按递减顺序取出所有元素并得到排序结果
-    - 应用很少，因为它无法利用缓存
+    - **应用很少，因为它无法利用缓存**
 - python模块heapq
     - 二叉树
     - 最小堆：每个父节点的值都小于所有子节点的值，即heap[0]表示最小的元素

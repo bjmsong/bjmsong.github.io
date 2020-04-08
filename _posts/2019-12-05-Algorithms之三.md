@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      算法与数据结构之三
+title:      Algorithms之三
 subtitle:   查找
 date:       2019-12-05
 author:     bjmsong

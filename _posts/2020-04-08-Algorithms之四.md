@@ -78,7 +78,7 @@ publci class Serach
     - 双色问题：能够用两种颜色将图的所有顶点着色，任意一条边的两个端点的颜色都不相同
         - 等价问题：这是一个二分图吗
 - 符号图 
-    
+  
     - 顶点名为字符串
 
 
@@ -148,7 +148,14 @@ publci class Serach
 
   - 比Dijkstra算法更快，更简单
 
-  
+
+
+
+### Maxflow/Mincut（最大流/最小割）
+
+- 对于一个网络流，从源点到目标点的最大的流量等于最小割的每一条边的和
+  - 即：图的最小割问题可以转换为最大流问题
+- [https://imlogm.github.io/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/mincut-maxflow/](https://imlogm.github.io/图像处理/mincut-maxflow/)
 
 
 

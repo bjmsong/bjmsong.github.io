@@ -2,7 +2,7 @@
 layout:     post
 title:      Learning to Rank
 subtitle:   
-date:       2020-04-03
+date:       2020-04-14
 author:     bjmsong
 header-img: img/IR/ir.jpg
 catalog: true

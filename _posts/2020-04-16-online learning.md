@@ -44,3 +44,4 @@ https://blog.csdn.net/dengxing1234/article/details/73277251
 https://medium.com/value-stream-design/online-machine-learning-515556ff72c5
 https://www.quora.com/What-is-the-best-way-to-learn-online-machine-learning
 https://github.com/creme-ml/creme
+https://daiwk.github.io/posts/ml-ftrl.html

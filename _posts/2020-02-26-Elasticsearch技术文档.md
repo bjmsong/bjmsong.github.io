@@ -28,7 +28,7 @@ tags:
 - Query 
 
   -  How well does this document match this query clause?
-  -  calculates a _score representing how well the document matches, relative to other documents
+  -  calculates a `_score` representing how well the document matches, relative to other documents
   - 也可以实现精确匹配？
     - match_phase
   - 关键字：match，match_all，match_phrase

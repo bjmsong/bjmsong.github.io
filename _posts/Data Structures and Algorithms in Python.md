@@ -2,7 +2,7 @@
 layout:     post
 title:      Data Structures and Algorithms in Python
 subtitle:   
-date:       2020-01-07
+date:       2020-05-07
 author:     bjmsong
 header-img: img/Algo/algorithms.jpg
 catalog: true

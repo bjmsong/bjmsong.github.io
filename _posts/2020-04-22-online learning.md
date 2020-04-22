@@ -2,7 +2,7 @@
 layout:     post
 title:      Online Learning
 subtitle:   
-date:       2019-10-24
+date:       2020-04-22
 author:     bjmsong
 header-img: img/machineLearning/machineLearning.png
 catalog: true

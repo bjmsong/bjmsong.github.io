@@ -58,6 +58,7 @@ tags:
 
 ### 50. 用包来安排模块，并提供稳固的API
 
+- [廖雪峰-模块](https://www.liaoxuefeng.com/wiki/1016959663602400/1017454145014176)
 - 模块：一个.py文件，module_name就是这个文件去掉.py之后的文件名，文件中可以直接定义一些变量、函数、类
 - 程序的代码量变大之后，需要重新调整结构
   - 大函数分割成小函数
@@ -85,7 +86,7 @@ tags:
 
 - 可以在模块里面提供一种根异常，然后，令该模块所抛出的其他异常，都继承自这个根异常
 
-  ```
+  ```python
   class Error(Exception):
   	"""Base-class for all exceptions raised by this module"""
   
@@ -169,7 +170,6 @@ tags:
 
 - 如果使用python3.4之前的版本，要使用virtualenv
 
-- 容器？
 
 
 

@@ -40,7 +40,7 @@ tags:
     - 稀疏、稠密
 - 图的表示方法
     - 邻接矩阵：存储空间是O(V^2)，而且无法表示平行边
-    - 邻接表数组：以顶点为索引的列表数组，其中每个元素都是和该顶点相邻的顶点列表
+    - **邻接表数组**：以顶点为索引的列表数组，其中每个元素都是和该顶点相邻的顶点列表
     - 邻接集
 
 ```java
@@ -50,7 +50,7 @@ public class Graph
     Graph(In in)   // 从标准输入流in读入一幅图
     int V()        // 顶点数
     int E()        // 边数
-   	void addEdge(int v int w)    // 添加边
+    void addEdge(int v int w)    // 添加边
     Iterable adj(inv v)   // 和v相邻的所有顶点
 ```
 - 图搜索API

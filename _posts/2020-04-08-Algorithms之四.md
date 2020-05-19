@@ -24,7 +24,11 @@ tags:
 
 - great algorithms are the poetry of computation
 
-  ![](/home/redfish/Desktop/bjmsong.github.io/img/Algo/why study algorithms.png)
+  <ul> 
+  <li markdown="1"> 
+  ![]({{site.baseurl}}/img/Algo/why study algorithms.png) 
+  </li> 
+  </ul> 
 
 
 

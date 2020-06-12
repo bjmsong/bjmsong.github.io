@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: img/how to learn.jpg
 catalog: true
 tags:
-    - 学习
+    - 阅读
 ---
 
 ### background

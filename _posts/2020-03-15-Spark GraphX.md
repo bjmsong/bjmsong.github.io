@@ -16,7 +16,7 @@ tags:
     - GraphX extends the Spark RDD by introducing a new Graph abstraction: a directed multigraph with properties attached to each vertex and edge. 
     - 支持快速构建图，以及在图上实现算法
 - 属性图 (Property Graph)
-    - 有向多重图：允许相同的顶点有多种关系：有多条平行的边
+    - 有向多重图：允许相同的顶点有多种关系，有多条平行的边
     - 顶点
       - VertexRDD
       - 顶点可以是不同类型：通过继承 
@@ -41,7 +41,7 @@ tags:
 
 
 
-#### Pregel
+### Pregel
 
 - For iterative computation we recommend using the Pregel API, which correctly unpersists intermediate results
 

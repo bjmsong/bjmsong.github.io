@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      统计学习方法之六
-subtitle:   Naive Bayes
+title:      Naive Bayes
+subtitle:   
 date:       2019-11-30
 author:     bjmsong
 header-img: img/machineLearning/machineLearning.png

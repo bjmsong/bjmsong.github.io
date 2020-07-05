@@ -285,8 +285,8 @@ pip install --upgrade pip  # 升级 pip
 - vscode
 - pdb, ipdb
 - vim
-- https://zhuanlan.zhihu.com/p/30022074
-- https://zhuanlan.zhihu.com/p/39008816
+    - https://zhuanlan.zhihu.com/p/30022074
+    - https://zhuanlan.zhihu.com/p/39008816
 - [pysnooper](https://zhuanlan.zhihu.com/p/63397849)
 
 

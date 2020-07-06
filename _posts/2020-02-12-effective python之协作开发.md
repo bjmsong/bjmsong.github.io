@@ -123,6 +123,13 @@ tags:
   - 不同项目包依赖不同
   - 同一份代码需要在不同机器上运行
 
+- **conda**
+
+  - https://medium.com/python4u/%E7%94%A8conda%E5%BB%BA%E7%AB%8B%E5%8F%8A%E7%AE%A1%E7%90%86python%E8%99%9B%E6%93%AC%E7%92%B0%E5%A2%83-b61fd2a76566
+  - https://xirikm.net/2019/319-1
+
+- **容器是更好的选择**
+
 - pyvenv
 
   - python3.4开始，默认安装在电脑中
@@ -167,8 +174,8 @@ tags:
     ```
     pip install -r /tmp/myproject/requirement.txt
     ```
-
-- 如果使用python3.4之前的版本，要使用virtualenv
+    
+  - 如果使用python3.4之前的版本，要使用virtualenv
 
 
 

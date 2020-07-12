@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      numpy
+title:      scipy
 subtitle:   
 date:       2020-03-12
 author:     bjmsong

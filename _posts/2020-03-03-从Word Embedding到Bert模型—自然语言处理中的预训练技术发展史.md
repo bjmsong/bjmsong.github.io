@@ -110,10 +110,15 @@ tags:
     
 - 参考
 
-    - Efficient Estimation of Word Representations in Vector Space
+    - https://towardsdatascience.com/introduction-to-word-embedding-and-word2vec-652d0c2060fa
+    - https://medium.com/@zafaralibagh6/a-simple-word2vec-tutorial-61e64e38a6a1
+    - 《word2vec Parameter Learning Explained》
+- 《Efficient Estimation of Word Representations in Vector Space》
     - https://shomy.top/2017/07/28/word2vec-all/
     - https://zhuanlan.zhihu.com/p/30302498
-
+    - Learning Representations of Text using Neural Networks
+      - word2vec 作者写一个教程
+    
     
 
 
@@ -267,9 +272,6 @@ https://mp.weixin.qq.com/s?__biz=MzU1NTMyOTI4Mw==&mid=2247491563&idx=1&sn=b139fa
 
 ### 参考资料
 
-- Efficient Estimation of Word Representations in Vector Space
-- Learning Representations of Text using Neural Networks
-  - word2vec 作者写一个教程
 - https://zhuanlan.zhihu.com/p/49271699
 - https://zhuanlan.zhihu.com/p/47488095?utm_source=wechat_session&utm_medium=social&utm_oi=30249563717632&from=singlemessage
 - https://zhuanlan.zhihu.com/p/66676144?utm_source=wechat_session&utm_medium=social&utm_oi=1114227199359782912&from=singlemessage&s_s_i=fg41NsREUSsyBOQAo%2Flk%2BHPO5qCB2tw7PkZHF1Yx0cA%3D&s_r=1

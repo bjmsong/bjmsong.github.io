@@ -36,6 +36,8 @@ https://www.cnblogs.com/EE-NovRain/p/3810737.html
 - 《在线最优化求解》 有pdf
 - Adaptive Bound Optimization for Online Convex Optimization
 - https://zhuanlan.zhihu.com/p/36410780
+- https://www.zhihu.com/question/37426733
+- https://zhuanlan.zhihu.com/p/77664408
 
 https://en.wikipedia.org/wiki/Online_machine_learning
 https://courses.cs.washington.edu/courses/cse599s/12sp/index.html

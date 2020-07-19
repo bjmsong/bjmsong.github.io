@@ -113,12 +113,12 @@ tags:
     - https://towardsdatascience.com/introduction-to-word-embedding-and-word2vec-652d0c2060fa
     - https://medium.com/@zafaralibagh6/a-simple-word2vec-tutorial-61e64e38a6a1
     - 《word2vec Parameter Learning Explained》
-- 《Efficient Estimation of Word Representations in Vector Space》
+    - 《Efficient Estimation of Word Representations in Vector Space》
     - https://shomy.top/2017/07/28/word2vec-all/
     - https://zhuanlan.zhihu.com/p/30302498
     - Learning Representations of Text using Neural Networks
       - word2vec 作者写一个教程
-    
+    - https://mp.weixin.qq.com/s?__biz=MzIyNjM2MzQyNg==&mid=2247511756&idx=1&sn=f39b2d51482bf358c2538bcc51ffc867&chksm=e8737f81df04f697dcac1c2ab030b750c08491e2eb2dfe58fc8756a0d22126564e841c3f3e45&mpshare=1&scene=1&srcid=0717py70oQCimkcQFRf4YFU0&sharer_sharetime=1594971333925&sharer_shareid=49581f7bdbef8664715f595bc62d7044&key=6121756d4ad9fd3cf22983d16eb4098c13167c6cb361a65a018afe706743aa14a6b6591deeda82190c371b568fa7c4ffcd2079e44bcd32d2da278fdb4d4f71f16526707eb5e3f30c313bb4acd451078b&ascene=1&uin=MjM1OTMwMzkwMA%3D%3D&devicetype=Windows+7+x64&version=62090529&lang=zh_CN&exportkey=AazX%2B1PDVvNprzTxUTqgH30%3D&pass_ticket=cbF%2BLZmN4M9UzTGSTEtDqy9RBWl7ywkcHAYpnoxMm%2FzREpa8taMYEG3NWZT4b%2FJh
     
 
 

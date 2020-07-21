@@ -48,3 +48,5 @@ https://medium.com/value-stream-design/online-machine-learning-515556ff72c5
 https://www.quora.com/What-is-the-best-way-to-learn-online-machine-learning
 https://github.com/creme-ml/creme
 https://daiwk.github.io/posts/ml-ftrl.html
+
+- https://mp.weixin.qq.com/s?__biz=MjM5MzY4NzE3MA==&mid=2247485716&idx=1&sn=106f5d6b17294260d7259e2d44ba8f07&chksm=a6927af991e5f3ef83b80a7d13f31029bd8fafd648f11ec6060a7b512089ef9b2a2b1086dbaa&mpshare=1&scene=1&srcid=0721pInQ6zlzDBRqZHG4Y7hD&sharer_sharetime=1595292571063&sharer_shareid=52006a0d19edf83d2b8be98f4d8fe935&key=25b7ee6511d12c93dda7ff22600e8b92d169a2acf5bbea0eb0203bae0b8688448669e519aaa07a8f7c207d52a8f04beeb914a29178ecd370024146e039d5c6d3ce865e2e3454144ee4e97932fdb4c700&ascene=1&uin=MjM1OTMwMzkwMA%3D%3D&devicetype=Windows+7+x64&version=62090529&lang=zh_CN&exportkey=AcFfhjRSc6ctODLTCYjIHKY%3D&pass_ticket=ipbSwC99tbDlmwwBuZrvYZcIonVi64LqRihIOgOYXl%2BzSFTLEDMbBZ6xvOTlh6Kn

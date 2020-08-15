@@ -9,6 +9,7 @@ catalog: true
 tags:
 	- 数据挖掘
 ---
+
 ### MapReduce
 - 集群计算
 - 分布式文件系统（DFS）

@@ -216,6 +216,9 @@ $$
 
 
 3.2 **Batch normalization**
+
+- https://www.cnblogs.com/guoyaohua/p/8724433.html
+
 $$
 z_{norm} = \frac{z-\mu}{\sqrt{\sigma^2+\epsilon}}
 $$

@@ -9,7 +9,11 @@ catalog: true
 tags:
     - 机器学习
 ---
-### 定义
+### continual learning
+- https://towardsdatascience.com/how-to-apply-continual-learning-to-your-machine-learning-models-4754adcd7f7f
+- https://zhuanlan.zhihu.com/p/82540025
+
+### Online Learning定义
 - 传统的学习算法是batch learning算法，它无法有效地处理大规模的数据集，也无法有效地处理大规模的在线数据流。这时，有效且高效的online learning算法显得尤为重要。
 - SGD算法是常用的online learning算法，它能学习出不错的模型，但学出的模型不是稀疏的。
 

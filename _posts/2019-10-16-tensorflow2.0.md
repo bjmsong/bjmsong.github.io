@@ -287,9 +287,11 @@ https://www.jianshu.com/p/2fffd0e332bc
 ### 参考资料
 
 - https://tensorflow.google.cn/tutorials
-- https://blog.csdn.net/mogoweb/article/details/97722478
-
 - https://tensorflow.google.cn/guide
+- https://blog.csdn.net/mogoweb/article/details/97722478
+- https://mp.weixin.qq.com/s/EUICEJ-LTY28N6RTrp5HSg
+- 《简单粗暴 TensorFlow 2.0》https://tf.wiki/
+- https://www.infoq.cn/article/oJc3hmjjeE8bvwU*m4km
 - https://github.com/snowkylin/tensorflow-handbook
 - tensorflow 2.0 快速入门 (by Chollet) 
 https://threader.app/thread/1105139360226140160
@@ -304,7 +306,7 @@ https://github.com/pkmital/tensorflow_tutorials
 https://github.com/taki0112/Tensorflow-Cookbook
 - deeplearning.ai 《Introduction to TensorFlow for AI,ML and DL》
 - Udacity 《Intro to TensorFlow for Deep Learning》
-- 《Tensorflow 实战google深度学习框架》（应该是1.0吧，已经落后了）
+- 《Tensorflow 实战google深度学习框架》（1.x？）
 - 
 https://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247530867&idx=1&sn=e0855bd03cbedde94df8cf947b9d8a68&chksm=e8d0ce01dfa74717ab43f773af0c5add8c8b7869ab13549f7f3eae6200faf1c2d739b7ac398c&mpshare=1&scene=1&srcid=&sharer_sharetime=1569996302466&sharer_shareid=49581f7bdbef8664715f595bc62d7044&key=8a4bbb55c6c79ce6fa454f5f47b52efb672dd9d3c51b557d7e3f94b262546f8efda62a6b5db95a39bdf13e98095ff283349bebd5031578f6e674caa30dc82acb1bc085b293576cb51894c84e64f645f0&ascene=1&uin=MjM1OTMwMzkwMA%3D%3D&devicetype=Windows+10&version=62070141&lang=en&pass_ticket=doB3BRar8EovetMHBhmSUx44fADeRFqbXn4STwtBWkUO4U8Pw6IebWbKuRSVBN6v
 - https://mp.weixin.qq.com/s/EUICEJ-LTY28N6RTrp5HSg

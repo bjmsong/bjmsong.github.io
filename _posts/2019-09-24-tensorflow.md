@@ -50,10 +50,11 @@ TensorFlow™ 是一个采用数据流图（data flow graphs），用于数值�
 ### 高阶API
 - tf.keras
 - Eager Execution
+https://towardsdatascience.com/eager-execution-vs-graph-execution-which-is-better-38162ea4dbf6
 
 命令式编程环境，可立即评估操作，无需构建图：操作会返回具体的值，而不是构建以后再运行的计算图。
 - tf.estimator
-
+https://www.cnblogs.com/marsggbo/p/11232897.html
 
 ### 导入数据（tf.data）
 #### 两个抽象类
@@ -249,8 +250,10 @@ sess = tf.Session()
 print(sess.run(total))
 ```
 
-#### TensorBoard 
-将计算图可视化
+#### TensorBoard 可视化
+https://www.tensorflow.org/tensorboard/get_started
+https://towardsdatascience.com/a-quickstart-guide-to-tensorboard-fb1ade69bbcf
+https://medium.com/@kkoehncke/tensorboard-for-beginners-c4709998628b
 
 #### 占位符
 
@@ -372,11 +375,26 @@ AutoGraph 会在后台自动将普通的python代码转换为等效的 TensorFlo
 
 
 ### 参考资料
+- 教程（tf1.x，tf2.x）
+  - https://github.com/aymericdamien/TensorFlow-Examples
+  - https://www.zhihu.com/question/49909565
 - https://tensorflow.google.cn/guide/
-- https://mp.weixin.qq.com/s/EUICEJ-LTY28N6RTrp5HSg
-- 《简单粗暴 TensorFlow 2.0》https://tf.wiki/
-- https://www.infoq.cn/article/oJc3hmjjeE8bvwU*m4km
-
+- deeplearnig.ai
+    - https://mooc.study.163.com/university/deeplearning_ai#/c
+    - deeplearning.ai 1.0&2.0课程
+    - 课件&课后作业：
+    https://blog.csdn.net/u013733326/article/details/83341643
+    https://github.com/Wasim37/deeplearning-assignment
+    - 笔记 
+        - https://github.com/fengdu78/deeplearning_ai_books
+        - https://zhuanlan.zhihu.com/p/35333489?utm_source=wechat_session&utm_medium=social&utm_oi=72535160913920&from=singlemessage
+        - https://github.com/stormstone/deeplearning.ai
+- https://github.com/ageron/handson-ml
+    - +pdf
+- 《Deep Learning with Python》
+https://livebook.manning.com/book/deep-learning-with-python/
+https://github.com/fchollet/deep-learning-with-python-notebooks
+- https://mp.weixin.qq.com/s?__biz=Mzg5ODAzMTkyMg==&mid=2247487433&idx=1&sn=403cac1730a04c967e99fbb44c4aeae1&chksm=c0698794f71e0e82dabf12268746f850686565ac8caa56c24677aa2def746fa6456bbc49e8c1&mpshare=1&scene=1&srcid=&sharer_sharetime=1573605136825&sharer_shareid=602b1ccf63ca4ea52755ecd058f6d407&key=7d1e4c0a06963a8b5ff47884a1e90d581015f29f3d3c76b231629d05c0e9a8ee7afc3ecd72e9f8a0360af9218e2e8b2ef591aa85509f0bc511c70cfd802f27ca1c2f7aa13cb606259b5643fba475de8d&ascene=1&uin=MjM1OTMwMzkwMA%3D%3D&devicetype=Windows+7&version=62070152&lang=zh_CN&pass_ticket=gd9xEtuY4W21P%2BXGRqDGswdbHvyZZJTrRy6smCdZoYMTxRtU7jUmWmcuzbnc2Z%2Bb
 
 
 

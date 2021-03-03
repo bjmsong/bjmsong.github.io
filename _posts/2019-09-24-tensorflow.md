@@ -375,10 +375,15 @@ AutoGraph 会在后台自动将普通的python代码转换为等效的 TensorFlo
 
 
 ### 参考资料
-- 教程（tf1.x，tf2.x）
+- 教程
+  - https://branyang.gitbooks.io/tfdocs/content/about/
+    - tf1.x
   - https://github.com/aymericdamien/TensorFlow-Examples
+    - tf1.x，tf2.x
   - https://www.zhihu.com/question/49909565
 - https://tensorflow.google.cn/guide/
+- white papers
+https://branyang.gitbooks.io/tfdocs/content/about/bib.html
 - deeplearnig.ai
     - https://mooc.study.163.com/university/deeplearning_ai#/c
     - deeplearning.ai 1.0&2.0课程

@@ -266,13 +266,24 @@ https://mp.weixin.qq.com/s?__biz=MzU2OTA0NzE2NA==&mid=2247519264&idx=3&sn=6613b0
 
 
 ### XLNet
-
 https://mp.weixin.qq.com/s?__biz=MzU1NTMyOTI4Mw==&mid=2247491563&idx=1&sn=b139fae75de75cf1ecd78dca53007df1&chksm=fbd4ad87cca32491ba551414dc16ba1ca0260656f4d34a542c81d842f575b39cd1ddf013a7a5&mpshare=1&scene=1&srcid=0624V6Uh43gaGrOyXY3mzvAI&key=8a4c04f4ab18b288934eb3d56fb0199a0833136f6c3174390c79094a683f55dea1c40ab99af7989a8bd39122933421054ef5dc834f1eee3f545738f942539e144bd6c20d18f075cd9ea5c173246723e8&ascene=1&uin=MjM1OTMwMzkwMA%3D%3D&devicetype=Windows+10&version=62060833&lang=en&pass_ticket=xDHREyRWT%2FIcmzT6U8K3y2sLJnSLl5%2BbcVHGIJW3d3SUi8E0sxYQmPUenTHpL7MQ
 
 
+### 使用bert生成word embedding
+- https://github.com/UKPLab/sentence-transformers
+    - https://www.sbert.net/docs/quickstart.html
+- https://blog.csdn.net/zhylhy520/article/details/87615772
+- https://github.com/huggingface/transformers
+- https://github.com/google-research/bert
+- https://mccormickml.com/2019/05/14/BERT-word-embeddings-tutorial/
+- https://towardsdatascience.com/a-complete-guide-to-transfer-learning-from-english-to-other-languages-using-sentence-embeddings-8c427f8804a9
+- https://www.kaggle.com/kashnitsky/simple-logistic-regression-bert-0-27-lb
+- https://medium.com/analytics-vidhya/text-classification-from-bag-of-words-to-bert-part-2-word2vec-35c8c3b34ee3
+- https://medium.com/dair-ai/tl-dr-sentencebert-8dec326daf4e
+- https://github.com/lonePatient/awesome-pretrained-chinese-nlp-models
+- https://towardsdatascience.com/from-pre-trained-word-embeddings-to-pre-trained-language-models-focus-on-bert-343815627598
 
 ### 参考资料
-
 - https://zhuanlan.zhihu.com/p/49271699
 - https://zhuanlan.zhihu.com/p/47488095?utm_source=wechat_session&utm_medium=social&utm_oi=30249563717632&from=singlemessage
 - https://zhuanlan.zhihu.com/p/66676144?utm_source=wechat_session&utm_medium=social&utm_oi=1114227199359782912&from=singlemessage&s_s_i=fg41NsREUSsyBOQAo%2Flk%2BHPO5qCB2tw7PkZHF1Yx0cA%3D&s_r=1

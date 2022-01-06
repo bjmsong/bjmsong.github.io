@@ -25,8 +25,7 @@ tags:
 - FTRL（Follow The Regularized Leader）
 http://vividfree.github.io/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2015/12/05/understanding-FTRL-algorithm
 https://www.cnblogs.com/EE-NovRain/p/3810737.html
-
-
+https://www.cnblogs.com/massquantity/p/12693314.html
 
 ### FTRL工程实现
 

@@ -22,4 +22,5 @@ tags:
 
 ## 参考资料
 https://github.com/ageron/handson-ml2
-
+https://www.learnpython.org/
+https://docs.python.org/3/tutorial/

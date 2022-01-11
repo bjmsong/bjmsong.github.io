@@ -35,7 +35,8 @@ https://www.cnblogs.com/massquantity/p/12693314.html
 
 
 ### 参考资料
-
+- https://blog.csdn.net/yz930618/article/details/75270869
+- https://www.kaggle.com/titericz/giba-darragh-ftrl-rerevisited
 - 《在线最优化求解》 有pdf
 - Adaptive Bound Optimization for Online Convex Optimization
 - https://zhuanlan.zhihu.com/p/36410780

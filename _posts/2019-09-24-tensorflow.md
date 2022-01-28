@@ -375,6 +375,9 @@ AutoGraph 会在后台自动将普通的python代码转换为等效的 TensorFlo
 
 
 ### 参考资料
+- handson-ml
+    - 1.0  https://github.com/ageron/handson-ml
+    - 2.0  https://github.com/ageron/handson-ml2
 - 教程
   - https://branyang.gitbooks.io/tfdocs/content/about/
     - tf1.x
@@ -394,8 +397,6 @@ https://branyang.gitbooks.io/tfdocs/content/about/bib.html
         - https://github.com/fengdu78/deeplearning_ai_books
         - https://zhuanlan.zhihu.com/p/35333489?utm_source=wechat_session&utm_medium=social&utm_oi=72535160913920&from=singlemessage
         - https://github.com/stormstone/deeplearning.ai
-- https://github.com/ageron/handson-ml
-    - +pdf
 - 《Deep Learning with Python》
 https://livebook.manning.com/book/deep-learning-with-python/
 https://github.com/fchollet/deep-learning-with-python-notebooks

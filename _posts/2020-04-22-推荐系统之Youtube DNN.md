@@ -69,5 +69,6 @@ tags:
     - https://zhuanlan.zhihu.com/p/52169807
     - https://zhuanlan.zhihu.com/p/52504407
     - https://zhuanlan.zhihu.com/p/61827629
+- https://lumingdong.cn/engineering-practice-of-embedding-in-recommendation-scenario.html
 - https://zhuanlan.zhihu.com/p/25343518
 - https://github.com/wangkobe88/Earth

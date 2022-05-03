@@ -39,7 +39,6 @@ https://www.freecodecamp.org/news/a-thorough-introduction-to-distributed-systems
 - 知乎：阿莱克西斯
 - 《Software Architecture for Developers》
 - http://www.designsmells.com/articles/ten-must-to-read-books-for-software-architects/
-- 《分布式机器学习》（刘铁岩）
 - 端到端一致性,流系统Spark/Flink/Kafka/DataFlow对比总结(压箱宝具呕血之作)
 https://zhuanlan.zhihu.com/p/77677075?utm_source=wechat_session&utm_medium=social&s_r=0#showWechatShareTip
 - TVM project from 陈天奇

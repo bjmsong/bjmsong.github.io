@@ -213,8 +213,6 @@ tags:
 
 
 
-
-
 ### ELK系统
 
 - Elasticsearch除了做搜索引擎，也可以搭建elk系统，也就是日志分析系统
@@ -232,21 +230,18 @@ tags:
 
 
 ### 参考资料
-
 - [官方技术手册](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
-
 - [官方教程：Elasticsearch: 权威指南](https://www.elastic.co/guide/cn/elasticsearch/guide/cn/index.html)
-
 - https://zhuanlan.zhihu.com/p/62892586
-
 - http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html
-
 - https://www.cnblogs.com/cjsblog/p/9439331.html
-
 - https://www.imooc.com/article/30131
-
-  
-
-  
+- https://elasticsearch-py.readthedocs.io/en/master/#
+- https://www.cnblogs.com/dreamroute/p/8484457.html
+- https://github.com/NLPchina/elasticsearch-sql
+- https://www.zhihu.com/question/323811022/answer/707399084
+- https://towardsdatascience.com/getting-started-with-elasticsearch-in-python-c3598e718380
+- https://blog.csdn.net/fwj_ntu/article/details/87863788
+- https://mp.weixin.qq.com/s/3xZY1HEtH6un-atXCl_Wtg  
 
 

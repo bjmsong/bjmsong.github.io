@@ -306,8 +306,8 @@ tags:
 
 ### 二十. 正则表达式
 
--  https://deerchao.cn/tutorials/regex/regex.html 
-
+- https://deerchao.cn/tutorials/regex/regex.html 
+- https://www.hahack.com/wiki/sundries-regexp.html
 
 
 ### 二十一. sed进阶

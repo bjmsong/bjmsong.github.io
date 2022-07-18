@@ -9,8 +9,7 @@ catalog: true
 tags:
     - 推荐系统
 ---
-
-### 算法架构
+## 算法架构
 
 <ul> 
 <li markdown="1">
@@ -22,7 +21,7 @@ tags:
 - 第二层是用`Ranking Model`：完成几百个候选视频的精排
 
 
-### 召回层
+## 召回层
 <ul> 
 <li markdown="1">
 ![]({{site.baseurl}}/img/Recommendation System/youtubeDNN/召回.png) 
@@ -42,7 +41,7 @@ tags:
     - 这是一个经典的工程和学术做trade-off的结果，在model serving过程中对几百万个候选集逐一跑一遍模型的时间开销显然太大了，因此在通过candidate generation model得到user 和 video的embedding之后，通过**最近邻搜索的方法的效率高很多**。我们甚至不用把任何model inference的过程搬上服务器，只需要把user embedding和video embedding存到redis或者内存中就好了。
 
 
-### 排序层
+## 排序层
 <ul> 
 <li markdown="1">
 ![]({{site.baseurl}}/img/Recommendation System/youtubeDNN/ranking.png) 
@@ -63,7 +62,12 @@ tags:
 - 采用了`weighted logistic regression`作为输出层
 
 
-### 参考资料
+## code
+https://github.com/shenweichen/deepmatch
+https://github.com/wangkobe88/Earth
+
+## 参考资料
+- b站 水淼笔记
 - Deep Neural Networks for YouTube Recommendations, 2016
 - 王喆的三篇博客
     - https://zhuanlan.zhihu.com/p/52169807
@@ -71,4 +75,3 @@ tags:
     - https://zhuanlan.zhihu.com/p/61827629
 - https://lumingdong.cn/engineering-practice-of-embedding-in-recommendation-scenario.html
 - https://zhuanlan.zhihu.com/p/25343518
-- https://github.com/wangkobe88/Earth

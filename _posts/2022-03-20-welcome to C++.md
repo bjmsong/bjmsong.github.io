@@ -9,29 +9,33 @@ catalog: true
 tags:
     - 
 ---
-## 
+> 一个视频讲一个知识点，时长10min左右，不念书，而是穿透到本质，同时通过代码展示实际案例，加深理解。知其然，更要知其所以然。
+
+## 笔记
 - 编译(compiling)
     - 只编译：visual studio(编译/ctrl+F7)
     - .cpp>.obj(二进制文件,机器码)
-    - 预处理
+    - 预处理(#开头的命令 )
         - #include： 就是copy&paste
             - 方括号只用于编译器的include路径，引号用于所有
             - C标准库里的头文件一般都有.h扩展名，而C++标准库的头文件没有
         - #define, #ifdef
+        - #pragma once
     - 标记解释，解析 => 生成抽象语法树
     - 编译器优化
 - 链接(linking）
     - 编译+链接：visual studio(build/F5)
-    - .obj->.exe（可执行二进制文件）
+    - many .objs->.exe（可执行二进制文件）
     - 把编译过程中生成的所有对象文件链接起来
         -  找到每个符号和函数的位置，并将它们链接在一起
-    - 如果只有一个cpp文件也需要链接，因为需要知道入口点（可设置，  可以不是main函数）在哪 
+    - 如果只有一个cpp文件也需要链接，因为需要知道入口点（可设置,  可以不是main函数）在哪 
     - static: 链接只发生在该文件的内部 
     - inline：用函数的body取代调用
     - 静态链接、动态链接
 - 变量
     - 存储在内存中：堆 or 栈
     - 原始数据类型
+        - C++是一种非常强大的语言，当你真正理解它的时候，它实际上限制很少
         - 不同类型之间唯一的区别就是大小（占用多少内存）
         - char,short,int,long,float,double,bool
         - unsigned
@@ -44,12 +48,15 @@ tags:
     - 声明(declaration)：在头文件中
     - 定义（definition，声明+函数body）：在cpp文件/翻译单元中
 - 头文件
-    - 存放声明，而非定义
+    - 存放声明（没有函数的body），而非定义
         - 只能定义函数一次
-    - 可以通过include头文件的方式，避免在cpp文件中写大量声明
-    - #pragma once：防止把单个头文件多次include到一个cpp/翻译单元里
-        - 头文件保护符
+    - 头文件的作用：可以通过include头文件的方式，避免在cpp文件中写大量声明 
+    - #pragma once：头文件保护符
+        - 防止把单个头文件多次include到一个cpp/翻译单元里
         - 之前解决这个问题的方式：#ifndef #define #endif
+    - include
+        - <>只用于编译器的include路径，""用于所有 
+    - c标准库的头文件一般有.h扩展名，而c++没有 
 - debug in visual studio
     - de-bug：清除bug
     - debug模式
@@ -74,22 +81,91 @@ tags:
     - break: get out of the loop
     - return: get out of the function 
 - 指针(raw Pointers)
+    - int* p = &a
     - is a integer number which stores a memory address 
     - memory in computer: like one-dimension line
     - type of pointer：the type of the data in that address
-    - nullptr
-    - 取址 &
-    - 
+    - 0不是一个有效的内存地址：NULL, nullptr 
+    - 取址 &p：取得变量对应的地址 
+    - 解引用 *p：取得地址对应的变量
+    - 指针也是变量
+    - double pointer: int** ptr = &p 
+- 引用(References)
+    - int& r = a
+    - 指针和引用基本上是一回事
+    - ”引用变量“：必须引用一个已存在的变量，不是一个新的变量，并不真正占用内存，只是一个别称，只存在我们的代码中
+    - 作用：可以实现按引用传递，函数的操作会改变变量的值
+        - 用指针也可以实现，不过用引用会使代码更简单（语法糖）
+        - 引用可以实现的功能指针都能实现，但是指针可以实现的功能引用不一定都能实现 
+    - 引用声明时必须初始化
+    - 一旦声明了一个引用，就不能更改它所引用的对象
+- Class
+    - C++支持面向对象、面向过程、基于对象、泛型编程，C不支持面向对象
+    - 类基本上就是一个新的变量类型
+    - 默认情况下，类中的成员访问控制都是私有的，只有类内部的函数才能访问这些变量
+        - Struct默认是共有的：这也是类和Struct的唯一区别
+    - 类只是语法糖，可以更好地组织、维护代码，没有什么是只有类能完成的
+    - class vs struct
+        - 技术上没有什么差别，除了默认的访问控制权限
+        - struct存在的原因：想要维持与c之间的兼容性，C没有类，但是有struct
+        - 习惯使用场景
+            - 基本只有一堆变量：struct
+            - 需要使用继承：class
+- static
+    - 在类，struct之外：表示这部分在link阶段是局部的，只对定义它的编译单元(.obj)可见，其它的编译单元不能访问
+        - extern：外部链接，会在另外的编译单元里找定义
+        - 尽量让全局函数和变量static，除非你必须要用它们在其它的编译单元里 
+    - 在类，struct之内：表示这部分内存是这个类的所有实例共享的
+    - 类方法有一个隐藏参数指向对象，而static方法没有这个参数
+    - 静态局部变量：函数内部的static变量
+        - 类似于全局变量（函数执行结束了变量仍然存在），但是又比全局变量更安全（类似python的闭包）
+        - 可以用在单例类中，代码简洁
+            - 单例类：只有一个实例
+- ENUM: 枚举
+    - 规整一组变量
+    - 必须是integer类型：integer、char
+- Constructor: 构造函数
+    - 实例化对象的时候运行
+    - 初始化列表：新型简单的有参构造函数
+- Destructor: 析构函数
+    - 销毁对象（生命周期结束）时运行
+    - 清理内存：手动在heap上分配的内存(new 出来的变量)需要手动清理
+- 重载：函数名一样，参数不一样
+- Inheritance：继承
+    - 减少了代码重复
+    - 可以重写父类的方法
+    - 可以继承多个父类
+- 虚函数
+    - 父类定义虚函数(virtual)，子类可以重写这个函数(override标记)
+    - 会带来一些性能的损失
+- 纯虚函数 pure virtual function
+    - virtual returnvalue functionname() = 0
+    - 犹如java中的抽象方法和接口
+    - 允许我们定义一个在基类中没有实现的函数，然后在子类中必须实现，否则子类也不能实例化
+    - 带纯虚函数的基类不能实例化
+- Visibility：访问控制
+    - private，protected，public
+    - 友元（friend）可以访问类的私有成员、方法
+        - 子类也不能访问
+    - protected：类及子类都可以访问
+    - 正确做法：只访问共有变量/方法
+- Array
+    - 数组名是个指针
+    - 数组在内存中开辟了一块连续空间
+    - new生成的变量在heap上，直到程序终止或者手动销毁。其它方式生成的变量在stack上，函数运行终止变量生命周期就结束了
+        - 原始的array要获取array的size非常困难
+    - std::array<> 是在 c++11 中引入的
+        - 增加了很多实用的功能：C++ python化？
+- String
+    - a array of char，以'\0'（null termination）结尾，双引号
+    - char：1个字节，只适用于英语，单引号
+    - std::string
+    - constant char array
 - smart Pointers
     - 
     - 
-- 引用(References)
-    - &a：变量a的内存地址
-    - 
-- Class
-    - 
-- Class vs Struct
-- static
 - 回调函数
 
 ## 参考资料
+- https://juejin.cn/post/7073106820654432263
+- https://zhuanlan.zhihu.com/p/352420950

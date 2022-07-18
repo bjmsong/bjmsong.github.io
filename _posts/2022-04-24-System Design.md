@@ -9,6 +9,9 @@ catalog: true
 tags:
     - 
 ---
+- **https://github.com/donnemartin/system-design-primer**
+
+
 ## 《System Design Interview: An Insider’s Guide》
 - b站花花酱
 - web server, DNS，load balancer，CDN，cache, stateless web tier，Message queue，微服务
@@ -35,7 +38,6 @@ http://www.mitbbs.com/article_t/JobHunting/32777529.html
 https://www.freecodecamp.org/news/a-thorough-introduction-to-distributed-systems-3b91562c9b3c/
 - **Grokking the System Design Interview**
 - 《I heart logs》
-- **https://github.com/donnemartin/system-design-primer**
 - 知乎：阿莱克西斯
 - 《Software Architecture for Developers》
 - http://www.designsmells.com/articles/ten-must-to-read-books-for-software-architects/

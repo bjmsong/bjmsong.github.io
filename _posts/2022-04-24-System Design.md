@@ -10,7 +10,7 @@ tags:
     - 
 ---
 - **https://github.com/donnemartin/system-design-primer**
-
+- https://schelleyyuki.com/learn-system-design
 
 ## 《System Design Interview: An Insider’s Guide》
 - b站花花酱

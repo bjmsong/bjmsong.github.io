@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: img/
 catalog: true
 tags:
-    - 
+    - C++
 ---
 > 一个视频讲一个知识点，时长10min左右，不念书，而是穿透到本质，同时通过代码展示实际案例，加深理解。知其然，更要知其所以然。
 

@@ -17,3 +17,4 @@ tags:
 - 《Tensorflow：A system for large-scale machine learning》
 - 《TensorFlow: Large-Scale Machine Learning on Heterogeneous Distributed Systems》
 - 《TFX: A TensorFlow-Based Production-Scale Machine Learning Platform》
+- https://zhuanlan.zhihu.com/p/78503581

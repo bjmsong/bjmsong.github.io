@@ -15,11 +15,12 @@ tags:
 - 编译(compiling)
     - 只编译：visual studio(编译/ctrl+F7)
     - .cpp>.obj(二进制文件,机器码)
-    - 预处理(#开头的命令 )
+    - 预处理(#开头的命令)
         - #include： 就是copy&paste
             - 方括号只用于编译器的include路径，引号用于所有
             - C标准库里的头文件一般都有.h扩展名，而C++标准库的头文件没有
-        - #define, #ifdef
+        - #define： 宏定义
+        - #ifdef
         - #pragma once
     - 标记解释，解析 => 生成抽象语法树
     - 编译器优化
@@ -28,9 +29,10 @@ tags:
     - many .objs->.exe（可执行二进制文件）
     - 把编译过程中生成的所有对象文件链接起来
         -  找到每个符号和函数的位置，并将它们链接在一起
-    - 如果只有一个cpp文件也需要链接，因为需要知道入口点（可设置,  可以不是main函数）在哪 
+    - 如果只有一个cpp文件也需要链接，因为需要知道入口点（可设置,可以不是main函数）在哪 
     - static: 链接只发生在该文件的内部 
-    - inline：用函数的body取代调用
+    - inline：用函数的body取代调用, 为了解决一些频繁调用的小函数大量消耗栈空间（栈内存）的问题
+    https://www.runoob.com/w3cnote/cpp-inline-usage.html
     - 静态链接、动态链接
 - 变量
     - 存储在内存中：堆 or 栈
@@ -45,6 +47,8 @@ tags:
 - 函数
     - 主要目的：防止代码重复，好维护
     - 调用函数有额外的开销，除非是内联(inline)函数 
+    - 先声明，再定义
+    https://blog.csdn.net/weixin_42565127/article/details/115909930
     - 声明(declaration)：在头文件中
     - 定义（definition，声明+函数body）：在cpp文件/翻译单元中
 - 头文件
@@ -85,7 +89,7 @@ tags:
     - is a integer number which stores a memory address 
     - memory in computer: like one-dimension line
     - type of pointer：the type of the data in that address
-    - 0不是一个有效的内存地址：NULL, nullptr 
+    - 0不是一个有效的内存地址：NULL,nullptr 
     - 取址 &p：取得变量对应的地址 
     - 解引用 *p：取得地址对应的变量
     - 指针也是变量
@@ -94,9 +98,11 @@ tags:
     - int& r = a
     - 指针和引用基本上是一回事
     - ”引用变量“：必须引用一个已存在的变量，不是一个新的变量，并不真正占用内存，只是一个别称，只存在我们的代码中
-    - 作用：可以实现按引用传递，函数的操作会改变变量的值
-        - 用指针也可以实现，不过用引用会使代码更简单（语法糖）
-        - 引用可以实现的功能指针都能实现，但是指针可以实现的功能引用不一定都能实现 
+    - 作用
+        - 可以实现按引用传递，函数的操作会改变变量的值
+            - 用指针也可以实现，不过用引用会使代码更简单（语法糖）
+            - 引用可以实现的功能指针都能实现，但是指针可以实现的功能引用不一定都能实现 
+        - 避免了拷贝变量，更高效更节省空间 
     - 引用声明时必须初始化
     - 一旦声明了一个引用，就不能更改它所引用的对象
 - Class
@@ -157,14 +163,76 @@ tags:
     - std::array<> 是在 c++11 中引入的
         - 增加了很多实用的功能：C++ python化？
 - String
-    - a array of char，以'\0'（null termination）结尾，双引号
+    - const char array: 以'\0'（null termination）结尾，双引号
+        - 不等同于 std::string，可以互相转换
     - char：1个字节，只适用于英语，单引号
-    - std::string
     - constant char array
-- smart Pointers
+    - String Literal：字符串字面常量
+- CONST
+    - a promise that something will be constant
+    - 可以将const变量转化为非const变量
+    - int const* a, const int* a -> 指针指向的对象可以变，对象的内容不能变
+    - int* const a —> 指针指向的对象不能变，对象的内容可以变
+    - const 在一个方法之后：这个方法不可以修改类中的任何成员变量
+        - 除了mutable成员变量
+- Mutable
+    - 大部分用途：CONST那一节已经提到
+    - 另一种用途：in lambda function
+- Constructive Member Initializer Lists：建议使用
+    - C++一种特殊的成员变量初始化的方式
+    - 作用：构造函数可读性更高，避免重复初始化变量
+- Ternary Operators：三元操作符
+    - if statement的语法糖: a = b > 1 ? 10 : 5
+- 初始化对象
+    - classname objname： 例如 Entity e
+        - 首选，效率最高
+        - create on stack： as soon as the variable get out of the scope, the memory is free
+    - classname* objname = new classname： 例如 Entity* e = Entity("Bob")
+        - 就是java初始化对象的方式，都在heap上 
+        - 场景：延长对象的生命周期，对象很大（stack空间很小放不下）
+        - create on heap: 除非手动释放(delete)，不然内存空间一直存在
+- new关键字
+    - 在heap上开辟一块连续的空间，需要手动释放
+- implicit conversion(隐式转换), explicit关键字
+    - implicit conversion
+        - 只会做一次转换
+        - 减少代码量
+        - 但是代码可读性不好
+        - implicit construction 
+    - explicit
+        - 放在构造函数之前，表示不能隐式构造
+- 操作符、操作符重载
+    - 操作符
+        - +，-，new，()，<< ....
+        - just functions
+- this关键字
+    - 方法里面使用，指代当前的对象
+- object lifetime
     - 
-    - 
+- 智能指针（smart Pointers）
+    - unique_ptr
+    - shared_ptr
+    - auto_ptr
+- copy, copy constructor(拷贝构造)
+- arrow operator
+- dynamic array： std::vector
+- 静态链接
+- 动态链接库
+
+
 - 回调函数
+- 泛型
+- 模板
+- STL
+
+
+## 调试
+- gdb
+    - 《debugging with gdb》
+
+
+## VIM开发
+
 
 ## 参考资料
 - https://juejin.cn/post/7073106820654432263

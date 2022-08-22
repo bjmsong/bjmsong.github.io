@@ -208,7 +208,7 @@ tags:
 - this关键字
     - 方法里面使用，指代当前的对象
 - object lifetime
-    - 
+    - stack：后进先出，create a scope就是生成一个栈，scope里面的变量跟栈一起，栈执行完，里面的变量生命周期也到了
 - 智能指针（smart Pointers）
     - unique_ptr
     - shared_ptr

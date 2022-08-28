@@ -64,7 +64,7 @@ tags:
             - new, delete
             - 内存泄露
 - 默认参数
-    - 以“参数传递”作为函数间的沟通方式，比“直接将对象定义于file scope”更适当
+    - 以参数传递作为函数间的沟通方式，比直接将对象定义于file scope更适当
         - 函数如果过度依赖定义于file scope内的对象，就比较难以在其他环境中重用，也比较难以修改
     - 默认值只能指定一次，一般在函数声明处而非定义处
 - 局部静态对象
@@ -86,11 +86,35 @@ tags:
 
 
 ## 泛型编程风格 Generic Programming
-- 
+- STL: Standard Template Library
+    - 容器(container): vector,list,set,map....
+    - 泛型算法: find(),sort(),replace(),merge()....
+        - 与操作对象的类型相互独立：通过function template技术
+        - 与操作的容器相互独立：不直接在容器身上进行操作，而是借由一对iterator(first和last),标示要进行迭代的元素范围
+- 指针的算术运算
+    - 目标：设计一个函数可以同时处理vector/array/list内的任意类型元素
+        - e.g.: find()
+    - 切分成子问题
+        - 将array的元素传入find(),而非指明该array
+            - 当数组被传给函数，或是由函数中返回，仅有第一个元素的地址会被传递
+            - 直接传指针更清晰，并且仍然可以通过下标运算符访问array的每个元素
+        - 将vector的元素传入find(),而非指明该vector
+            - 跟array不同的是，vector要先校验是否为空
+        - list：链表
+- Iterator(泛型指针)
+- 所有容器的共通操作
+- 顺序性容器
+- 泛型算法
+- Map
+- Set
+- Iterator Inserter
+- iostream Iterator
+
 
 
 ## 基于对象的编程风格 Object-Based Programming
--
+- 
+- 
 
 
 ## 面向对象编程风格 Object-Oriented Programming

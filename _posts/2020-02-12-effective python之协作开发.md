@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: img/language/python.jpg
 catalog: true
 tags:
-    - python
+    - Python
 ---
 
 > Python的某些特性，可以帮助开发者构建接口清晰、边界明确的优秀API。Python开发者之间也形成了一套固定的做法，能够在程序的演化过程中尽量保持代码的可维护性。
@@ -188,7 +188,8 @@ tags:
 
 
 
-
+### 你的 Python 包都装到哪了？
+https://frostming.com/2019/03-13/where-do-your-packages-go/
 
 
 ### 安装包

@@ -9,10 +9,6 @@ catalog: true
 tags:
     - 深度学习
 ---
-## 
-https://github.com/wangshusen/DeepLearning
-    - 第五节
-
 ## 李沐读paper
 https://www.bilibili.com/video/BV1pu411o7BE/?spm_id_from=333.999.0.0
 - MLP、CNN、RNN之后第四大类基础模型
@@ -38,6 +34,19 @@ https://www.bilibili.com/video/BV1pu411o7BE/?spm_id_from=333.999.0.0
     - 讲一个故事，为什么做，设计理念等
     - 重要的部分不要默认大家都知道，需要做介绍
     - 要写得让其它领域的人也能看懂
+
+## https://bjmsong.github.io/2020/03/03/%E4%BB%8EWord-Embedding%E5%88%B0Bert%E6%A8%A1%E5%9E%8B-%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B8%AD%E7%9A%84%E9%A2%84%E8%AE%AD%E7%BB%83%E6%8A%80%E6%9C%AF%E5%8F%91%E5%B1%95%E5%8F%B2/
+
+## https://www.bilibili.com/video/BV1Di4y1c7Zm/?is_story_h5=false&p=1&share_from=ugc&share_medium=android&share_plat=android&share_session_id=8ff19c57-bbed-49d2-8fa2-2cd31b573fcf&share_source=WEIXIN&share_tag=s_i&timestamp=1665311648&unique_k=dbwe0H3
+
+
+## 
+https://github.com/wangshusen/DeepLearning
+    - 第五节
+
+
+## 开源实现
+tensor2tensor
 
 ## https://github.com/huggingface/transformers
 

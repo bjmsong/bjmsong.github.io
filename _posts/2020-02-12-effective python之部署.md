@@ -7,11 +7,8 @@ author:     bjmsong
 header-img: img/language/python.jpg
 catalog: true
 tags:
-    - python
+    - Python
 ---
-
-
-
 > 若想将Python程序付诸应用，就必须把它从开发环境部署到**生产环境**。令程序支持好几套不同的配置方案颇有些难度。我们要设法保证程序在各种情境下都能可靠地运作，这与实现正确的功能，是一样重要的。
 >
 > 所以，我们要将Python程序**产品化(productionize)**，令其能够稳定地运行在实际环境中。开发者可以通过某些内置的模块提供的调试、优化和测试功能，把程序打造地更加**健壮**，更有效率。

@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: 
 catalog: true
 tags:
-    - 
+    - Python
 ---
 ## 用Pythonic方式来思考
 2. 遵循PEP8风格指南

@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: img/cs/cs.jpeg
 catalog: true
 tags:
-    - 计算机
+    - Computer Science
 ---
 ## 文件系统
 - /bin /sbin

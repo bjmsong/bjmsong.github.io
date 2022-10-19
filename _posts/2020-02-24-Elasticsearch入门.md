@@ -8,7 +8,7 @@ author:     bjmsong
 header-img: img/cs/es/es.jpg
 catalog: true
 tags:
-    - ES
+    - 信息检索
 ---
 
 

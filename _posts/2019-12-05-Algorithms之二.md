@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: img/Algo/algorithms.jpg
 catalog: true
 tags:
-    - 算法
+    - 数据结构与算法
 ---
 >本文将介绍排序算法，包括插入排序、选择排序、希尔排序、快速排序、归并排序和堆排序。同时还会介绍另外一些算法，用于解决跟排序相关的问题，包括优先队列、选举以及归并。
 

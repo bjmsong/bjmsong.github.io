@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: 
 catalog: true
 tags:
-    - 深度学习
+    - 推荐系统
 ---
 >文档、注释、参考资料都很详细（墙裂推荐!）
 

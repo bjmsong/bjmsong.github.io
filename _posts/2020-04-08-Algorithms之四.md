@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: img/Algo/algorithms.jpg
 catalog: true
 tags:
-    - 算法
+    - 数据结构与算法
 ---
 >图的主要内容是对象和它们的连接，连接可能有权重和方向。利用图可以为大量重要而困难的问题建模。本文将介绍深度优先搜索、广度优先搜索、连通性问题、最小树生成算法、最短路径算法等。
 

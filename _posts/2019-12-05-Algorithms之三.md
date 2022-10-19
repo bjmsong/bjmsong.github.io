@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: img/Algo/algorithms.jpg
 catalog: true
 tags:
-    - 算法
+    - 数据结构与算法
 ---
 >本文将介绍查找算法，包括二叉查找树、平衡查找树和散列表。
 

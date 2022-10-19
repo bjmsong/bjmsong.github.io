@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: 
 catalog: true
 tags:
-    - C
+    - C++
 ---
 ##
 

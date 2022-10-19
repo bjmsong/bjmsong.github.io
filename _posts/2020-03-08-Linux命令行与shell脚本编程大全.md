@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: img/cs/linux/linux.png
 catalog: true
 tags:
-    - Linux
+    - Computer Science
 ---
 
 

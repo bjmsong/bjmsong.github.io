@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: img/Algo/algorithms.jpg
 catalog: true
 tags:
-    - 算法
+    - 数据结构与算法
 ---
 >本文首先将讲解用来实现、分析和比较算法的基本原则和方法。包括Java编程模型、数据抽象、基本数据结构、集合类的抽象数据类型、算法性能分析的方法和一个案例分析（union-find）
 

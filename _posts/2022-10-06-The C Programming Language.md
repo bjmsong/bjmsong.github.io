@@ -101,6 +101,7 @@ https://github.com/Heatwave/The-C-Programming-Language-2nd-Edition
 ## 5. 指针与数组
 - 指针：保存地址的变量
 - 指针与地址
+
 ```C
 int x=1,y=2,z[10];
 int *ip;  // ip是指向类型的指针
@@ -112,8 +113,10 @@ ip = &z[0]; // ip现在指向z[0]
 
 iq = ip; // 指针iq也指向ip指向的对象
 ```
+
     - 指针只能指向某种特定类型的对象，void类型的指针可以存放指向任何类型的指针
 - 指针与函数参数
+
 ```C
 // px=&a,py=&b
 void swap(int *px, int *py)
@@ -127,9 +130,11 @@ void swap(int *px, int *py)
 
 swap(&a, &b);
 ```
+
 - 指针与数组
     - 通过数组下标所能完成的任何操作都可以通过指针来实现
     - 指针是一个变量，但数组名不是一个变量
+
     ```C
     int a[10];
     int *pa;
@@ -139,7 +144,9 @@ swap(&a, &b);
     a[i] // 会先转换为*(a+i)
     &a[i] // a之后第i个元素的地址，和a+i的含义相同
     ```
+
     - 数组名参数必须是一个指针
+
     ```C
     int strlen(char *s)     // char *s 和 char s[]是等价的
     {
@@ -153,8 +160,10 @@ swap(&a, &b);
     strlen(array);  // array:字符数组
     strlen(ptr);    // ptr: 是一个指向char类型对象的指针
     ```
+
 - 地址算术运算
     - p++, p+=i
+
     ```C
     #define ALLOCSIZE 10000
 
@@ -178,14 +187,44 @@ swap(&a, &b);
             allocp = p;
     }
     ```
+
     - 如果指针p和q指向同一个数组的成员，那么它们之间就可以进行关系比较运算
 - 字符指针与函数
     - 字符串常量是一个字符数组，以'\0'结尾
+
     ```C
     char amessage[] = "now is the time"; // 定义一个数组
     char *pmessage = "now is the time";  // 定义一个指针
     ```
-    - 
+
+    ```C
+    // 将指针t指向的字符串复制到指针s指向的位置：使用数组下标实现的版本
+    void strcpy(char *s, char *t)
+    {
+        int i;
+
+        i = 0;
+        while ((s[i] = t[i]) != '\0')
+            i++;
+    }
+
+    // 使用指针方式实现的版本1
+    void strcpy(char *s, char *t)
+    {
+        while ((*s = *t) != '\0'){
+            s++;
+            t++;
+        }
+    }
+
+    // 使用指针方式实现的版本1
+    void strcpy(char *s, char *t)
+    {
+        while ((*s++ = *t++) != '\0')
+            ;
+    }
+    ```
+    
 - 指针数组以及指向指针的指针
     - 
 - 多维数组

@@ -53,7 +53,8 @@ https://github.com/Heatwave/The-C-Programming-Language-2nd-Edition
 - if-else
 - switch
 - while，for循环
-- break，continue
+- break: 从循环中提前退出
+- continue：开始下一次循环的执行
 
 ## 4. 函数与程序结构
 - 最简单的函数 dummy() {}
@@ -101,10 +102,11 @@ https://github.com/Heatwave/The-C-Programming-Language-2nd-Edition
 ## 5. 指针与数组
 - 指针：保存地址的变量
 - 指针与地址
+    - 指针只能指向某种特定类型的对象，void类型的指针可以存放指向任何类型的指针
 
 ```C
 int x=1,y=2,z[10];
-int *ip;  // ip是指向类型的指针
+int *ip;  // ip是指向int类型的指针
 
 ip = &x; // ip指向x
 y = *ip; // y现在值为1
@@ -114,7 +116,6 @@ ip = &z[0]; // ip现在指向z[0]
 iq = ip; // 指针iq也指向ip指向的对象
 ```
 
-    - 指针只能指向某种特定类型的对象，void类型的指针可以存放指向任何类型的指针
 - 指针与函数参数
 
 ```C
@@ -145,7 +146,7 @@ swap(&a, &b);
     &a[i] // a之后第i个元素的地址，和a+i的含义相同
     ```
 
-    - 数组名参数必须是一个指针
+    - 习惯于将指针作为数组的形参
 
     ```C
     int strlen(char *s)     // char *s 和 char s[]是等价的
@@ -217,16 +218,23 @@ swap(&a, &b);
         }
     }
 
-    // 使用指针方式实现的版本1
+    // 使用指针方式实现的版本2
     void strcpy(char *s, char *t)
     {
         while ((*s++ = *t++) != '\0')
             ;
     }
+
+    // 使用指针方式实现的版本3
+    void strcpy(char *s, char *t)
+    {
+        while (*s++ = *t++)
+            ;
+    }
     ```
-    
+
 - 指针数组以及指向指针的指针
-    - 
+    - 指针本身也是变量，它们也可以像其他变量一样存储在数组中
 - 多维数组
     - 
 - 指针数组的初始化
@@ -243,10 +251,20 @@ swap(&a, &b);
 
 ## 6. 结构(struct)
 - 结构的基本知识
+    - 一个或多个变量的集合，这些变量可以为不同的类型，用于组织复杂的数据
+    - 结构名.成员
 - 结构与函数
+    - 合法操作
+        - 作为一个整体复制和赋值
+        - 取地址：&
+        - 访问其成员
+    - p是一个指向结构的指针，可以用: p->结构成员
 - 结构数组
+    - sizeof: 对象或类型占用的存储空间字节数
 - 指向结构的指针
+    - 指针之间的加法运算是非法的，减法运算是合法的
 - 自引用结构
+    - 
 - 表查找
 - 类型定义(typedef)
 - 联合
@@ -259,7 +277,7 @@ swap(&a, &b);
         - 从标准输入中读入下一个输入字符，并将其作为结果值返回
         - 若遇到文件结尾，则返回EOF
     - < : 重定向
-    - |: 管道重定向 
+    - 管道重定向 
     - int putchar(int)
         - 将字符送至标准输出上
 - 格式化输出(printf)
@@ -271,7 +289,9 @@ swap(&a, &b);
     FILE *fp;
     FILE *fopen(char *name, char *mode);
 
+    // 从文件中返回下一个字符
     int getc(FILE, *fp);
+    // 将字符c写入到fp指向的文件中
     int putc(int c, FILE *fp);
 
     int fclose(FILE *fp);
@@ -295,6 +315,7 @@ swap(&a, &b);
     - 命令执行函数
     - 存储管理函数
     ```C
+    // 动态地分配存储块
     // 返回一个指针，该指针指向n字节长度的未初始化的存储空间
     void *malloc(size_t h);
 

@@ -10,7 +10,7 @@ tags:
     - C++
 ---
 ## code
-https://github.com/Heatwave/The-C-Programming-Language-2nd-Edition
+https://github.com/bjmsong/The-C-Programming-Language-2nd-Edition
 
 ## 1. 导言
 - 编译，生成可执行文件： cc filename1.c filename2.c filename3.c

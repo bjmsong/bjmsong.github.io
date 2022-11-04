@@ -33,7 +33,8 @@ int x = 0;
 int x (0);
 int x {0};  // C++11支持
 ```
-- 类型推断
+- 类型(自动)推断
+
 ```cpp
 int foo = 0;
 auto bar = foo;   // C++11支持

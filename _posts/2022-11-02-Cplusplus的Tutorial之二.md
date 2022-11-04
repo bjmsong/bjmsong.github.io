@@ -407,12 +407,12 @@ int main () {
 |Member function |typical form for class C :|
 |  ----  | ----  |
 | Default constructor | C::C(); |
-| Destructor | C::~C(); |
+| Destructor | C::\~C(); |
 | Copy constructor | C::C (const C&); |
 | Copy assignment | C& operator= (const C&); |
 | Move constructor | C::C (C&&); |
 | Move assignment | C& operator= (C&&); |
-~
+
 - 默认构造函数 Default constructor
     - 默认构造函数是在声明类的对象时调用的构造函数，但不使用任何参数初始化
     - 如果类定义没有构造函数，编译器就假定该类具有隐式定义的默认构造函数，类的对象可以通过简单地声明而不带任何参数来构造
@@ -607,25 +607,156 @@ int main () {
 
 ## Other language features
 21. Type conversions
-- 
-- explicit
+- Implicit conversion
+- Implicit conversions with classes
+- keyword explicit
+- Type casting
+- dynamic_cast
+- static_cast
+- reinterpret_cast
+- const_cast
+- typeid
 
 
 22. Exceptions
 - 异常
     - 异常提供了一种意外情况的处理方法，将控制权转移到特殊的函数(handler)
-    - 
+    - 为了捕获异常，通过将代码的一部分封装在try块中，可以把它们置于异常检查之下。当该块中出现 异常情况时，将抛出一个异常，将控制权传递给异常处理程序。如果没有抛出异常，则代码继续正常运行，并忽略 所有处理程序。
+    - 在try块内部使用throw关键字会抛出异常。异常处理程序是用关键字catch声明的，该关键字必须立即放在try块之后。
+
+    ```cpp
+    int main () {
+      try
+      {
+        throw 20;
+      }
+      catch (int e)  // 形参只有跟throw表达式传递的实参的类型匹配的情况下，才会捕获异常
+      {
+        cout << "An exception occurred. Exception Nr. " << e << '\n'; 
+      }
+        return 0;
+    }
+    ```
+
+    - 如果使用省略号(...)作为catch的形参，则该处理程序将捕获任何异常，而不管抛出的异常类型是什么。这可以用作 一个默认的处理程序，用来捕获其他处理程序没有捕获的所有异常
 - 标准异常
+    - C++标准库提供了一个基类，专⻔用于声明作为异常抛出的对象。它被称为std::exception，定义在头文件<exception>中。这个类有一个名为what的虚成员函数，它返回一个以空字符结尾的字符序列(类型为char \*)，并且可以在派生类中重写 该函数以包含异常的某种描述。
+
+    ```cpp
+    #include <iostream>
+    #include <exception>
+    using namespace std;
+    
+    class myexception: public exception
+    {
+      virtual const char* what() const throw()
+      {
+    return "My exception happened"; }
+    } myex;
+
+    int main () {
+         try
+          {
+            throw myex;
+          }
+          catch (exception& e)
+          {
+            cout << e.what() << '\n'; 
+          }
+        return 0;
+        }
+    ```
+
+    - c++标准库组件抛出的所有异常都抛出派生自这个异常类的异常。
+    - 头文件<exception>定义了两种通用异常类型，派生自异常类exception，可被自定义异常继承以报告错误：
+
+    |exception| description|
+    |  ----  | ----  |
+    | logic_error | error related to the internal logic of the program |
+    | runtime_error | error detected during runtime |
 
 23. Preprocessor directives 预处理器
-- define
-- include
+- 预处理器指令是包含在程序代码中前面有#号(#)的行。这些行不是程序语句，而是预处理器的指令。预处理器在实 际编译代码之前检查代码，并在常规语句实际生成代码之前解析所有这些指令
+- 宏定义 macro definitions
+    - 替换代码其余部分中出现的任何标识符，这个替换可以是表达式、语句、块或任何东⻄
+
+    ```cpp
+    #define TABLE_SIZE 100
+    int table1[TABLE_SIZE]; 
+    #undef TABLE_SIZE     // 取消宏定义
+    #define TABLE_SIZE 200 
+    int table2[TABLE_SIZE];
+    ```
+
+- 条件引入 Conditional inclusions
+    - 允许在满足特定条件时包含或丢弃程序的部分代码
+    - #ifdef, #ifndef, #if, #endif, #else and #elif
+- 行控制 Line control
+    - 当我们编译一个程序时，在编译过程中发生了一些错误，编译器会显示一个错误消息，其中引用了发生错误的文件 的名称和行号，因此更容易找到生成错误的代码
+    - #line指令允许我们控制这两件事：代码文件中的行号，以及当错误发生时我们希望出现的文件名
+- Error directive
+    - 当找到它时，这个指令会终止编译过程，生成一个编译错误，可以指定为它的参数
+    - #error
+- Source file inclusion
+    
+    ```cpp
+    #include <header> 
+    #include "file"
+    ```
+- Pragma directive
+    - 用于向编译器指定不同的选项
+- Predefined(预定义) macro names
+    - 都以' __ '开始和结束
 
 ## Standard library
 24. Input/output with files
-- 
-- 
+- C++提供了以下类来执行文件的字符输出和输入:
+    - ofstream : Stream class to write on files
+    - ifstream : Stream class to read from files
+    - fstream : Stream class to both read and write from/to files
+    - 这些类直接或间接地派生自istream和ostream类。我们已经使用了这些类类型的对象:cin是istream类的对象， cout是ostream类的对象
+    - 我们可以像使用cin和cout一样使用文件流，唯一的区别是我们必须将这些流与物理文件关联起来
 
+    ```cpp
+    #include <iostream>
+    #include <fstream>
+    #include <string>
+    using namespace std;
+
+    int main () {
+        ofstream myfile ("example.txt"); 
+        if (myfile.is_open())
+        {
+            myfile << "This is a line.\n"; 
+            myfile << "This is another line.\n"; 
+            myfile.close();
+        }
+        else cout << "Unable to open file"; 
+
+        string line;
+        ifstream myfile ("example.txt"); 
+        if (myfile.is_open())
+        {
+            while ( getline (myfile,line) )
+            {
+                cout << line << '\n'; 
+            }
+            myfile.close(); 
+        }
+        else cout << "Unable to open file";
+    }
+    ```
+- 以下成员函数用于检查流的特定状态(它们都返回bool值):
+    - bad(): 如果读或写操作失败，则返回true
+    - fail(): 在与bad()相同的情况下返回true，但在发生格式错误的情况下也返回true
+    - eof(): 如果打开读取的文件已经到达末尾，则返回true
+    - good(): 在调用前面的任何函数都会返回true的情况下，它会返回false
+- 二进制文件
+    - 对于二进制文件，使用提取和插入操作符(<<和>>)以及getline这样的函数读写数据是没有效率的，因为我们不需要 格式化任何数据，而且数据很可能不会在行中进行格式化
+    - 文件流包括两个专⻔用于顺序读写二进制数据的成员函数:写入和读取。第一个(write)是ostream的成员函数(由
+    ofstream继承)。read是istream的成员函数(由ifstream继承)
+- Buffers and Synchronization
+    - 当我们操作文件流时，它们与类型为streambuf的内部缓冲区对象相关联。这个缓冲区对象可能代表一个充当流和 物理文件之间的中介的内存块。例如，对于ofstream，每次调用成员函数put(写入单个字符)时，字符可能会被插 入这个中间缓冲区，而不是直接写入与流相关联的物理文件。
 
 ## 参考资料
 - 24节课快速过完c++所有语法

@@ -404,7 +404,7 @@ int main () {
 
 18. Special members 特殊成员函数
 - 特殊成员函数是隐式定义的成员函数。有六个:
-|Member function |typical form for class C :
+|Member function |typical form for class C :|
 |  ----  | ----  |
 | Default constructor | C::C(); |
 | Destructor | C::~C(); |
@@ -413,21 +413,192 @@ int main () {
 | Move constructor | C::C (C&&); |
 | Move assignment | C& operator= (C&&); |
 ~
-- 默认构造函数
-    - 默认构造函数是在声明类的对象时调用的构造函数，但不使用任何参数初始化。
-- 构造函数
-    - 
-- 拷贝构造函数
-    - 
-- 拷贝赋值
-    - 
-- 移动构造函数、移动赋值
-    - 
-- 
+- 默认构造函数 Default constructor
+    - 默认构造函数是在声明类的对象时调用的构造函数，但不使用任何参数初始化
+    - 如果类定义没有构造函数，编译器就假定该类具有隐式定义的默认构造函数，类的对象可以通过简单地声明而不带任何参数来构造
+    - 一旦类的某个构造函数显式声明了任意数量的形参，编译器就不再提供隐式默认构造函数，也不再允许声明 没有实参的类的新对象。如果需要在不带参数的情况下构造该类的对象，也应该在类中声明适当的默认构造函数。
+- 析构函数 Destructor
+    - 析构函数实现构造函数相反的功能: 它们负责在类生命周期结束时进行必要的清理
+    
+    ```cpp
+    #include <iostream>
+    #include <string>
+    using namespace std;
+
+    class Example4 {
+        string* ptr;
+    public:
+    // constructors:
+    Example4() : ptr(new string) {}
+    Example4 (const string& str) : ptr(new string(str)) {} // destructor:
+    ~Example4 () {delete ptr;}
+    // access content:
+    const string& content() const {return *ptr;}
+    };
+
+    int main () {
+        Example4 foo;
+        Example4 bar ("Example");
+        cout << "bar's content: " << bar.content() << '\n';
+        return 0; 
+    }
+    ```
+
+- 拷贝构造函数 Copy constructor
+    - 当一个对象被传递一个相同类型的对象作为参数时，拷贝构造函数被调用来创建一个副本
+    - 拷贝构造函数的第一个形参是类本身的引用
+    - 如果类没有定义自定义复制或移动构造函数(或赋值)，则提供隐式复制构造函数，这个函数的定义执行了一个浅拷⻉
+
+    ```cpp
+    MyClass::MyClass(const MyClass& x) : a(x.a), b(x.b), c(x.c) {}
+    ```
+
+    ```cpp
+    // copy constructor: deep copy
+    // 深拷贝会为新的string开辟一块内存区域，这块区域会被初始化为原始对象的副本。
+    #include <iostream>
+    #include <string>
+    using namespace std;
+
+    class Example5 {
+        string* ptr;
+        public:
+            Example5 (const string& str) : ptr(new string(str)) {} ~Example5 () {delete ptr;}
+            // copy constructor:
+            Example5 (const Example5& x) : ptr(new string(x.content())) {} // access content:
+            const string& content() const {return *ptr;}
+    };
+
+    int main () {
+        Example5 foo ("Example"); 
+        Example5 bar = foo;
+        cout << "bar's content: " << bar.content() << '\n';
+        return 0; 
+    }
+    ```
+
+- 拷贝赋值 Copy assignment
+    - 对象不仅可以在构造时被复制，也可以在任何的赋值操作时被复制
+
+    ```cpp
+    MyClass foo; 
+    MyClass bar (foo);   // object initialization: copy constructor called
+    MyClass baz = foo;   // object initialization: copy constructor called
+    foo = bar;           // object already initialized: copy assignment called
+    ```
+
+- 移动构造函数、移动赋值 Move constructor and assignment
+    - 与拷贝构造不同的是，内容从一个对象移动到了另一个对象，源对象丢失了内容，只有当源是一个未命名对象时才可以
+    - 未命名对象的典型例子是函数的返回值、类型转换
+
+    ```cpp
+    MyClass fn();   // function returning a MyClass object
+    MyClass foo;    // default constructor
+    MyClass bar = foo;   // copy constructor
+    MyClass baz = fn();   // move constructor
+    foo = bar;    // copy assignment
+    baz = MyClass();  // move assignment
+    ```
+
+    - 移动构造函数和移动赋值的形参是类的右值引用(rvalue reference)，右值引用很少用于移动构造函数之外的场景
+
+    ```cpp
+    MyClass (MyClass&&); // move-constructor 
+    MyClass& operator= (MyClass&&); // move-assignment
+    ```
+
+- Implicit members 隐式成员
+    - 每个类都可以显式地选择哪些成员具有默认定义，或者分别使 用关键字default和delete删除哪些成员。语法是:
+
+    ```cpp
+    #include <iostream>
+    using namespace std;
+
+    class Rectangle {
+        int width, height;
+    public:
+        Rectangle (int x, int y) : width(x), height(y) {} 
+        Rectangle() = default;
+        Rectangle (const Rectangle& other) = delete;
+        int area() {return width*height;}
+    };
+
+    int main () {
+        Rectangle foo;
+        Rectangle bar (10,20);
+        cout << "bar's area: " << bar.area() << '\n';
+        return 0; 
+    }
+    ```
 
 19. Friendship and inheritance
 - 友元
+    - 友元函数
+        - 可以访问类的private和protected成员
+        - 不是类的成员函数
+
+    ```cpp
+    class Rectangle {
+        int width, height;
+      public:
+        Rectangle() {}
+        Rectangle (int x, int y) : width(x), height(y) {}
+        int area() {return width * height;}
+        friend Rectangle duplicate (const Rectangle&);
+    };
+    Rectangle duplicate (const Rectangle& param)
+    {
+        Rectangle res;
+        res.width = param.width*2; 
+        res.height = param.height*2; 
+        return res;
+    }
+
+    int main () {
+        Rectangle foo;
+        Rectangle bar (2,3);
+        foo = duplicate (bar);
+        cout << foo.area() << '\n'; 
+        return 0;
+    }
+    ```
+
+    - 友元类
+        - 其成员可以访问另一个类的private或protected成员
 - 继承
+    - public派类继承基类的所有可访问成员，除了
+        - constructors and its destructor
+        - assignment operator members (operator=)
+        - friends
+        - private members
+    - 派生类的成员可以访问基类的受保护成员，但不能访问它的私有成员
+    - 多继承
+        - 从多个类继承
+
+    ```cpp
+    class Polygon {
+      protected:
+        int width, height;
+      public:
+        void set_values (int a, int b) 
+            { width=a; height=b;}
+    };
+
+    class Rectangle: public Polygon {
+      public:
+        int area ()
+          { return width * height; }
+    };
+
+    int main () {
+        Rectangle rect;
+        Triangle trgl; 
+        rect.set_values (4,5); 
+        trgl.set_values (4,5);
+        cout << rect.area() << '\n'; 
+        cout << trgl.area() << '\n'; 
+    }
+    ```
 
 20. Polymorphism 多态
 - 
@@ -442,7 +613,9 @@ int main () {
 
 22. Exceptions
 - 异常
-- 
+    - 异常提供了一种意外情况的处理方法，将控制权转移到特殊的函数(handler)
+    - 
+- 标准异常
 
 23. Preprocessor directives 预处理器
 - define

@@ -601,20 +601,82 @@ int main () {
     ```
 
 20. Polymorphism 多态
-- 
-- 
+- 类继承的一个关键特性是，指向派生类的指针与指向基类的指针类型兼容。多态性是利用这个简单但强大和通用特性的艺术。
+
+```cpp
+class Polygon {
+  protected:
+    int width, height;
+  public:
+    void set_values (int a, int b) 
+        { width=a; height=b; }
+};
+
+class Rectangle: public Polygon {
+  public:
+    int area()
+      { return width*height; }
+};
+
+class Triangle: public Polygon {
+  public:
+    int area()
+      { return width*height/2; }
+};
+
+int main () {
+    Rectangle rect;
+    Triangle trgl;
+    Polygon * ppoly1 = &rect; 
+    Polygon * ppoly2 = &trgl; 
+    ppoly1->set_values (4,5); 
+    ppoly2->set_values (4,5); 
+    cout << rect.area() << '\n'; 
+    cout << trgl.area() << '\n';
+}
+```
+
+- 虚成员是可以在派生类中重新定义的成员函数，同时通过引用保留其调用属性。要变成虚函数的语法是在它的声明之前加上virtual关键字
+- 抽象基类是只能用作基类的类，允许具有没有定义的虚成员函数(称为纯虚函数)。语法是将它们的定义替换为=0(一个等号和一个0)。抽象基类不能用于实例化对象
 
 
 ## Other language features
 21. Type conversions
 - Implicit conversion
     - 当值被复制到兼容类型时，隐式转换将自动执行
+    
+    ```cpp
+    short a=2000; 
+    int b;
+    b=a;
+    ```
+
+    - 对于非基本类型，数组和函数隐式转换为指针，指针通常允许以下转换:
+        + null pointer可以转换为任何类型的指针
+        + 指向任何类型的指针都可以转换为void pointer
+        + 指向派生类的指针可以转换为可访问且无二义性的基类的指针
 - Implicit conversions with classes
+    + 在类的世界里，隐式转换可以通过三个成员函数来控制:
+        * 单参数构造函数:允许从特定类型隐式转换来初始化对象
+        * 赋值操作符:允许在赋值时从特定类型隐式转换
+        * 类型强制转换操作符:允许隐式转换到特定类型
 - keyword explicit
-- Type casting
+- Type casting 强制类型转换
+    + 为了控制类之间的这些转换类型，我们有四个特定的强制转换操作符:dynamic_cast、reinterpret_cast、 static_cast和const_cast。它们的格式是紧跟在尖括号(<>)之间的新类型之后，紧接在要在括号之间转换的表达式之后。
+    
+    ```cpp
+    dynamic_cast <new_type> (expression)
+    reinterpret_cast <new_type> (expression)
+    static_cast <new_type> (expression)
+    const_cast <new_type> (expression
+    ```
+
 - dynamic_cast
+    + 可以向下强制转换(从指针到基类转换为指针到派生类)多态类(具有虚成员的类)
 - static_cast
+    + 可以执行指向相关类的指针之间的转换，不仅可以执行向上转换(从指针到派生类到指针到基类)，还可以 执行向下转换(从指针到基类到指针到派生类)
 - reinterpret_cast
+    + 
 - const_cast
 - typeid
 

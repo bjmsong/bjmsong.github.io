@@ -21,27 +21,28 @@ tags:
     - 可以简写：例如signed short int  可以简写为short
     - 每一种基本数据类型都有多个类型(例如char，char16_t，char32_t)，唯一的区别是占的内存空不一样
     - 除了char，其它数据类型占的内存大小都不确定，由编译器和机器来决定
-    - <limits.h>: 决定了各种变量类型的各种属性
-    - <cstdint.h>: 定义了一系列特定长度的类型别名
+    - <\limits.h>: 决定了各种变量类型的各种属性
+    - <\cstdint.h>: 定义了一系列特定长度的类型别名
 - void
 - nullptr
 - 变量要先声明，再使用
 - 三种初始化方式
 
-```cpp
-int x = 0;
-int x (0);
-int x {0};  // C++11支持
-```
+    ```cpp
+    int x = 0;
+    int x (0);
+    int x {0};  // C++11支持
+    ```
+    
 - 类型(自动)推断
 
-```cpp
-int foo = 0;
-auto bar = foo;   // C++11支持
+    ```cpp
+    int foo = 0;
+    auto bar = foo;   // C++11支持
 
-int foo = 0;
-decltype(foo) bar; 
-```
+    int foo = 0;
+    decltype(foo) bar; 
+    ```
 
 - string
 
@@ -62,13 +63,12 @@ decltype(foo) bar;
 - 位运算符
 - 类型强制转换
 
-```cpp
-int i;
-float f = 3.14; 
-i = (int) f;    // C语言继承来的写法
-
-i = int (f);
-```
+    ```cpp
+    int i;
+    float f = 3.14; 
+    i = (int) f;    // C语言继承来的写法
+    i = int (f);
+    ```
 
 - sizeof
     - 接受一个形参，形参可以是类型或变量，并返回该类型或对象的大小(以字节为单位)
@@ -153,26 +153,26 @@ i = int (f);
 8. Overloads and templates
 - 重载
 
-```cpp
-#include <iostream>
-using namespace std;
-int operate (int a, int b)
-{
-  return (a*b);
-}
-double operate (double a, double b)
-{
-  return (a/b);
-}
+    ```cpp
+    #include <iostream>
+    using namespace std;
+    int operate (int a, int b)
+    {
+      return (a*b);
+    }
+    double operate (double a, double b)
+    {
+      return (a/b);
+    }
 
-int main () {
-    int x=5,y=2;
-    double n=5.0,m=2.0;
-    cout << operate (x,y) << '\n'; 
-    cout << operate (n,m) << '\n'; 
-    return 0;
-}
-```
+    int main () {
+        int x=5,y=2;
+        double n=5.0,m=2.0;
+        cout << operate (x,y) << '\n'; 
+        cout << operate (n,m) << '\n'; 
+        return 0;
+    }
+    ```
 
 - 模板：使用泛型类型定义函数
     - 模板形参可以有多个，可以包含泛型，也可以包含指定类型

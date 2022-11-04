@@ -44,7 +44,7 @@ foo = new int [5];  // 为5个int类型的元素分配空间，返回一个指�
 
 - 作为参数传递给delete的值必须是一个指针，该指针指向先前用new分配的内存块，或者是一个空指针(对于空指 针，delete不起作用)。
 - C语言中的动态内存
-    - <stdlib.h>：malloc , calloc , realloc
+    - <\stdlib.h>：malloc , calloc , realloc
     - 这些函数在c++中也可用，也可以用来分配和释放动态内存。但是，由这些函数分配的内存块不一定与new返回的内存块兼容，它们不应混合使用。  
 
 14. Data structure
@@ -608,6 +608,7 @@ int main () {
 ## Other language features
 21. Type conversions
 - Implicit conversion
+    - 当值被复制到兼容类型时，隐式转换将自动执行
 - Implicit conversions with classes
 - keyword explicit
 - Type casting
@@ -640,7 +641,7 @@ int main () {
 
     - 如果使用省略号(...)作为catch的形参，则该处理程序将捕获任何异常，而不管抛出的异常类型是什么。这可以用作 一个默认的处理程序，用来捕获其他处理程序没有捕获的所有异常
 - 标准异常
-    - C++标准库提供了一个基类，专⻔用于声明作为异常抛出的对象。它被称为std::exception，定义在头文件<exception>中。这个类有一个名为what的虚成员函数，它返回一个以空字符结尾的字符序列(类型为char \*)，并且可以在派生类中重写 该函数以包含异常的某种描述。
+    - C++标准库提供了一个基类，专⻔用于声明作为异常抛出的对象。它被称为std::exception，定义在头文件<\exception>中。这个类有一个名为what的虚成员函数，它返回一个以空字符结尾的字符序列(类型为char \*)，并且可以在派生类中重写 该函数以包含异常的某种描述。
 
     ```cpp
     #include <iostream>
@@ -668,7 +669,7 @@ int main () {
     ```
 
     - c++标准库组件抛出的所有异常都抛出派生自这个异常类的异常。
-    - 头文件<exception>定义了两种通用异常类型，派生自异常类exception，可被自定义异常继承以报告错误：
+    - 头文件<\exception>定义了两种通用异常类型，派生自异常类exception，可被自定义异常继承以报告错误：
 
     |exception| description|
     |  ----  | ----  |

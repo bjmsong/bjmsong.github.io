@@ -149,7 +149,15 @@ https://www.informit.com/store/essential-c-plus-plus-9780201485189
         - 将vector的元素传入find(),而非指明该vector
             - 跟array不同的是，vector要先校验是否为空
         - list：链表
+            + 指针的算术运算不适用与链表，因为内存空间不连续
 - Iterator(泛型指针)
+    + 提供一层抽象，把底层指针的处理都放在这层抽象中，让用户无须直接面对指针进行操作，同时可以提供“和指针相同的语法”
+    + 每个标准容器都提供begin()/end()函数，可以返回一个iterator
+    
+    ```cpp
+    vector<string> svec;
+    vector<string>::iterator iter = svec.begin();
+    ```
     + 
 - 所有容器(所有容器类以及string类)的共通操作
     + ==,!=

@@ -46,7 +46,7 @@ tags:
     + 可以访问私有成员
 - copy assignment operator
 - function object
-    + 
+    + 通常function object被当作参数传递给范型算法
 - 重载iostream运算符
 - 指向Class Member Function的指针
     + 
@@ -114,7 +114,10 @@ tags:
     + 
 - 局部资源管理
     + 在异常处理机制终结某个函数之前，C++保证，函数中的所有局部对象的destructor都会被调用
-    + auto_ptr
+    + auto_ptr  
+        * 标准库提供的，使用前必须包含memory头文件
+        * 是一个class template，可以实现资源的自动释放
+        * 已被废弃
 - 标准异常
     + 抽象基类: exception
 

@@ -69,9 +69,11 @@ tags:
 ## 单例模式
 - 
 
+
 ## 代码
+https://github.com/JakubVojvoda/design-patterns-cpp
 https://github.com/bethrobson/Head-First-Design-Patterns
-
-
+https://github.com/yaocoder/DesignPattern
+https://github.com/mrlegowatch/HeadFirstDesignPatternsCpp
 
 

@@ -19,10 +19,11 @@ tags:
 - 基本数据类型
     - Character，Numerical integer，Floating-point，Boolean
     - 可以简写：例如signed short int  可以简写为short
-    - 每一种基本数据类型都有多个类型(例如char，char16_t，char32_t)，唯一的区别是占的内存空不一样
+    - 每一种基本数据类型都有多个类型(例如char，char16_t，char32_t)，唯一的区别是占的内存空间不一样
     - 除了char，其它数据类型占的内存大小都不确定，由编译器和机器来决定
-    - <\limits.h>: 决定了各种变量类型的各种属性
-    - <\cstdint.h>: 定义了一系列特定长度的类型别名
+    - <\\limits.h>: 决定了各种变量类型的各种属性
+    - <\\cstdint.h>: 定义了一系列特定长度的类型别名
+    
 - void
 - nullptr
 - 变量要先声明，再使用
@@ -48,7 +49,8 @@ tags:
 
 3. Constants 常量
 - Literals 字面量
-    - 文字常量可以分为:整型、浮点型、字符型、字符串型、布尔型、指针型和用户定义的文字型。
+    - 文字常量可以分为:整型、浮点型、字符型、字符串型、布尔型、指针型和用户定义的文字型
+    
 - constant
 - #define：发生在编译之前 
 
@@ -84,7 +86,7 @@ tags:
 - if-else
 - for
     - for (initialization; condition; increase) statement;
-    - for ( declaration : range ) statement; C++11支持
+    - for ( declaration : range ) statement: C++11支持
 
     ```cpp
     // range-based for loop
@@ -184,7 +186,9 @@ using namespace std;
 template <class T>
 T sum (T a, T b)
 {
-T result; result = a + b; return result;
+    T result; 
+    result = a + b; 
+    return result;
 }
 
 int main () {
@@ -257,7 +261,7 @@ int main() {
   char myword[] = "Hello";
 ```
 
-    - 用字符序列表示的字符串以'\0'结尾
+- 用字符序列表示的字符串以'\0'结尾
 - 在标准库中，字符串的两种表示形式(c字符串和标准库字符串)同时存在
     - 以空结尾的字符序列可以隐式转换为字符串，而字符串可以通过使用string的成员函数c_str或data转换为以空结尾
 的字符序列
@@ -330,7 +334,8 @@ int main () {
     ```
 
     ```cpp
-    // 指向const元素的指针的一个用例是作为函数形参:接受非const指针作为形参的函数可以修改作为实参传递的值，而 接受const指针作为形参的函数则不能。
+    // 指向const元素的指针的一个用例是作为函数形参
+    // 接受非const指针作为形参的函数可以修改作为实参传递的值，而接受const指针作为形参的函数则不能
     #include <iostream>
     using namespace std;
 
@@ -454,4 +459,4 @@ int main () {
 
 ## 参考资料
 - 24节课快速过完c++所有语法
-https://www.bilibili.com/video/BV1Gv411N7KN/?spm_id_from=333.999.0.0&vd_source=7798c62f92ce545f56fd00d4daf55e26
+    - https://www.bilibili.com/video/BV1Gv411N7KN/?spm_id_from=333.999.0.0&vd_source=7798c62f92ce545f56fd00d4daf55e26

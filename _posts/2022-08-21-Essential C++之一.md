@@ -158,7 +158,7 @@ https://www.informit.com/store/essential-c-plus-plus-9780201485189
     vector<string> svec;
     vector<string>::iterator iter = svec.begin();
     ```
-    + 
+    
 - 所有容器(所有容器类以及string类)的共通操作
     + ==,!=
     + 赋值(=)
@@ -210,6 +210,7 @@ https://www.informit.com/store/essential-c-plus-plus-9780201485189
     push_back()
     pop_back()
     ```
+    
 - 泛型算法
     + <\algorithm>
     + 搜索

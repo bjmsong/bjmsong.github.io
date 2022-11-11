@@ -175,7 +175,7 @@ tags:
     - const 在一个方法之后：这个方法不可以修改类中的任何成员变量
         - 除了mutable成员变量
 - Mutable
-    - 大部分用途：CONST那一节已经提到
+    - 主要用途：CONST那一节已经提到
     - 另一种用途：in lambda function
 - Constructive Member Initializer Lists：建议使用
     - C++一种特殊的成员变量初始化的方式

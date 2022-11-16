@@ -12,7 +12,7 @@ tags:
 - https://sites.google.com/lbl.gov/cs267-spr2021
 - https://www.bilibili.com/video/BV1nA411V7iZ/?spm_id_from=333.337.search-card.all.click&vd_source=7798c62f92ce545f56fd00d4daf55e26
 - 课程很新(Spring 2021)，老师讲得很清晰
-- 先看ppt，准备相关知识背景，再看视频，效率会更高
+- 先看ppt，准备相关知识背景，再看视频，效率会更高，挑重点地看
 
 ## 1. Introduction & Overview
 - 并行计算的目的：加速

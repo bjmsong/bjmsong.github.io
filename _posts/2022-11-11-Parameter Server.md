@@ -42,3 +42,5 @@ https://www.zhihu.com/question/53851014
 2. 训练数据巨大，需要分布式并行提速（大数据）
 
 
+https://zhuanlan.zhihu.com/p/578046577?utm_id=0
+https://www.cnblogs.com/rossiXYZ/p/16221579.html

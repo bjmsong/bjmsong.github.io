@@ -23,8 +23,8 @@ tags:
 - STL(标准模板库)
     + 容器、迭代器、算法
     + 许多相关能力以funcion object实现：行为像函数的对象
-- 避开不明确行为(undefined behavior): 对一个null指针取值，索引超过数组大小等
-- interface(接口): C++的"接口"一般指的是函数的签名或class的可访问元素
+- 避开不明确行为(undefined behavior): 例如对一个null指针取值，索引超过数组大小等
+- interface(接口): C++的接口一般指的是函数的签名或class的可访问元素
 
 ## 一. 让自己习惯C++
 ### 1. 视C++为一个语言联邦

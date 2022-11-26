@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: img/dl/tf.jpg
 catalog: true
 tags:
-    - 深度学习
+    - 深度学习框架
 ---
 <ul> 
 <li markdown="1"> 

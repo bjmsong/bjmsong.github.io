@@ -310,4 +310,5 @@ https://github.com/taki0112/Tensorflow-Cookbook
 - 
 https://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw==&mid=2247530867&idx=1&sn=e0855bd03cbedde94df8cf947b9d8a68&chksm=e8d0ce01dfa74717ab43f773af0c5add8c8b7869ab13549f7f3eae6200faf1c2d739b7ac398c&mpshare=1&scene=1&srcid=&sharer_sharetime=1569996302466&sharer_shareid=49581f7bdbef8664715f595bc62d7044&key=8a4bbb55c6c79ce6fa454f5f47b52efb672dd9d3c51b557d7e3f94b262546f8efda62a6b5db95a39bdf13e98095ff283349bebd5031578f6e674caa30dc82acb1bc085b293576cb51894c84e64f645f0&ascene=1&uin=MjM1OTMwMzkwMA%3D%3D&devicetype=Windows+10&version=62070141&lang=en&pass_ticket=doB3BRar8EovetMHBhmSUx44fADeRFqbXn4STwtBWkUO4U8Pw6IebWbKuRSVBN6v
 - https://mp.weixin.qq.com/s/EUICEJ-LTY28N6RTrp5HSg
+- https://github.com/princewen/tensorflow_practice
 

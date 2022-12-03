@@ -11,26 +11,57 @@ tags:
 ---
 - https://dlsyscourse.org/
 - Fall 2022
+- CMU 10714
+- 第一次online授课
+- 已注册：gmail邮箱
+- 先看ppt，再看视频（选择性看），再写code
 
 ## Introduction
 - Throughout the course, students will design and build from scratch a complete deep learning library, capable of efficient GPU-based operations, automatic differentiation of all implemented functions, and the necessary modules to support parameterized layers, loss functions, data loaders, and optimizers.
 
 ## Assignments and project
-- an introductory homwork
+- https://dlsyscourse.org/assignments/
+- an introductory homwork： review / test of your background
 - four major homework assignments 
     - build a basic deep learning library, comparable to a very minimal version of PyTorch or TensorFlow, scalable to a reasonably-sized system (e.g., with fast GPU implementations of operations)
-- a final project
+- a final project(Group)
     - an implementation of a substantial new feature within the developed library, plus an implementation of a model using this feature (than runs under the developed library not, e.g., done within PyTorch/Tensorflow)
-- 已注册：gmail邮箱
+- There is no formal “credit” for taking the course, but everyone who an average of at least 80% on the homeworks, and submits a final project, will receive a certificate of completion
 
 ## 互相交流
+- https://forum.dlsyscourse.org/login
+     - 积极参与
 - https://zhuanlan.zhihu.com/p/563035837
+- https://github.com/fbsh/cmu-10714
+- https://github.com/HeCheng0625/10714
 - qq群
 
 ## 1 - Introduction / Logistics
-
+- Aim of this course
+    - an introduction to the functioning of modern deep learning systems
+    - the underlying concepts of modern deep learning systems like automatic differentiation, neural network architectures, optimization, and efficient operations on systems like GPUs
+    -  build(from scratch) needle, a deep learning library loosely similar to PyTorch, and implement many common architectures in the library
+- Why study deep learning systems?
+    - To build deep learning systems
+    - To use existing systems more effectively
+    - Deep learning systems are fun!
+        - you could probably write a “reasonable” deep learning library in <2000 lines of (dense) code
+- Elements of deep learning systems
+    - Compose multiple tensor operations to build modern machine learning models
+    - Transform a sequence of operations (automatic differentiation)
+    - Accelerate computation via specialized hardware
+    - Extend more hardware backends, more operators
+- Being released for the first time. There will almost certainly be some bugs in the content or assignments
+- Prerequisites
+    - Python：熟练
+    - C++: 基础特性
+    - 数学
+        - 线性代数：矩阵乘法
+        - 微积分：微分
+    - 机器学习
 
 ## 2 - ML Refresher / Softmax Regression
+- 
 
 ## 3 - Manual Neural Networks / Backprop
 

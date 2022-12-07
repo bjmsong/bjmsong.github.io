@@ -2,16 +2,13 @@
 layout:     post
 title:      web service
 subtitle:   
-date:       2022-12-06
+date:       2021-12-06
 author:     bjmsong
 header-img: 
 catalog: true
 tags:
     - Computer Science
 ---
-
-
-
 - 顾名思义就是基于Web的服务。它使用Web(HTTP)方式，接收和响应外部系统的某种请求，从而实现远程调用。可以将你的服务(一段代码)发布到互联网上让别人去调用,也可以调用别人机器上发布的Web Service,就像使用自己的代码一样
 - HTTP（超文本传输协议）
   - 保证客户机和服务器之间的通信
@@ -62,4 +59,6 @@ tags:
   - Flask
       - http://docs.jinkan.org/docs/flask/
       - https://medium.com/bhavaniravi/build-your-1st-python-web-app-with-flask-b039d11f101c
+      - https://www.youtube.com/watch?v=MwZwr5Tvyxo&list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH&ab_channel=CoreySchafer
+      - https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog
   - FastAPI

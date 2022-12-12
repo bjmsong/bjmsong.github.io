@@ -57,3 +57,4 @@ https://github.com/layerism/brpc_faiss_server
 https://zhuanlan.zhihu.com/p/85510172
 https://blog.csdn.net/zlb872551601/article/details/103704874
 https://blog.csdn.net/xmxoxo/article/details/108884689
+https://ailab-aida.github.io/2019/09/29/Ubuntu%20faiss%E5%AE%89%E8%A3%85%E5%B9%B6%E5%88%A9%E7%94%A8flask%E6%8F%90%E4%BE%9B%E5%90%91%E9%87%8F%E6%90%9C%E7%B4%A2%E6%9C%8D%E5%8A%A1API/

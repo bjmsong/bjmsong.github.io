@@ -11,6 +11,7 @@ tags:
 ---
 > 一个视频讲一个知识点，时长10min左右，不念书，而是穿透到本质，同时通过代码展示实际案例，加深理解。知其然，更要知其所以然。
 > 缺点是讲得不太体系化，比较零散
+> 中文字幕：https://space.bilibili.com/364152971/channel/collectiondetail?sid=13909
 
 ## 笔记
 - 编译(compiling)
@@ -218,19 +219,16 @@ tags:
 - 静态链接
 - 动态链接库
 
-
+- 54. 堆内存，栈内存
+    - new会调用malloc
+    
 - 回调函数
 - 泛型
 - 模板
 - STL
 
 
-## 调试
-- gdb
-    - 《debugging with gdb》
 
-
-## VIM开发
 
 
 ## 参考资料

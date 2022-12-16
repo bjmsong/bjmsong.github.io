@@ -189,7 +189,6 @@ TensorFlow Hub是一个共享可重用机器学习模型的平台，其愿景是
 - [XLA](https://tensorflow.google.cn/xla/)：加速线性代数，是一种特定里关于的线性代数编译器，能够优化TensorFlow计算，它可以提高服务器和移动平台的运行速度并改进内存使用情况和可移植性。
 - [TensorFlow PlayGround](https://github.com/fengdu78/deeplearning_ai_books)：在浏览器中设计神经网络
 - TensorFlow Research Cloud
-- MLIR
 
 
 

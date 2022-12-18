@@ -168,67 +168,16 @@ tags:
 
 ### Transformer
 
-- 目前最强的特征抽取器，替代RNN,可并行
-- 资料
-  - **https://jalammar.github.io/illustrated-transformer/ （解释得很清楚）**
-  - **http://nlp.seas.harvard.edu/2018/04/03/attention.html （代码 !）**
-  - github: attention-is-all-you-need-pytorch 
-  - https://github.com/ongunuzaymacar/attention-mechanisms
-  - https://zhuanlan.zhihu.com/p/48508221
-  - paper：
-      - Attention is All you need (不好懂)
-      - Netural Machine Translation by Jointly Learning to Align and Translate
-- Seq to Seq 结构
-- Stacked encoder + Stacked decoder
-- Encoder：
-    - **self-attention**
-        - 基本步骤
-            - first step ： calculate “query”, “key”, and “value” vectors by Multiple Query,Key,Value Matrix
-            - second step : calculate a score 
-                - score each word of the input sentence against this word
-                - dot product of the query vector with the key vector
-            - third step : divide the score 
-                - leads to have more stable gradients
-            - forth step : softmax
-            - fifth step : multiply each value vector by the softmax score
-            - sixth step : sum up the weighted value vectors
-                -  output the self-attention layer at this position
-        - multi-head attention ： improve performance
-        - Representing The Order of The Sequence Using Positional Encoding 
-    - feed forward(非线性转换)
-- Decoder
-    - self-attention
-    - encoder-decoder attention
-    - feed forward
-- 几种不同的attention
-    - self-attention
-        - pair-wise
-        - bi-directional
-    - decoder-attention
-        - 只跟前几个相关
-        - uni-directional
-    - encoder-decoder attention
 
 
 
 ### GPT
 
-《Improving Language Understanging by Generative Pre-Training》
-- 基于Fine-tunning的模式
-- stage 1 : 利用**单向**语言模型进行预训练
-    - Transformer作为特征抽取器
-- stage 2 : 通过fine-tunning模式解决下游任务
-    - 改造下游任务的网络结构要和GPT的网络结构一样
-    - 利用第一步预训练好的参数初始化
-    - 再用手头的任务训练网络，fine-tunning
+
 
 
 
 #### GPT 2.0
-
-https://zhuanlan.zhihu.com/p/56865533
-- 改进
-    - 第二阶段的fine-tunning换成了无监督
 
 
 

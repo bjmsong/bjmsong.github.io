@@ -44,7 +44,49 @@ https://www.bilibili.com/video/BV1pu411o7BE/?spm_id_from=333.999.0.0
 https://github.com/wangshusen/DeepLearning
     - 第五节
 
+##
+- 目前最强的特征抽取器，替代RNN,可并行
+- 资料
+  - **https://jalammar.github.io/illustrated-transformer/ （解释得很清楚）**
+  - **http://nlp.seas.harvard.edu/2018/04/03/attention.html （代码 !）**
+  - github: attention-is-all-you-need-pytorch 
+  - https://github.com/ongunuzaymacar/attention-mechanisms
+  - https://zhuanlan.zhihu.com/p/48508221
+  - paper：
+      - Attention is All you need (不好懂)
+      - Netural Machine Translation by Jointly Learning to Align and Translate
+- Seq to Seq 结构
+- Stacked encoder + Stacked decoder
+- Encoder：
+    - **self-attention**
+        - 基本步骤
+            - first step ： calculate “query”, “key”, and “value” vectors by Multiple Query,Key,Value Matrix
+            - second step : calculate a score 
+                - score each word of the input sentence against this word
+                - dot product of the query vector with the key vector
+            - third step : divide the score 
+                - leads to have more stable gradients
+            - forth step : softmax
+            - fifth step : multiply each value vector by the softmax score
+            - sixth step : sum up the weighted value vectors
+                -  output the self-attention layer at this position
+        - multi-head attention ： improve performance
+        - Representing The Order of The Sequence Using Positional Encoding 
+    - feed forward(非线性转换)
+- Decoder
+    - self-attention
+    - encoder-decoder attention
+    - feed forward
+- 几种不同的attention
+    - self-attention
+        - pair-wise
+        - bi-directional
+    - decoder-attention
+        - 只跟前几个相关
+        - uni-directional
+    - encoder-decoder attention
 
+    
 ## 开源实现
 tensor2tensor
 

@@ -9,8 +9,15 @@ catalog: true
 tags:
     - 模型优化与部署 
 ---
-## PYTORCH PROFILER WITH TENSORBOARD
+## tensorboard
+- https://pytorch.org/tutorials/intermediate/tensorboard_tutorial.html
+    - 可视化数据、网络结构、loss变化、精度变化，pr曲线等
+    - https://blog.csdn.net/scar2016/article/details/115361245
+- https://pytorch.org/docs/stable/tensorboard.html
 - https://pytorch.org/tutorials/intermediate/tensorboard_profiler_tutorial.html
+    - 性能分析与优化
+- https://medium.com/@hyoungsungkim/pytorch-tensorboard-tutorial-for-a-beginner-b037ee66574a
+- https://stackoverflow.com/questions/53736966/how-to-profiling-layer-by-layer-in-pytroch
 
 ## OPTIMIZING VISION TRANSFORMER MODEL FOR DEPLOYMENT
 - https://pytorch.org/tutorials/beginner/vt_tutorial.html
@@ -38,4 +45,5 @@ tags:
 ## GROKKING PYTORCH INTEL CPU PERFORMANCE FROM FIRST PRINCIPLES
 - https://pytorch.org/tutorials/intermediate/torchserve_with_ipex.html
 
+## 
 - 《DNNFusion: Accelerating Deep Neural Networks Execution with Advanced Operator Fusion》

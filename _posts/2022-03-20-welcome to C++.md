@@ -16,25 +16,50 @@ tags:
 ## 笔记
 - 编译(compiling)
     - 只编译：visual studio(编译/ctrl+F7)
-    - .cpp>.obj(二进制文件,机器码)
-    - 预处理(#开头的命令)
+    - 代码由源代码（.c）到可执行文件（.exe）的转化过程，有以下几步：
+        - 预处理器在预处理阶段将源代码（.c）转化为预处理文件（.i）
+        - 编译器在编译阶段将预处理文件（.i）转化为汇编文件（.s）
+        - 汇编器在汇编阶段将汇编文件（.s）转化为目标文件（.o）
+        - 链接器在链接阶段将目标文件（.o）转化为可执行程序（.exe）
+    - .cpp -> .obj(二进制文件,机器码)
+    - 预处理命令(#开头)
         - #include： 就是copy&paste
-            - 方括号只用于编译器的include路径，引号用于所有
+            - 尖括号只用于编译器的include路径，引号用于所有
         - #define： 宏定义
         - #ifdef
-        - #pragma once
+        - #pragma once：头文件保护符
+            - 防止把单个头文件多次include到一个cpp/翻译单元里
+            - 之前解决这个问题的方式：#ifndef #define #endif
+            - https://blog.csdn.net/fengbingchun/article/details/78696814/
     - 标记解释，解析 => 生成抽象语法树
     - 编译器优化
 - 链接(linking）
     - 编译+链接：visual studio(build/F5)
-    - many .objs->.exe（可执行二进制文件）
+    - many .objs -> 可执行二进制文件
     - 把编译过程中生成的所有对象文件链接起来
         - 找到每个符号和函数的位置，并将它们链接在一起
     - 如果只有一个cpp文件也需要链接，因为需要知道入口点（可设置,可以不是main函数）在哪 
     - static: 链接只发生在该文件的内部 
-    - inline：用函数的body取代调用, 为了解决一些频繁调用的小函数大量消耗栈空间（栈内存）的问题
-    https://www.runoob.com/w3cnote/cpp-inline-usage.html
-    - 静态链接、动态链接
+    - 静态链接
+        - https://blog.csdn.net/qq_46046431/article/details/124951684
+        - 链接器在链接阶段将各种库文件和相关文件集成到可执行文件中
+        - 静态链接库：在windows下以.lib结尾，linux下以.a结尾
+        - 优点
+            - 装载速度很快，运行速度比动态链接快；
+            - 只需要开发人员在开发机上有完整的.lib文件，不需要在用户机器上有完整的.lib文件，自完备
+        - 缺点
+            - 可执行文件很大，并且相同代码很多，资源浪费
+    - 动态链接
+        - 链接在运行时进行，在可执行文件装载或运行的时候，由操作系统的装载程序加载库文件
+        - 动态链接库：windows下以.dll结尾，也有.lib的，但是这个是叫做导入库，和静态链接的不一样，linux下以.so结尾
+        - 优点
+            - 可执行文件很小；
+            - 适合大规模软件开发，开发过程耦合度小、独立，便于不同开发人员和开发组织开发；
+            - 不同编程语言按照约定可以使用同一套动态链接库；
+            - 动态链接库文件与exe文件独立，如果输出接口相同，更换动态链接库文件不会对exe文件产生影响，可拓展性和可维护性好
+        - 缺点
+            - 速度没有静态链接快；
+            - 不具有自完备，如果用户机器中没有动态链接库文件，程序将无法运行并且报错
 - 变量
     - 存储在内存中：堆 or 栈
     - 原始数据类型
@@ -47,7 +72,9 @@ tags:
     - sizeof: 查看变量占用内存大小
 - 函数
     - 主要目的：防止代码重复，好维护
-    - 调用函数有额外的开销，除非是内联(inline)函数 
+    - 调用函数有额外的开销，除非是内联(inline)函数
+        - inline：用函数的body取代调用, 为了解决一些频繁调用的小函数大量消耗栈空间（栈内存）的问题
+        https://www.runoob.com/w3cnote/cpp-inline-usage.html
     - 先声明，再定义
     https://blog.csdn.net/weixin_42565127/article/details/115909930
     - 声明(declaration)：在头文件中
@@ -56,9 +83,6 @@ tags:
     - 存放声明（没有函数的body），而非定义
         - 只能定义函数一次
     - 头文件的作用：可以通过include头文件的方式，避免在cpp文件中写大量声明 
-    - #pragma once：头文件保护符
-        - 防止把单个头文件多次include到一个cpp/翻译单元里
-        - 之前解决这个问题的方式：#ifndef #define #endif
     - include
         - <>只用于编译器的include路径，""用于所有 
     - c标准库的头文件一般有.h扩展名，而c++没有 
@@ -216,8 +240,7 @@ tags:
 - copy, copy constructor(拷贝构造)
 - arrow operator
 - dynamic array： std::vector
-- 静态链接
-- 动态链接库
+
 
 - 54. 堆内存，栈内存
     - new会调用malloc
@@ -231,6 +254,6 @@ tags:
 
 
 
-## 参考资料
+## 网友笔记
 - https://juejin.cn/post/7073106820654432263
 - https://zhuanlan.zhihu.com/p/352420950

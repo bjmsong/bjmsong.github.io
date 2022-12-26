@@ -25,6 +25,7 @@ tags:
     - 预处理命令(#开头)
         - #include： 就是copy&paste
             - 尖括号只用于编译器的include路径，引号用于所有
+            - https://learn.microsoft.com/zh-cn/cpp/preprocessor/hash-include-directive-c-cpp?view=msvc-170
         - #define： 宏定义
         - #ifdef
         - #pragma once：头文件保护符
@@ -51,7 +52,7 @@ tags:
             - 可执行文件很大，并且相同代码很多，资源浪费
     - 动态链接
         - 链接在运行时进行，在可执行文件装载或运行的时候，由操作系统的装载程序加载库文件
-        - 动态链接库：windows下以.dll结尾，也有.lib的，但是这个是叫做导入库，和静态链接的不一样，linux下以.so结尾
+        - 动态链接库/共享库：windows下以.dll结尾，也有.lib的，但是这个是叫做导入库，和静态链接的不一样，linux下以.so结尾
         - 优点
             - 可执行文件很小；
             - 适合大规模软件开发，开发过程耦合度小、独立，便于不同开发人员和开发组织开发；

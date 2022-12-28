@@ -13,7 +13,6 @@ tags:
 https://github.com/bjmsong/The-C-Programming-Language-2nd-Edition
 
 ## 1. 导言
-- 编译，生成可执行文件： cc filename1.c filename2.c filename3.c
 - 所有变量必须先声明后使用
     - 可以在声明的同时进行初始化
 - 符号常量： #define 名字 替换文本
@@ -61,8 +60,10 @@ https://github.com/bjmsong/The-C-Programming-Language-2nd-Edition
     - 用于在程序开发期间保留位置
 - 不允许在一个函数中定义其他函数
 - 外部变量
+    - 定义于所有函数外部的变量
     - 可以在全局范围内访问，函数可以通过外部变量交换数据
     - 必须定义在所有函数之外，且只能定义一次
+    - 在每个需要访问外部变量的函数中，必须声明相应的外部变量，声明时可以用extern显式声明，也可以通过上下文隐式声明
     - 过度依赖外部变量会导致一定的风险：外部变量的值可能会被意外地修改
 - 作用域规则
     - 名字的作用域指的是程序中可以使用该名字的部分
@@ -277,8 +278,14 @@ swap(&a, &b);
         - 表达方式更简洁
         - 使得程序参数化，提高程序的可移植性
             - 如果typedef声明的数据类型与机器相关，当程序移植到其它机器时，只需要改变typedef类型定义就可以了
-                - 例如标准库的size_t: 表示C中任何对象所能达到的最大长度，它是无符号整数
-                https://blog.csdn.net/fuxiaoxiaoyue/article/details/82747332
+            - size_t: 主要用于计数，他就是一个unsinged int的重定义. 如sizeof函数返回值类型即为size_t。在不同位的机器中所占的位数也不同，size_t是无符号数
+            https://blog.csdn.net/fuxiaoxiaoyue/article/details/82747332
+            - 为了避免由于依赖“典型”大小和不同编译器设置带来的奇怪 行为, ISO C99 引人了一类数据类型 , 其数据大小是固定的 ,不随编译器和机器设置而变化：
+                    1字节 int8_t —— char
+                    2字节 int16_t —— short
+                    4字节 int32_t —— int
+                    8字节 int64_t —— long long
+                https://blog.csdn.net/chongbin007/article/details/123766387
         - 为程序提供更好的说明性
 - 联合(union)
     - 是可以(在不同时刻)保存不同类型和长度的对象的变量

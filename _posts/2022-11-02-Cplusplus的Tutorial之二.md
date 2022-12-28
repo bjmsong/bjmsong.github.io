@@ -357,7 +357,7 @@ int main () {
 
 - 静态成员（数据或函数）
     - 一个类的静态数据成员也被称为“类变量”，因为同一个类的所有对象只有一个公共变量
-    - 为了避免多次声明它们，不能在类 中直接初始化它们，而是需要在类外部进行初始化
+    - 为了避免多次声明它们，不能在类中直接初始化它们，而是需要在类外部进行初始化
 - Const member functions
     - 当类的对象限定为const对象时，从类外部访问其数据成员的权限被限制为只读，就好像从类外部访问其数据成员的所有成员都是const一样。但是请注意，构造函数仍然被调用，并且允许初始化和修改这些数据成员。
 
@@ -479,6 +479,7 @@ int main () {
 
 - 拷贝赋值 Copy assignment
     - 对象不仅可以在构造时被复制，也可以在任何的赋值操作时被复制
+    - 就是对"="运算符的重载
 
     ```cpp
     MyClass foo; 
@@ -508,7 +509,7 @@ int main () {
     ```
 
 - Implicit members 隐式成员
-    - 每个类都可以显式地选择哪些成员具有默认定义，或者分别使 用关键字default和delete删除哪些成员。语法是:
+    - 每个类都可以显式地选择哪些成员具有默认定义，或者分别使用关键字default和delete删除哪些成员。语法是:
 
     ```cpp
     #include <iostream>
@@ -566,7 +567,7 @@ int main () {
     - 友元类
         - 其成员可以访问另一个类的private或protected成员
 - 继承
-    - public派类继承基类的所有可访问成员，除了
+    - public派生类继承基类的所有可访问成员，除了
         - constructors and its destructor
         - assignment operator members (operator=)
         - friends

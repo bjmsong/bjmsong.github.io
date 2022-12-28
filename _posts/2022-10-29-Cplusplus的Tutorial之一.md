@@ -49,7 +49,7 @@ tags:
 
 3. Constants 常量
 - Literals 字面量
-    - 文字常量可以分为:整型、浮点型、字符型、字符串型、布尔型、指针型和用户定义的文字型
+    - 文字常量可以分为: 整型、浮点型、字符型、字符串型、布尔型、指针型和用户定义的文字型
     
 - constant
 - #define：发生在编译之前 
@@ -203,7 +203,7 @@ int main () {
 
 9. Name visibility
 - 全局变量，局部变量
-- Namespaces 命名空间
+- Namespace 命名空间
     - using关键字将名称引入到当前声明区域(如块)，从而避免了对名称进行限定的需要
 
 
@@ -242,6 +242,7 @@ int main() {
 #include <iostream>
 #include <array>
 using namespace std;
+
 int main() {
     array<int,3> myarray {10,20,30};
     for (int i=0; i<myarray.size(); ++i)
@@ -432,7 +433,7 @@ int main () {
     // 不要混淆null pointers 和 void pointers
     ```
 
-- 指向函数的指针
+- 指针函数：指向函数的指针
 
     ```cpp
     #include <iostream>
@@ -449,6 +450,7 @@ int main () {
     }
     int main () {
         int m,n;
+        // minus是指针函数：参数，返回值都是int
         int (*minus)(int,int) = subtraction;
         m = operation (7, 5, addition); 
         n = operation (20, m, minus); 

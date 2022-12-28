@@ -10,12 +10,13 @@ tags:
     - C++
 ---
 > 一个视频讲一个知识点，时长10min左右，不念书，而是穿透到本质，同时通过代码展示实际案例，加深理解。知其然，更要知其所以然。
-> 缺点是讲得不太体系化，比较零散
+> 缺点是讲得不太体系化，不是很有条理，比较零散
 > 中文字幕：https://space.bilibili.com/364152971/channel/collectiondetail?sid=13909
 
 ## 笔记
 - 编译(compiling)
     - 只编译：visual studio(编译/ctrl+F7)
+    - 编译器将文本转换成一种称为目标文件的中间格式，在这个过程中，编译器会先预处理代码，将我们的代码转为抽象语法树，然后生成 CPU 所执行的代码.
     - 代码由源代码（.c）到可执行文件（.exe）的转化过程，有以下几步：
         - 预处理器在预处理阶段将源代码（.c）转化为预处理文件（.i）
         - 编译器在编译阶段将预处理文件（.i）转化为汇编文件（.s）
@@ -29,7 +30,7 @@ tags:
         - #define： 宏定义
         - #ifdef
         - #pragma once：头文件保护符
-            - 防止把单个头文件多次include到一个cpp/翻译单元里
+            - 监督当前头文件只被包含一次，防止把单个头文件多次include到一个cpp/翻译单元里
             - 之前解决这个问题的方式：#ifndef #define #endif
             - https://blog.csdn.net/fengbingchun/article/details/78696814/
     - 标记解释，解析 => 生成抽象语法树
@@ -73,7 +74,7 @@ tags:
     - sizeof: 查看变量占用内存大小
 - 函数
     - 主要目的：防止代码重复，好维护
-    - 调用函数有额外的开销，除非是内联(inline)函数
+    - 调用函数有额外的开销（每次调用函数，编译器都会生成一个 call 指令），除非是内联(inline)函数
         - inline：用函数的body取代调用, 为了解决一些频繁调用的小函数大量消耗栈空间（栈内存）的问题
         https://www.runoob.com/w3cnote/cpp-inline-usage.html
     - 先声明，再定义
@@ -115,7 +116,7 @@ tags:
     - is a integer number which stores a memory address 
     - memory in computer: like one-dimension line
     - type of pointer：the type of the data in that address
-    - 0不是一个有效的内存地址：NULL,nullptr 
+    - 0不是一个有效的内存地址，不能赋值给指针，可以赋值NULL,nullptr 
     - 取址 &p：取得变量对应的地址 
     - 解引用 *p：取得地址对应的变量
     - 指针也是变量
@@ -184,14 +185,13 @@ tags:
     - 数组名是个指针
     - 数组在内存中开辟了一块连续空间
     - new生成的变量在heap上，直到程序终止或者手动销毁。其它方式生成的变量在stack上，函数运行终止变量生命周期就结束了
-        - 原始的array要获取array的size非常困难
+    - 原始的array要获取array的size非常困难
     - std::array<> 是在 c++11 中引入的
-        - 增加了很多实用的功能：C++ python化？
+        - 增加了很多实用的功能
 - String
     - const char array: 以'\0'（null termination）结尾，双引号
         - 不等同于 std::string，可以互相转换
-    - char：1个字节，只适用于英语，单引号
-    - constant char array
+    - char：1个字节，只适用于英文字符，单引号
     - String Literal：字符串字面常量
 - CONST
     - a promise that something will be constant
@@ -216,8 +216,6 @@ tags:
         - 就是java初始化对象的方式，都在heap上 
         - 场景：延长对象的生命周期，对象很大（stack空间很小放不下）
         - create on heap: 除非手动释放(delete)，不然内存空间一直存在
-- new关键字
-    - 在heap上开辟一块连续的空间，需要手动释放
 - implicit conversion(隐式转换), explicit关键字
     - implicit conversion
         - 只会做一次转换
@@ -257,4 +255,3 @@ tags:
 
 ## 网友笔记
 - https://juejin.cn/post/7073106820654432263
-- https://zhuanlan.zhihu.com/p/352420950

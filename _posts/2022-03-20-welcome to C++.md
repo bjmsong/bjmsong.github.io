@@ -163,6 +163,7 @@ tags:
     - 销毁对象（生命周期结束）时运行
     - 清理内存：手动在heap上分配的内存(new 出来的变量)需要手动清理
 - 重载：函数名一样，参数不一样
+    - https://www.bilibili.com/video/BV187411i7Pu/?spm_id_from=333.999.0.0&vd_source=7798c62f92ce545f56fd00d4daf55e26
 - Inheritance：继承
     - 减少了代码重复
     - 可以重写父类的方法
@@ -245,6 +246,8 @@ tags:
     - new会调用malloc
     
 - 回调函数
+    - 被其它函数调用的函数
+    - https://www.bilibili.com/video/BV1vL411t78b/?spm_id_from=333.788.recommend_more_video.0&vd_source=7798c62f92ce545f56fd00d4daf55e26
 - 泛型
 - 模板
 - STL

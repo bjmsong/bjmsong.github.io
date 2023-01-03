@@ -78,7 +78,8 @@ tags:
 5. Basic Input/Output
 - cin,cout
 - getline
-- stringstream: 将字符串转换为数值
+- stringstream: 将字符串对象与流关联起来，允许像读取流一样读取字符串
+    - https://www.lifeee.top/posts/23490.html
 
 
 ## Program Structure

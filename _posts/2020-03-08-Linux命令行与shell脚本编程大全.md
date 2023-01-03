@@ -287,10 +287,12 @@ tags:
 
 
 ## 二十. 正则表达式
-
-- https://deerchao.cn/tutorials/regex/regex.html 
+- 《正则表达式必知必会》
+- 正则表达式在线测试工具：https://regex101.com/
+- 正则表达式30分钟入门
+  - https://deerchao.cn/tutorials/regex/regex.html 
 - https://www.hahack.com/wiki/sundries-regexp.html
-
+- https://www.bilibili.com/video/BV1da4y1p7iZ/?spm_id_from=333.999.0.0&vd_source=7798c62f92ce545f56fd00d4daf55e26
 
 ## 二十一. sed进阶
 

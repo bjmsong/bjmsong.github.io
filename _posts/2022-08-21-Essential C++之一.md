@@ -64,9 +64,9 @@ https://www.informit.com/store/essential-c-plus-plus-9780201485189
     + 在解引用操作之前，要校验指针是否为空指针
 - 文件的读写
     - 头文件：fstream
-    - 输出文件：ofstream
-    - 读取文件：ifstream
-    - 读写文件：fstream
+    - 输出文件：ofstream类
+    - 读取文件：ifstream类
+    - 读写文件：fstream类
 
 ## 2. 面向过程的编程风格 Procedural Programming
 - 编写函数

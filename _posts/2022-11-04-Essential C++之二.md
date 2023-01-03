@@ -35,7 +35,10 @@ tags:
         * 编译器会进行检查
     + 成员变量标注mutable：表名对这个成员变量所做的改变不会破幻class object的常量性
 - this指针
-    + 在成员函数内用来指向其调用者
+    + 指向对象的指针
+    - 用途：在成员函数内用来指向其调用者
+    - 实现原理：编译器自动将this指针加到每一个成员函数（静态成员函数除外）的参数表中
+    - https://www.bilibili.com/video/BV1C7411Y7Kb/?spm_id_from=333.999.0.0&vd_source=7798c62f92ce545f56fd00d4daf55e26
 - 静态类成员
     + static data member 用来表示唯一的、可共享的member，它可以在同一类的所有对象中被访问
     + member function只有在不访问任何non-static member的条件下才能够被声明为static

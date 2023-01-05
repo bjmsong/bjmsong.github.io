@@ -25,13 +25,13 @@ tags:
     - .cpp -> .obj(二进制文件,机器码)
     - 预处理命令(#开头)
         - #include： 就是copy&paste
-            - 尖括号只用于编译器的include路径，引号用于所有
+            - 尖括号只用于编译器的include路径(标准库头文件)，引号用于所有（自己写的头文件）
             - https://learn.microsoft.com/zh-cn/cpp/preprocessor/hash-include-directive-c-cpp?view=msvc-170
         - #define： 宏定义
         - #ifdef
         - #pragma once：头文件保护符
             - 监督当前头文件只被包含一次，防止把单个头文件多次include到一个cpp/翻译单元里
-            - 之前解决这个问题的方式：#ifndef #define #endif
+            - 之前解决这个问题的方式：#ifndef... #define... #endif
             - https://blog.csdn.net/fengbingchun/article/details/78696814/
     - 标记解释，解析 => 生成抽象语法树
     - 编译器优化

@@ -280,7 +280,7 @@ swap(&a, &b);
             - 如果typedef声明的数据类型与机器相关，当程序移植到其它机器时，只需要改变typedef类型定义就可以了
             - size_t: 主要用于计数，他就是一个unsinged int的重定义. 如sizeof函数返回值类型即为size_t。在不同位的机器中所占的位数也不同，size_t是无符号数
             https://blog.csdn.net/fuxiaoxiaoyue/article/details/82747332
-            - 为了避免由于依赖“典型”大小和不同编译器设置带来的奇怪 行为, ISO C99 引人了一类数据类型 , 其数据大小是固定的 ,不随编译器和机器设置而变化：
+            - 为了避免由于依赖“典型”大小和不同编译器设置带来的奇怪行为, ISO C99 引人了一类数据类型 , 其数据大小是固定的 ,不随编译器和机器设置而变化：
                     1字节 int8_t —— char
                     2字节 int16_t —— short
                     4字节 int32_t —— int

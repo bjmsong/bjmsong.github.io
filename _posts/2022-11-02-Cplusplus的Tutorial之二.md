@@ -149,8 +149,8 @@ int main () {
     - 类可以使用关键字class，struct，union来定义
         - 用关键字struct声明的类的成员在默认情况下具有公共访问权限，而用关键字class声明的类的成员 在默认情况下具有私有访问权限
     - 访问控制符
-        - private：同一个类的成员函数或者友元函数可以访问
-        - protected：同一个类的成员函数或者友元函数，或者派生类可以访问
+        - private：同一个类的成员函数，友元函数可以访问
+        - protected：同一个类的成员函数，友元函数，派生类可以访问
         - public：在对象可⻅的任何地方都可以访问
     - 用class关键字声明的类的所有成员默认是private（struct默认是public）
 
@@ -639,9 +639,12 @@ int main () {
 - 虚函数
     - 可以在派生类中重新定义的成员函数，同时通过引用保留其调用属性。要变成虚函数的语法是在它的声明之前加上virtual关键字
     - 实现多态的基石
-    - 虚函数指针(vptr)：指向虚函数表
-    - 虚函数表(vftable)：函数指针数组
-    - https://www.bilibili.com/video/BV1R7411p79b/?spm_id_from=333.999.0.0&vd_source=7798c62f92ce545f56fd00d4daf55e26
+        - 子类重写父类的虚函数
+        - 基类指针指向派生类，基类指针调用虚函数时会调用派生类的虚函数
+    - 原理
+        - 编译器会给含有virtual function的类加上一个成员变量---虚函数指针(vptr)。vptr指向虚函数表(vftable)，虚函数表存储指向（对应）虚函数的地址
+        - non-virtual function在编译期被resolve，virtual function在runtime被resolve。
+        - https://www.bilibili.com/video/BV1R7411p79b/?spm_id_from=333.999.0.0&vd_source=7798c62f92ce545f56fd00d4daf55e26
 - 抽象基类是只能用作基类的类，允许具有没有定义的虚成员函数(称为纯虚函数)。语法是将它们的定义替换为=0(一个等号和一个0)。抽象基类不能用于实例化对象
 
 

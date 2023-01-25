@@ -29,7 +29,7 @@ tags:
         * 没有任何参数，不可能被重载
     + 拷贝构造函数
         * 将某个class object赋值给另一个，默认会进行成员的逐一赋值操作。但是某些情况下，这种赋值会产生问题，因此需要定义拷贝构造函数，来取代默认的赋值操作。
-        * 唯一参数是一个const reference
+        * 唯一参数是一个const reference，不可以重载
 - mutable(可变)，const
     + member function上标注const：这个member function不会改变class object的内容
         * 编译器会进行检查

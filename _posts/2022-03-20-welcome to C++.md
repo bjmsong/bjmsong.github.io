@@ -162,6 +162,8 @@ tags:
 - Destructor: 析构函数
     - 销毁对象（生命周期结束）时运行
     - 清理内存：手动在heap上分配的内存(new 出来的变量)需要手动清理
+    - 当系统没有显式定义析构函数，编译器同样会为对象定义一个默认析构函数，默认的析构函数只能释放普通数据成员所占用的空间，无法通过释放通过new和malloc进行申请的空间，因此避免内存泄漏，我们要显式的析构函数对申请的空间释放
+        - https://blog.csdn.net/Abelia/article/details/92425163
 - 重载：函数名一样，参数不一样
     - https://www.bilibili.com/video/BV187411i7Pu/?spm_id_from=333.999.0.0&vd_source=7798c62f92ce545f56fd00d4daf55e26
 - Inheritance：继承

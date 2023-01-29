@@ -183,4 +183,5 @@ tags:
     + https://github.com/GunterMueller/Books-3/blob/master/Effective%20C%2B%2B%203rd%20ed.pdf
     + https://www.dsi.fceia.unr.edu.ar/downloads/informatica/info_II/c++/Effective%20C++%20+%20More%20Effective%20C++.pdf
 - https://blog.csdn.net/fengbingchun/article/details/102761542
-
+- Scott Meyers An Effective C++11 14 Sampler
+https://www.youtube.com/watch?v=IqVZG6jWXvs&ab_channel=AmletoFobia

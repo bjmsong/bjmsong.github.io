@@ -46,7 +46,9 @@ tags:
 - High-level System Design
     - Message Queue：异步处理
     - CDN：用户可以就近获取内容，适合静态内容（不会改动），存放热门内容
-- 
+
+## Building Software Systems At Google and Lessons Learned
+https://www.youtube.com/watch?v=modXC5IWTJI&ab_channel=Stanford
 
 ## 《System Design Interview: An Insider’s Guide》
 - web server, DNS，load balancer，CDN，cache, stateless web tier，Message queue，微服务
@@ -61,6 +63,9 @@ tags:
     - https://www.youtube.com/channel/UCRPMAqdtSgd0Ipeef7iFsKw   
     - https://www.youtube.com/channel/UCn1XnDWhsLS5URXTi5wtFTA
     - https://www.youtube.com/channel/UCZLJf_R2sWyUtXSKiKlyvAw 
+- https://www.xiaohongshu.com/explore/6338a6e1000000001c033bef
+    - system design interview(Alex Xu) 
+    - DDIA
 - https://www.1point3acres.com/bbs/thread-683982-1-1.html
 - https://www.freecodecamp.org/news/a-thorough-introduction-to-distributed-systems-3b91562c9b3c/
 - youtube频道：Tech Dummies，System Design Interview，InfoQ，@Scale，Data council

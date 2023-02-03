@@ -38,6 +38,10 @@ https://www.bilibili.com/video/BV1pu411o7BE/?spm_id_from=333.999.0.0
     - 重要的部分不要默认大家都知道，需要做介绍
     - 要写得让其它领域的人也能看懂
 
+## Faster-transformer
+https://zhuanlan.zhihu.com/p/73715272
+https://github.com/NVIDIA/FasterTransformer
+
 ## 李沐 百亿模型计划
 - https://www.bilibili.com/video/BV1LT411F77M/?spm_id_from=333.999.0.0&vd_source=7798c62f92ce545f56fd00d4daf55e26
 - https://github.com/mli/transformers-benchmarks

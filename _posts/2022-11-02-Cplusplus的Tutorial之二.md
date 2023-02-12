@@ -678,15 +678,17 @@ int main () {
     static_cast <new_type> (expression)
     const_cast <new_type> (expression
     ```
-
-- dynamic_cast
-    + 可以向下强制转换(从指针到基类转换为指针到派生类)多态类(具有虚成员的类)
+- https://www.cnblogs.com/fortunely/p/14453815.html
 - static_cast
-    + 可以执行指向相关类的指针之间的转换，不仅可以执行向上转换(从指针到派生类到指针到基类)，还可以 执行向下转换(从指针到基类到指针到派生类)
+    - 任何具有明确定义的类型转换，只要不包含底层const，都可以使用static_cast。
+- dynamic_cast
+    + 一般情况下，不允许将基类指针或引用转换成派生类指针或引用。dynamic_cast让类型转换的安全检查在运行时执行，从而安全地将基类指针或引用，转换为派生类指针或引用。
+- const_cast
+    - 去掉底层const
 - reinterpret_cast
     + 
-- const_cast
 - typeid
+- RTTI
 
 
 22. Exceptions

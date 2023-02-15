@@ -9,8 +9,8 @@ catalog: true
 tags:
     - C++
 ---
-> 一个视频讲一个知识点，时长10min左右，不念书，而是穿透到本质，同时通过代码展示实际案例，加深理解。知其然，更要知其所以然。
-> 缺点是讲得不太体系化，不是很有条理，比较零散
+> 一个视频讲一个知识点，时长10min左右，不念书，同时通过代码展示实际案例，加深理解。
+> 缺点是讲得不太系统，天马行空，不是很有条理，比较零散
 > 中文字幕：https://space.bilibili.com/364152971/channel/collectiondetail?sid=13909
 
 ## 笔记
@@ -36,9 +36,10 @@ tags:
 - 头文件
     - 存放声明（没有函数的body），而非定义
         - 只能定义函数一次
-    - 头文件的作用：可以通过include头文件的方式，避免在cpp文件中写大量声明 
+    - 头文件的作用：可以通过include头文件的方式，避免在cpp文件中写大量重复的声明 
     - include
-        - <>只用于编译器的include路径，""用于所有 
+        - 尖括号（<>）只用于编译器的include路径(标准库头文件，/usr/include)，引号("")用于所有（自己写的头文件，优先查找当前目录）
+        - https://learn.microsoft.com/zh-cn/cpp/preprocessor/hash-include-directive-c-cpp?view=msvc-170
     - c标准库的头文件一般有.h扩展名，而c++没有 
 - debug in visual studio
     - de-bug：清除bug

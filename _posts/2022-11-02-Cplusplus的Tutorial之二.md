@@ -673,23 +673,19 @@ int main () {
     + 为了控制类之间的这些转换类型，我们有四个特定的强制转换操作符:dynamic_cast、reinterpret_cast、 static_cast和const_cast。它们的格式是紧跟在尖括号(<>)之间的新类型之后，紧接在要在括号之间转换的表达式之后。
     
     ```cpp
-    dynamic_cast <new_type> (expression)
-    reinterpret_cast <new_type> (expression)
-    static_cast <new_type> (expression)
-    const_cast <new_type> (expression
+    cast_name <new_type> (expression)
     ```
 - https://www.cnblogs.com/fortunely/p/14453815.html
 - static_cast
     - 任何具有明确定义的类型转换，只要不包含底层const，都可以使用static_cast。
-- dynamic_cast
-    + 一般情况下，不允许将基类指针或引用转换成派生类指针或引用。dynamic_cast让类型转换的安全检查在运行时执行，从而安全地将基类指针或引用，转换为派生类指针或引用。
 - const_cast
-    - 去掉底层const
+    - const to non-const
 - reinterpret_cast
     + 
-- typeid
-- RTTI
-
+- RTTI: Run-time type identification
+    - typeid
+    - dynamic_cast
+        + 一般情况下，不允许将基类指针或引用转换成派生类指针或引用。dynamic_cast让类型转换的安全检查在运行时执行，从而安全地将基类指针或引用，转换为派生类指针或引用。
 
 22. Exceptions
 - 异常

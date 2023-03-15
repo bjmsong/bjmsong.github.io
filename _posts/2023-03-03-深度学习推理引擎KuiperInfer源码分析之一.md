@@ -107,7 +107,7 @@ mat类是列主序的，也就是同一列数据存放在内存中相邻的位�
 
 <ul> 
 <li markdown="1">
-例如Fill(vector<float>values)方法：以values中的数据去填充Tensor。如果将顺序的一组数据(0,1,2,3,4,5,...,15)填充到一个大小为4×4的Tensor中。默认情况下填充的结果是这样的
+例如Fill方法：以values中的数据去填充Tensor。如果将顺序的一组数据[0,1,2,3,4,5,...,15]填充到一个大小为4×4的Tensor中。默认情况下填充的结果是这样的:
 ![]({{site.baseurl}}/img/kuiper/4.png) 
 </li> 
 </ul> 

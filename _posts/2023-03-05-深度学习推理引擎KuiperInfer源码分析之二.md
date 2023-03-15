@@ -1,4 +1,3 @@
----
 layout:     post
 title:      深度学习推理引擎KuiperInfer源码分析
 subtitle:   之二
@@ -7,8 +6,8 @@ author:     bjmsong
 header-img: img/kuiper/logo2.jpg
 catalog: true
 tags:
+
     - 深度学习推理系统
----
 
 
 ## 算子
@@ -86,13 +85,16 @@ tags:
 
 ### 卷积
 
-使用**im2col**方法，也就是把卷积计算的过程转换成矩阵运算的过程。优点是只需要进行一次矩阵乘法运算，大大减少了内存的访问次数。同时矩阵乘法运算优化比较成熟，效率较高。
+<ul> 
+<li markdown="1">
+使用im2col方法，也就是把卷积计算的过程转换成矩阵运算的过程。优点是只需要进行一次矩阵乘法运算，大大减少了内存的访问次数。同时矩阵乘法运算优化比较成熟，效率较高。
+![]({{site.baseurl}}/img/kuiper/14.png) 
+</li> 
+</ul> 
 
 在计算过程中将需要计算的特征子矩阵存放在连续的内存中，有利于一次将所需要计算的数据直接按照需要的格式取出进行计算。
 
 矩阵乘法底层调用`OpenBlas`的实现。
-
-![1677286082193](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1677286082193.png)
 
 
 
@@ -105,9 +107,12 @@ output_mid = input1 + input2
 output = output_mid * input3
 ```
 
+<ul> 
+<li markdown="1">
 用图形来表达就是这样的：
-
-![1677208305268](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1677208305268.png)
+![]({{site.baseurl}}/img/kuiper/15.png) 
+</li> 
+</ul> 
 
 `PNNX`的`Expession Operator`中给出的是一种抽象表达式，表达式会对计算过程进行折叠，消除中间变量. 并且将具体的输入张量替换为抽象输入`@0`,`@1`等.对于上面的计算过程,`PNNX`生成的抽象表达式是这样的：
 
@@ -201,9 +206,12 @@ else if (current_token.token_type == TokenType::TokenMul || current_token.token_
  }
 ```
 
+<ul> 
+<li markdown="1">
 最终生成如下的抽象语法树：
-
-![1677231890615](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1677231890615.png)
+![]({{site.baseurl}}/img/kuiper/16.png) 
+</li> 
+</ul> 
 
 
 
@@ -225,35 +233,54 @@ else if (current_token.token_type == TokenType::TokenMul || current_token.token_
 
 ### `Benchmark`
 
-![1677999910904](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1677999910904.png)
+<ul> 
+<li markdown="1">
+可以发现batch=8、16的时候，CPU运行时间低于总时间，CPU没有打满，batch=4就好很多。
+![]({{site.baseurl}}/img/kuiper/17.png) 
+</li> 
+</ul> 
 
-- 可以发现batch=8、16的时候，CPU运行时间低于总时间，CPU没有打满，batch=4就好很多。
 
-  
 
 ### **Yolov5s**耗时分析
 
+<ul> 
+<li markdown="1">
 卷积计算最耗时
+![]({{site.baseurl}}/img/kuiper/18.png) 
+</li> 
+</ul> 
 
-![1677887790023](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1677887790023.png)
+<ul> 
+<li markdown="1">
+gperftool显示执行时间最长的函数是sgemv，耗时占46.3%，sgemv函数执行矩阵-向量运算。排第二的是memset，其执行的是复制字符的操作。
+![]({{site.baseurl}}/img/kuiper/19.png) 
+</li> 
+</ul> 
 
-`gperftool`显示执行时间最长的函数是`sgemv`，耗时占46.3%，`sgemv`函数执行矩阵-向量运算。排第二的是`memset`，其执行的是复制字符的操作。
+<ul> 
+<li markdown="1">
+通过graph call可以发现sgemv主要是卷积层在调用
+![]({{site.baseurl}}/img/kuiper/20.png) 
+</li> 
+</ul> 
 
-![1677912090272](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1677912090272.png)
-
-通过`graph call`可以发现`sgemv`主要是卷积层在调用
-
-![1677934233510](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1677934233510.png)
-
-`memset`函数主要是`InitOperatorOutput`在调用
-
-![1677934298980](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1677934298980.png)
+<ul> 
+<li markdown="1">
+memset函数主要是InitOperatorOutput在调用
+![]({{site.baseurl}}/img/kuiper/21.png) 
+</li> 
+</ul> 
 
 
 
 ### 内存泄漏检测
 
-![1678026405743](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1678026405743.png)
+<ul> 
+<li markdown="1">
+![]({{site.baseurl}}/img/kuiper/22.png) 
+</li> 
+</ul> 
 
 
 

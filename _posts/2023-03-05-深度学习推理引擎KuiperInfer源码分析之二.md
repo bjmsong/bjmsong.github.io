@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      深度学习推理引擎`KuiperInfer`源码分析
+title:      深度学习推理引擎KuiperInfer源码分析
 subtitle:   之二
-date:       2023-03-01
+date:       2023-03-05
 author:     bjmsong
-header-img: img/kuiper/logo.jpg
+header-img: img/kuiper/logo2.jpg
 catalog: true
 tags:
     - 深度学习推理系统

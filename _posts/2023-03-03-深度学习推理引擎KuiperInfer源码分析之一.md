@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      深度学习推理引擎`KuiperInfer`源码分析
+title:      深度学习推理引擎KuiperInfer源码分析
 subtitle:   之一
 date:       2023-03-03
 author:     bjmsong
-header-img: img/kuiper/logo.jpg
+header-img: img/kuiper/logo2.jpg
 catalog: true
 tags:
     - 深度学习推理系统
@@ -17,9 +17,12 @@ tags:
 
 训练好的深度学习模型，需要通过推理框架部署到不同的设备上，高效完成模型推理，服务应用场景。与训练框架不同的是，深度学习推理框架**没有梯度反向传播功能**，因为算法模型文件中的权重系数已经被固化，推理框架只需要读取、加载并完成对新数据的预测即可。
 
-作为深度学习推理框架的核心组件，**推理引擎的整体流程**如下图所示：
-
-![1676960146688](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1676960146688.png)
+<ul> 
+<li markdown="1">
+作为深度学习推理框架的核心组件，推理引擎的整体流程如下图所示：
+![]({{site.baseurl}}/img/kuiper/1.png) 
+</li> 
+</ul> 
 
 下面介绍下`KuiperInfer`的核心模块。
 
@@ -29,11 +32,12 @@ tags:
 
 **张量是存储数据(例如输入、输出、系数或参数)的主要容器**。张量是一种递归和自包含的定义，比如：4维Tensor由N个3维Tensor组成，3维Tensor由N个2维Tensor组成，2维Tensor由N个1维的Tensor组成，1维Tensor由N个0维Tensor组成，0维Tensor维为标量。 
 
-典型的图像数据RGB为3维Tensor，RGB数据的保存方式有RGBRGBRGB....或者 RRR...GGG...BBB...，即NHWC或者NCHW，如下图所示。`KuiperInfer`采用的是**NCHW**格式（NCHW分别表示批次、通道和高宽）。
-
-![img](https://gitee.com/cao_fx/KuiperInfer_Better/raw/master/02/NCHW_NHWC.png)
-
-
+<ul> 
+<li markdown="1">
+典型的图像数据RGB为3维Tensor，RGB数据的保存方式有RGBRGBRGB....或者 RRR...GGG...BBB...，即NHWC或者NCHW，如下图所示。KuiperInfer采用的是NCHW格式（NCHW分别表示批次、通道和高宽）。
+![]({{site.baseurl}}/img/caffe/NCHW.png) 
+</li> 
+</ul> 
 
 
 
@@ -49,11 +53,16 @@ tags:
   arma::fcube data_;                  // 张量数据
 ```
 
-`KuiperInfer`的张量以**Armadillo**类中的**`cube`**(三维矩阵)作为数据的container，在`cube`之上实现了`Tensor`的接口，一个`cube`由多个**`mat`**（二维矩阵）在内存中连续存储组成。
 
-- **Armadillo**是一个接口友好，高性能的线性代数库，底层可以调用`OpenBlas`、`MKL`。
 
-![1676976449108](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1676976449108.png)
+<ul> 
+<li markdown="1">
+KuiperInfer的张量以Armadillo类中的cube(三维矩阵)作为数据的container，在cube之上实现了Tensor的接口，一个cube由多个mat（二维矩阵）在内存中连续存储组成。
+![]({{site.baseurl}}/img/kuiper/2.png) 
+</li> 
+</ul> 
+
+**Armadillo**是一个接口友好，高性能的线性代数库，底层可以调用`OpenBlas`、`MKL`。
 
 张量是**逻辑上的多维数组，底层数据结构为一维数组（内存连续）**
 
@@ -89,27 +98,48 @@ class CSVDataLoader {
 
 ### 列主序
 
-`mat`类是列主序的，也就是同一列数据存放在内存中相邻的位置。这个特性会影响很多对`Tensor`的操作。
+<ul> 
+<li markdown="1">
+mat类是列主序的，也就是同一列数据存放在内存中相邻的位置。这个特性会影响很多对Tensor的操作。
+![]({{site.baseurl}}/img/kuiper/3.png) 
+</li> 
+</ul> 
 
-![1676966822021](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1676966822021.png)
+<ul> 
+<li markdown="1">
+例如Fill(vector<float>values)方法：以values中的数据去填充Tensor。如果将顺序的一组数据[0,1,2,3,4,5,...,15]填充到一个大小为4×4的Tensor中。默认情况下填充的结果是这样的：
+![]({{site.baseurl}}/img/kuiper/4.png) 
+</li> 
+</ul> 
 
-例如`Fill(vector<float>values)`方法：以`values`中的数据去填充`Tensor`。如果将顺序的一组数据`[0,1,2,3,4,5,...,15]`填充到一个大小为4×4的`Tensor`中。默认情况下填充的结果是这样的：
+<ul> 
+<li markdown="1">
+如果想要实现行主序的填充效果，需要对填充结果进行转置。
+![]({{site.baseurl}}/img/kuiper/5.png) 
+</li> 
+</ul> 
 
-![1677489471946](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1677489471946.png)
 
-如果想要实现行主序的填充效果，需要对填充结果进行**转置**。
 
-![1677489575411](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1677489575411.png)
+<ul> 
+<li markdown="1">
+还有Reshape方法：调整tensor的形状。默认的reshape结果是这样的：
+![]({{site.baseurl}}/img/kuiper/6.png) 
+</li> 
+</ul> 
 
-还有`Reshape`方法：调整`tensor`的形状。默认的reshape结果是这样的：
+<ul> 
+<li markdown="1">
+![]({{site.baseurl}}/img/kuiper/7.png) 
+</li> 
+</ul> 
 
-![1677489744205](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1677489744205.png)
-
-![1677489755430](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1677489755430.png)
-
-如果想要实现行主序的reshape，不能直接调用`cube`的方法，只能**通过位置计算的方式来对逐个元素进行搬运**。
-
-![1677489935307](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1677489935307.png)
+<ul> 
+<li markdown="1">
+如果想要实现行主序的reshape，不能直接调用cube的方法，只能通过位置计算的方式来对逐个元素进行搬运。
+![]({{site.baseurl}}/img/kuiper/8.png) 
+</li> 
+</ul> 
 
 ```c++
 void Tensor<float>::ReView(const std::vector<uint32_t>& shapes) {
@@ -144,11 +174,18 @@ void Tensor<float>::ReView(const std::vector<uint32_t>& shapes) {
 
 ## 计算图
 
+<ul> 
+<li markdown="1">
 计算图是神经网络的中间表达。计算图根据训练好的神经网络结构，将Tensor和计算节点（Operator）有效的组织和连接形成一个整体，形成一个有向无环图（DAG），并描述如何将输入的数据通过各种层进行运算得到输出。
+![]({{site.baseurl}}/img/kuiper/9.png) 
+</li> 
+</ul> 
 
-![1676959793348](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1676959793348.png)
-
-![img](https://gitee.com/cao_fx/KuiperInfer_Better/raw/master/02/graph_structure.png)
+<ul> 
+<li markdown="1">
+![]({{site.baseurl}}/img/kuiper/10.png) 
+</li> 
+</ul> 
 
 
 
@@ -287,20 +324,19 @@ PNNX具有以下特性：
   pnnx.Output     output      1 0 2
   ```
 
-- 算子跟PyTorch Python API完全对应
-
-  ![1677551646971](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1677551646971.png)
+<ul> 
+<li markdown="1">
+算子跟PyTorch Python API完全对应
+![]({{site.baseurl}}/img/kuiper/11.png) 
+</li> 
+</ul> 
 
 - expression operator
 
   - 完整的算术表达式，阅读方便，减少访存
-
 - 计算图优化
-
 - 支持Pytorch自定义算子
-
 - Tensor shape propagation
-
 - ....
 
 
@@ -439,13 +475,19 @@ for (const auto& current_op : this->operators_) {
 
 ### 计算图的调度执行
 
-Graph在执行时在逻辑上可以分为两条路径，一条是**控制流**，另外一条是**数据流**。在数据流中，前一个`operator`产生的输出传递到后继`operator`作为输入。
+<ul> 
+<li markdown="1">
+Graph在执行时在逻辑上可以分为两条路径，一条是控制流，另外一条是数据流。在数据流中，前一个operator产生的输出传递到后继operator作为输入。
+![]({{site.baseurl}}/img/kuiper/12.png) 
+</li> 
+</ul> 
 
-![1677568136017](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1677568136017.png)
-
-每个计算节点必须要等它依赖的节点完成计算，才能进行计算，是一个**拓扑排序**的过程。也就是进行**广度优先遍历**，通过一个队列维护要遍历的计算节点，当某个计算节点的前驱节点都已加入队列中，则将该节点也加入到队列中。
-
-![1676778404291](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1676778404291.png)
+<ul> 
+<li markdown="1">
+每个计算节点必须要等它依赖的节点完成计算，才能进行计算，是一个拓扑排序的过程。也就是进行广度优先遍历，通过一个队列维护要遍历的计算节点，当某个计算节点的前驱节点都已加入队列中，则将该节点也加入到队列中。
+![]({{site.baseurl}}/img/kuiper/13.png) 
+</li> 
+</ul> 
 
 寻找并拷贝上一级的输出到后继节点
 

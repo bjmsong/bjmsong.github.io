@@ -107,7 +107,7 @@ mat类是列主序的，也就是同一列数据存放在内存中相邻的位�
 
 <ul> 
 <li markdown="1">
-例如Fill(vector<float>values)方法：以values中的数据去填充Tensor。如果将顺序的一组数据[0,1,2,3,4,5,...,15]填充到一个大小为4×4的Tensor中。默认情况下填充的结果是这样的
+例如Fill(vector<float>values)方法：以values中的数据去填充Tensor。如果将顺序的一组数据(0,1,2,3,4,5,...,15)填充到一个大小为4×4的Tensor中。默认情况下填充的结果是这样的
 ![]({{site.baseurl}}/img/kuiper/4.png) 
 </li> 
 </ul> 
@@ -245,11 +245,10 @@ static void ProbeNextLayer(
 
 计算节点是计算图中的一个节点，用来执行特定计算。如`Relu`，卷积、池化等。
 
-计算节点主要包含三部分内容：
-
-1. 节点的输入、输出数据，节点的参数（如卷积核的大小），节点的权重（如卷积核的weight、bias）等；
-2. 后继计算节点和前驱计算节点；
-3. 层(Layer): 计算过程的具体执行者
+- 计算节点主要包含三部分内容：
+  1. 节点的输入、输出数据，节点的参数（如卷积核的大小），节点的权重（如卷积核的weight、bias）等；
+  2. 后继计算节点和前驱计算节点；
+  3. 层(Layer): 计算过程的具体执行者
 
 `RuntimeOperator`类设计如下：
 
@@ -305,11 +304,10 @@ struct RuntimeOperand {
 
 [PNNX](https://link.zhihu.com/?target=https%3A//github.com/Tencent/ncnn/tree/master/tools/pnnx) （PyTorch Neural Network eXchange）是PyTorch模型互操作性的开放标准。PNNX为PyTorch提供了一种开源的模型格式，它定义了与Pytorch相匹配的数据流图和运算图。Pytorch训练好一个模型之后，模型可以转换到pnnx格式文件，通过读取pnnx格式文件，形成计算图。
 
-ONNX作为广泛应用的模型中间表达，具有以下一些问题：
-
-- ONNX以ProtoBuffer作为模型表达的文件格式，对数据传输友好，但是可读性不友好，很难直接修改计算图
-- 算子的定义和PyTorch不完全兼容，需要用很多小算子去拼接，使得计算图变得过于复杂，同时降低推理效率
-- 因为ONNX要适配不同的深度学习框架，添加了大量的参数，增加了开发者负担
+- ONNX作为广泛应用的模型中间表达，具有以下一些问题：
+  - ONNX以ProtoBuffer作为模型表达的文件格式，对数据传输友好，但是可读性不友好，很难直接修改计算图
+  - 算子的定义和PyTorch不完全兼容，需要用很多小算子去拼接，使得计算图变得过于复杂，同时降低推理效率
+  - 因为ONNX要适配不同的深度学习框架，添加了大量的参数，增加了开发者负担
 
 PNNX具有以下特性：
 

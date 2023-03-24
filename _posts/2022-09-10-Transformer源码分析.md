@@ -64,6 +64,7 @@ class Transformer(nn.Module):
 
     def forward(self, enc_inputs, dec_inputs):
         # enc_inputs : [batch_size, src_len], encoder的输入
+        
 		# dec_inputs : [batch_size, tgt_len], decoder的输入
         
         enc_outputs, enc_self_attns = self.encoder(enc_inputs)
@@ -135,7 +136,7 @@ class PositionalEncoding(nn.Module):
         
         position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)   
         div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
-		# position * div_term：广播机制 [max_len, 1] * [d_model] = [max_len, d_model]
+        # position * div_term：广播机制 [max_len, 1] * [d_model] = [max_len, d_model]
         
         # pe[:, 0::2]: 从0开始到最后面，步长为2，代表的就是偶数位置
         
@@ -143,7 +144,6 @@ class PositionalEncoding(nn.Module):
         # pe[:, 1::2]: 从1开始到最后面，步长为2，代表的就是奇数位置
         
         pe[:, 1::2] = torch.cos(position * div_term) 
-
 		# unsqueeze(0): [max_len, d_model] -> [1, max_len, d_model]
 		
         # transpose(0,1): [1, max_len, d_model] -> [max_len, 1, d_model]
@@ -180,6 +180,7 @@ def get_attn_pad_mask(seq_q, seq_k):
     # eq(zero) is PAD token，标记为1
     
     pad_attn_mask = seq_k.data.eq(0).unsqueeze(1)  # batch_size x 1 x len_k
+    
     # expand: 将张量沿着某些维度进行扩展, expand方法并不会复制原始数据，而是使用广播的方式共享原始数据
     
     return pad_attn_mask.expand(batch_size, len_q, len_k)  # batch_size x len_q x len_k

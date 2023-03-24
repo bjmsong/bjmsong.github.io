@@ -37,8 +37,8 @@ tags:
 ### 超参数
 
 ```python
-d_model = 512  # Embedding Size
-d_ff = 2048  # FeedForward dimension
+d_model = 512  ## Embedding Size
+d_ff = 2048  ## FeedForward dimension
 d_k = d_v = 64  # dimension of K(=Q), V
 n_layers = 6  # number of Encoder of Decoder Layer
 n_heads = 8  # number of heads in Multi-Head Attention
@@ -270,7 +270,20 @@ class ScaledDotProductAttention(nn.Module):
 
 ### Position-wise Feed Forward Network
 
+```python
+class PoswiseFeedForwardNet(nn.Module):
+    def __init__(self):
+        super(PoswiseFeedForwardNet, self).__init__()
+        self.conv1 = nn.Conv1d(in_channels=d_model, out_channels=d_ff, kernel_size=1)
+        self.conv2 = nn.Conv1d(in_channels=d_ff, out_channels=d_model, kernel_size=1)
+        self.layer_norm = nn.LayerNorm(d_model)
 
+    def forward(self, inputs):
+        residual = inputs # inputs : [batch_size, len_q, d_model]
+        output = nn.ReLU()(self.conv1(inputs.transpose(1, 2)))
+        output = self.conv2(output).transpose(1, 2)
+        return self.layer_norm(output + residual)
+```
 
 
 
@@ -278,7 +291,29 @@ class ScaledDotProductAttention(nn.Module):
 
 ## Decoder
 
+```python
+class Decoder(nn.Module):
+    def __init__(self):
+        super(Decoder, self).__init__()
+        self.tgt_emb = nn.Embedding(tgt_vocab_size, d_model)
+        self.pos_emb = nn.Embedding.from_pretrained(get_sinusoid_encoding_table(tgt_len+1, d_model),freeze=True)
+        self.layers = nn.ModuleList([DecoderLayer() for _ in range(n_layers)])
 
+    def forward(self, dec_inputs, enc_inputs, enc_outputs): # dec_inputs : [batch_size x target_len]
+        dec_outputs = self.tgt_emb(dec_inputs) + self.pos_emb(torch.LongTensor([[5,1,2,3,4]]))
+        dec_self_attn_pad_mask = get_attn_pad_mask(dec_inputs, dec_inputs)
+        dec_self_attn_subsequent_mask = get_attn_subsequent_mask(dec_inputs)
+        dec_self_attn_mask = torch.gt((dec_self_attn_pad_mask + dec_self_attn_subsequent_mask), 0)
+
+        dec_enc_attn_mask = get_attn_pad_mask(dec_inputs, enc_inputs)
+
+        dec_self_attns, dec_enc_attns = [], []
+        for layer in self.layers:
+            dec_outputs, dec_self_attn, dec_enc_attn = layer(dec_outputs, enc_outputs, dec_self_attn_mask, dec_enc_attn_mask)
+            dec_self_attns.append(dec_self_attn)
+            dec_enc_attns.append(dec_enc_attn)
+        return dec_outputs, dec_self_attns, dec_enc_attns
+```
 
 
 

@@ -37,8 +37,8 @@ tags:
 ### 超参数
 
 ```python
-d_model = 512  # Embedding Size\
-d_ff = 2048  # FeedForward dimension\
+d_model = 512  # Embedding Size
+d_ff = 2048  # FeedForward dimension
 d_k = d_v = 64  # dimension of K(=Q), V
 n_layers = 6  # number of Encoder of Decoder Layer
 n_heads = 8  # number of heads in Multi-Head Attention
@@ -82,6 +82,7 @@ class Transformer(nn.Module):
 class Encoder(nn.Module):
     def __init__(self):
         super(Encoder, self).__init__()
+        # Embedding: 通过参数矩阵查表
         self.src_emb = nn.Embedding(src_vocab_size, d_model)  
         # 位置编码
         self.pos_emb = PositionalEncoding(d_model)

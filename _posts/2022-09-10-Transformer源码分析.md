@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: img/transformer/logo.jpg
 catalog: true
 tags:
-    - C++
+    - 深度学习
 ---
 
 ## 输入
@@ -37,8 +37,8 @@ tags:
 ### 超参数
 
 ```python
-d_model = 512  # Embedding Size
-d_ff = 2048  # FeedForward dimension
+d_model = 512  # Embedding Size\
+d_ff = 2048  # FeedForward dimension\
 d_k = d_v = 64  # dimension of K(=Q), V
 n_layers = 6  # number of Encoder of Decoder Layer
 n_heads = 8  # number of heads in Multi-Head Attention
@@ -244,7 +244,11 @@ class MultiHeadAttention(nn.Module):
         return self.layer_norm(output + residual), attn # output: [batch_size x len_q x d_model]
 ```
 
-
+<ul> 
+<li markdown="1">
+![]({{site.baseurl}}/img/transformer/sourcecode/8.png) 
+</li> 
+</ul> 
 
 ```python
 class ScaledDotProductAttention(nn.Module):

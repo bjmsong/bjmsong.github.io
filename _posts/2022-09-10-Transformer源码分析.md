@@ -38,10 +38,14 @@ tags:
 
 ```python
 d_model = 512  # Embedding Size  
+
 d_ff = 2048  # FeedForward dimension  
-d_k = d_v = 64  # dimension of K(=Q), V  
-n_layers = 6  # number of Encoder of Decoder Layer  
-n_heads = 8  # number of heads in Multi-Head Attention  
+
+d_k = d_v = 64  # dimension of K(=Q), V
+
+n_layers = 6  # number of Encoder of Decoder Layer
+
+n_heads = 8  # number of heads in Multi-Head Attention
 ```
 
 
@@ -317,10 +321,19 @@ class Decoder(nn.Module):
 
 
 
+```python
+class DecoderLayer(nn.Module):
+    def __init__(self):
+        super(DecoderLayer, self).__init__()
+        self.dec_self_attn = MultiHeadAttention()
+        self.dec_enc_attn = MultiHeadAttention()
+        self.pos_ffn = PoswiseFeedForwardNet()
 
+    def forward(self, dec_inputs, enc_outputs, dec_self_attn_mask, dec_enc_attn_mask):
+        dec_outputs, dec_self_attn = self.dec_self_attn(dec_inputs, dec_inputs, dec_inputs, dec_self_attn_mask)
+        dec_outputs, dec_enc_attn = self.dec_enc_attn(dec_outputs, enc_outputs, enc_outputs, dec_enc_attn_mask)
+        dec_outputs = self.pos_ffn(dec_outputs)
+        return dec_outputs, dec_self_attn, dec_enc_attn
+```
 
   
-
-
-
-

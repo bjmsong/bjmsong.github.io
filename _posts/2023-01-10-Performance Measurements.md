@@ -49,15 +49,6 @@ cout << "Cost time: " << duration_cast<milliseconds>(t2 - t1).count() << "ms" <<
 
 Linux 系统原生提供的性能分析工具
 
-- 安装
-
-```shell
-yum instal perf
-perf --version
-```
-
-
-
 #### `perf stat`
 
 - 正常编译，只需要运行程序时加上`perf stat`
@@ -136,41 +127,6 @@ perf的结果不够直观，因此才有了火焰图。
 
 
 ### [gperftools](https://github.com/gperftools/gperftools)
-
-##### 安装
-
-- 先安装`libunwind`
-
-  ```shell
-  http://download.savannah.nongnu.org/releases/libunwind/
-  
-  tar xvf libunwind-1.6.0.tar.gz
-  
-  cd libunwind-1.6.0
-  
-  ./configure --prefix=/use/local/ct3rd(自己要安装的路径)
-  
-  make && make install
-  
-  // 找到自己系统对应可以安装的libunwind-dev
-  sudo yum search libunwind 
-  
-  sudo yum install libunwind-devel.x86_64
-  ```
-
-- 安装`gperftools`
-
-  ```shell
-  https://github.com/gperftools/gperftools/releases
-  tar xvf gperftools-2.10.tar.gz
-  cd gperftools-2.10
-  
-  ./configure
-  make -j4
-  sudo make install
-  ```
-
-  
 
 ##### `CMake`配置
 
@@ -252,7 +208,7 @@ debug
 
 
 
-### gperf、gperftools、oprofile、intel vtune amplifier等工具对比
+### gperf、oprofile、intel vtune amplifier等工具对比
 
 https://cloud.tencent.com/developer/article/1787752
 
@@ -287,19 +243,9 @@ BENCHMARK_MAIN();
 
 
 
-## 内存泄漏检测
+## 内存泄漏检测：`Valgrind`
 
-`Valgrind` 安装
-
-```shell
-bzip2 -d valgrind-3.15.0.tar.bz2
-tar -xf valgrind-3.15.0.tar
-cd valgrind-3.15.0
-./configure && make
-sudo make install
-```
-
-`Valgrind` 使用，编译时需要打开调式
+ 编译时需要打开调式
 
 ```shell
 valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all ./main

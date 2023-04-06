@@ -14,6 +14,7 @@ tags:
 
 ```c++
 #include <iostream>
+
 #include <math.h>
 
 // function to add the elements of two arrays
@@ -98,7 +99,9 @@ cudaFree(y);
 
 ```c++
 #include <iostream>
+
 #include <math.h>
+
 // Kernel function to add the elements of two arrays
 __global__
 void add(int n, float *x, float *y)
@@ -201,7 +204,14 @@ Time(%)      Time     Calls       Avg       Min       Max  Name
 
 CUDA GPUs have many parallel processors grouped into **Streaming Multiprocessors**, or SMs. Each SM can run multiple concurrent thread blocks.  
 
+<ul> 
+<li markdown="1">
+![]({{site.baseurl}}/img/compress/zhangzhi/12.png) 
+</li> 
+</ul> 
+
 As an example, a Tesla P100 GPU based on the [Pascal GPU Architecture](https://developer.nvidia.com/blog/inside-pascal/) has 56 SMs, each capable of supporting up to 2048 active threads. 
+
 
 例如，需要用N个线程来处理N个数据，每个`block`有256个线程，`block`的数量(`numBlocks`)可以通过下面计算得到。
 

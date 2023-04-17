@@ -68,17 +68,21 @@ KuiperInfer的张量以Armadillo类中的cube(三维矩阵)作为数据的contai
 
 张量类提供的**数据读取**方法有：
 
-| rows      | cols        | channels         | size     | empty  |
-| --------- | ----------- | ---------------- | -------- | ------ |
-| **index** | **shapes**  | **raw_shapes**   | **data** | **at** |
-| **Show**  | **raw_ptr** | **TensorIsSame** |          |        |
+<ul> 
+<li markdown="1">
+![]({{site.baseurl}}/img/kuiper/23.png) 
+</li> 
+</ul> 
 
-张量类提供的**数据操作**方法有：
 
-| set_data            | Padding              | Fill                      | Ones             | Rand      |
-| ------------------- | -------------------- | ------------------------- | ---------------- | --------- |
-| **ReRawshape**      | **ReRawView**        | **Flatten**               | **Transform**    | **Clone** |
-| **TensorBroadcast** | **TensorElementAdd** | **TensorElementMultiply** | **TensorCreate** |           |
+提供的**数据操作**方法有：
+
+<ul> 
+<li markdown="1">
+![]({{site.baseurl}}/img/kuiper/24.png) 
+</li> 
+</ul> 
+        |
 
 张量可以通过加载csv文件生成
 
@@ -189,6 +193,59 @@ void Tensor<float>::ReView(const std::vector<uint32_t>& shapes) {
 
 
 
+### PNNX
+
+[PNNX](https://link.zhihu.com/?target=https%3A//github.com/Tencent/ncnn/tree/master/tools/pnnx) （PyTorch Neural Network eXchange）是PyTorch模型互操作性的开放标准。PNNX为PyTorch提供了一种开源的模型格式，它定义了与Pytorch相匹配的数据流图和运算图。Pytorch训练好一个模型之后，模型可以转换到pnnx格式文件，通过读取pnnx格式文件，形成计算图。
+
+- ONNX作为广泛应用的模型中间表达，具有以下一些问题：
+  - ONNX以ProtoBuffer作为模型表达的文件格式，对数据传输友好，但是可读性不友好，很难直接修改计算图
+  - 算子的定义和PyTorch不完全兼容，需要用很多小算子去拼接，使得计算图变得过于复杂，同时降低推理效率
+  - 因为ONNX要适配不同的深度学习框架，添加了大量的参数，增加了开发者负担
+
+PNNX具有以下特性：
+
+- 模型文件用户可读，容易修改
+
+  ```PNNX
+  7767517
+  4 3
+  pnnx.Input      input       0 1 0
+  nn.Conv2d       conv_0      1 1 0 1 bias=1 dilation=(1,1) groups=1 in_channels=12 kernel_size=(3,3) out_channels=16 padding=(0,0) stride=(1,1) @bias=(16)f32 @weight=(16,12,3,3)f32
+  nn.Conv2d       conv_1      1 1 1 2 bias=1 dilation=(1,1) groups=1 in_channels=16 kernel_size=(2,2) out_channels=20 padding=(2,2) stride=(2,2) @bias=(20)f32 @weight=(20,16,2,2)f32
+  pnnx.Output     output      1 0 2
+  ```
+
+<ul> 
+<li markdown="1">
+算子跟PyTorch Python API完全对应
+![]({{site.baseurl}}/img/kuiper/11.png) 
+</li> 
+</ul> 
+
+- expression operator
+  - 完整的算术表达式，阅读方便，减少访存
+- 计算图优化
+- 支持Pytorch自定义算子
+- Tensor shape propagation
+- ....
+
+
+<ul> 
+<li markdown="1">
+为了方便本项目的使用，作者对PNNX的计算图进行了封装。下面的示意图展示了PNNX中Operator类和Operand类的主要属性。
+![]({{site.baseurl}}/img/kuiper/25.png) 
+</li> 
+</ul> 
+
+
+<ul> 
+<li markdown="1">
+经过封装之后的RuntimeOperator类和RuntimeOperand类的主要属性如下：
+![]({{site.baseurl}}/img/kuiper/26.png) 
+</li> 
+</ul> 
+
+
 ### 计算图(`RuntimeGraph`)
 
 `RuntimeGraph`类负责计算图的初始化、构建、执行等，主要方法如下：
@@ -297,45 +354,6 @@ struct RuntimeOperand {
   RuntimeDataType type = RuntimeDataType::kTypeUnknown; /// 操作数的类型，一般是float
 };
 ```
-
-
-
-### PNNX
-
-[PNNX](https://link.zhihu.com/?target=https%3A//github.com/Tencent/ncnn/tree/master/tools/pnnx) （PyTorch Neural Network eXchange）是PyTorch模型互操作性的开放标准。PNNX为PyTorch提供了一种开源的模型格式，它定义了与Pytorch相匹配的数据流图和运算图。Pytorch训练好一个模型之后，模型可以转换到pnnx格式文件，通过读取pnnx格式文件，形成计算图。
-
-- ONNX作为广泛应用的模型中间表达，具有以下一些问题：
-  - ONNX以ProtoBuffer作为模型表达的文件格式，对数据传输友好，但是可读性不友好，很难直接修改计算图
-  - 算子的定义和PyTorch不完全兼容，需要用很多小算子去拼接，使得计算图变得过于复杂，同时降低推理效率
-  - 因为ONNX要适配不同的深度学习框架，添加了大量的参数，增加了开发者负担
-
-PNNX具有以下特性：
-
-- 模型文件用户可读，容易修改
-
-  ```PNNX
-  7767517
-  4 3
-  pnnx.Input      input       0 1 0
-  nn.Conv2d       conv_0      1 1 0 1 bias=1 dilation=(1,1) groups=1 in_channels=12 kernel_size=(3,3) out_channels=16 padding=(0,0) stride=(1,1) @bias=(16)f32 @weight=(16,12,3,3)f32
-  nn.Conv2d       conv_1      1 1 1 2 bias=1 dilation=(1,1) groups=1 in_channels=16 kernel_size=(2,2) out_channels=20 padding=(2,2) stride=(2,2) @bias=(20)f32 @weight=(20,16,2,2)f32
-  pnnx.Output     output      1 0 2
-  ```
-
-<ul> 
-<li markdown="1">
-算子跟PyTorch Python API完全对应
-![]({{site.baseurl}}/img/kuiper/11.png) 
-</li> 
-</ul> 
-
-- expression operator
-
-  - 完整的算术表达式，阅读方便，减少访存
-- 计算图优化
-- 支持Pytorch自定义算子
-- Tensor shape propagation
-- ....
 
 
 

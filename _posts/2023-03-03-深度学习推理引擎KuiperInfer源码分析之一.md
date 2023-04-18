@@ -82,7 +82,7 @@ KuiperInfer的张量以Armadillo类中的cube(三维矩阵)作为数据的contai
 ![]({{site.baseurl}}/img/kuiper/24.png) 
 </li> 
 </ul> 
-        |
+
 
 张量可以通过加载csv文件生成
 
@@ -248,31 +248,27 @@ PNNX具有以下特性：
 
 ### 计算图(`RuntimeGraph`)
 
-`RuntimeGraph`类负责计算图的初始化、构建、执行等，主要方法如下：
+`RuntimeGraph`类负责计算图的初始化&构建：
 
-```c++
-// 计算图的初始化
-bool Init();
+<ul> 
+<li markdown="1">
+![]({{site.baseurl}}/img/kuiper/27.png) 
+</li> 
+</ul> 
 
-// 构建计算图
-void Build(const std::string& input_name, const std::string& output_name);  
+<ul> 
+<li markdown="1">
+![]({{site.baseurl}}/img/kuiper/28.png) 
+</li> 
+</ul> 
 
-// 计算图的执行
-std::vector<std::shared_ptr<Tensor<float>>> Forward(
-      const std::vector<std::shared_ptr<Tensor<float>>>& inputs, bool debug = false);
+前向推理：
 
-// 根据计算图中的计算节点来生成Layer
-static std::shared_ptr<Layer> CreateLayer(const std::shared_ptr<RuntimeOperator>& op);
-
-// 检查当前节点是否就绪
-static bool CheckOperatorReady(const std::shared_ptr<RuntimeOperator>& op);
-
-// 探查下一层的计算节点
-static void ProbeNextLayer(
-      const std::shared_ptr<RuntimeOperator>& current_op,
-      std::deque<std::shared_ptr<RuntimeOperator>>& operator_queue,
-      const std::vector<std::shared_ptr<Tensor<float>>>& layer_output_data);
-```
+<ul> 
+<li markdown="1">
+![]({{site.baseurl}}/img/kuiper/29.png) 
+</li> 
+</ul> 
 
 成员变量如下：
 
@@ -357,7 +353,7 @@ struct RuntimeOperand {
 
 
 
-### 计算图的构建步骤
+### 计算图的构建
 
 #### 加载PNNX模型文件，生成PNNX计算图
 
@@ -463,17 +459,13 @@ std::shared_ptr<Layer> LayerRegisterer::CreateLayer(
 #### 关联计算节点的后继计算节点
 
 ```c++
-for (const auto& current_op : this->operators_) {
-    // 获取当前节点的所有后继节点names
+for (const auto& current_op : operators_) {
+    // 遍历当前节点的所有后继节点，通过name检索next_op_name，找到后继节点
     const std::vector<std::string>& output_names = current_op->output_names;
-    for (const auto& next_op : this->operators_) {
-        if (next_op == current_op) {
-            continue;
-        }
-        // 如果其余节点的name符合当前节点的后继节点names，则将这个其余节点作为当前节点的后继
-        if (std::find(output_names.begin(), output_names.end(), next_op->name) !=
-            output_names.end()) {
-            current_op->output_operators.insert({next_op->name, next_op});
+    for (const auto& next_op_name : output_names) {
+        if (const auto& next_op_pair = this->operators_maps_.find(next_op_name);
+            next_op_pair != this->operators_maps_.end()) {
+            current_op->output_operators.insert({next_op_name, next_op_pair->second});
         }
     }
 }
@@ -481,11 +473,39 @@ for (const auto& current_op : this->operators_) {
 
 
 
-#### 预分配操作数内存
+#### 预分配计算节点的输入和输出空间
 
 根据计算图，可以得到算子的输入输出操作数大小，可以在计算图执行之前提前分配好内存
 
 由于每个节点的输入就是上一层节点的输出，因此除了输入节点之外，其他节点的输入可以复用它上一层节点的输出空间
+
+```c++
+  RuntimeOperatorUtils::InitOperatorInput(operators_);
+  RuntimeOperatorUtils::InitOperatorOutput(graph_->ops, operators_);
+```
+
+
+
+#### 对计算节点进行拓扑排序
+
+```c++
+void RuntimeGraph::ReverseTopo(const std::shared_ptr<RuntimeOperator>& root_op) {
+    CHECK(root_op != nullptr) << "current operator is nullptr";
+    root_op->has_forward = true;
+    const auto& next_ops = root_op->output_operators;
+    for (const auto& [_, op] : next_ops) {
+      if (op != nullptr) {
+        if (!op->has_forward) {
+          ReverseTopo(op);
+        }
+      }
+    }
+    for (const auto& [_, op] : next_ops) {
+      CHECK_EQ(op->has_forward, true);
+    }
+    topo_operators_.push_back(root_op);
+}
+```
 
 
 

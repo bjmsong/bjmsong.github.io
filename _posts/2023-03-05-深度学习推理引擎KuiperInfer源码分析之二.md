@@ -13,13 +13,7 @@ tags:
 
 ## 算子
 
-支持yolo5等模型的推理，实现的算子有：
-
-| **adaptive_avgpooling** | **batchnorm2d** | **cat**       | **convolution** | **expression** |
-| ----------------------- | --------------- | ------------- | --------------- | -------------- |
-| **flatten**             | **hardsigmoid** | **hardswish** | **linear**      | **maxpooling** |
-| **relu**                | **sigmoid**     | **silu**      | **softmax**     | **unsample**   |
-| **view**                | ...             |               |                 |                |
+目前已支持yolo5，resnet等模型的推理
 
 
 
@@ -30,6 +24,79 @@ tags:
 3. **融合不同路线：`TFLite`，`NCNN`通过手写实现算子，`TVM`通过编译和规则配置来自动实现算子**
 
 下面介绍其中几个算子的实现。
+
+
+
+### 卷积
+
+使用im2col方法，也就是把卷积计算的过程转换成矩阵运算的过程。优点是只需要进行一次矩阵乘法运算，大大减少了内存的访问次数。同时矩阵乘法运算优化比较成熟，效率较高。
+
+<ul> 
+<li markdown="1">
+首先需要将卷积核、输入特征图进行展开，如下图所示
+![]({{site.baseurl}}/img/kuiper/14.png) 
+</li> 
+</ul> 
+
+```c++
+/**
+* 初始化kernel的im2col排布
+*/
+void ConvolutionLayer::InitIm2ColWeight() {
+	......
+
+    const uint32_t kernel_count_group = kernel_count;
+    std::vector<arma::frowvec> kernel_matrix_arr(kernel_count_group);
+    arma::frowvec kernel_matrix_c(row_len * kernel_c);
+    for (uint32_t k = 0; k < kernel_count_group; ++k) {
+      const std::shared_ptr<Tensor<float>>& kernel = this->weights_.at(k);
+      for (uint32_t ic = 0; ic < kernel->channels(); ++ic) {
+        memcpy(kernel_matrix_c.memptr() + row_len * ic,
+               kernel->slice(ic).memptr(), row_len * sizeof(float));
+      }
+      kernel_matrix_arr.at(k) = kernel_matrix_c;
+    }
+    this->kernel_matrix_arr_ = std::move(kernel_matrix_arr);
+ 	
+    ......
+}
+```
+
+```c++
+/**
+* 初始化输入特征图的im2col排布
+*/
+arma::fmat ConvolutionLayer::Im2Col(sftensor input, uint32_t kernel_w, uint32_t kernel_h,
+                uint32_t input_w, uint32_t input_h, uint32_t input_c_group,
+                uint32_t group, uint32_t row_len, uint32_t col_len) const {
+    arma::fmat input_matrix(input_c_group * row_len, col_len);
+    for (uint32_t ic = 0; ic < input_c_group; ++ic) {
+        const arma::fmat& input_channel = input->slice(ic + group * input_c_group);
+        int current_col = 0;
+        for (uint32_t w = 0; w < input_w - kernel_w + 1; w += stride_w_) {
+            for (uint32_t r = 0; r < input_h - kernel_h + 1; r += stride_h_) {
+             float* input_matrix_c_ptr = input_matrix.colptr(current_col) + ic * row_len;
+                current_col += 1;
+                for (uint32_t kw = 0; kw < kernel_w; ++kw) {
+                const float* region_ptr = input_channel.colptr(w + kw) + r;
+                memcpy(input_matrix_c_ptr, region_ptr, kernel_h * sizeof(float));
+                input_matrix_c_ptr += kernel_h;
+            }
+          }
+        }
+    }
+    
+    return input_matrix;                
+}
+```
+
+调用`openmp`进行多线程计算
+
+```c++
+#pragma omp parallel for num_threads(batch_size)
+```
+
+矩阵乘法底层调用`OpenBlas`的实现。此外还实现了分组卷积。
 
 
 
@@ -81,21 +148,6 @@ tags:
 ```
 
 
-
-
-
-### 卷积
-
-<ul> 
-<li markdown="1">
-使用im2col方法，也就是把卷积计算的过程转换成矩阵运算的过程。优点是只需要进行一次矩阵乘法运算，大大减少了内存的访问次数。同时矩阵乘法运算优化比较成熟，效率较高。
-![]({{site.baseurl}}/img/kuiper/14.png) 
-</li> 
-</ul> 
-
-在计算过程中将需要计算的特征子矩阵存放在连续的内存中，有利于一次将所需要计算的数据直接按照需要的格式取出进行计算。
-
-矩阵乘法底层调用`OpenBlas`的实现。
 
 
 

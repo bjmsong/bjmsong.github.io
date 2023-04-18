@@ -273,23 +273,20 @@ PNNX具有以下特性：
 成员变量如下：
 
 ```c++
-  enum class GraphState {     
+std::string param_path_;   // 计算图的模型结构文件路径
+std::string bin_path_;     // 计算图的模型权重文件路径
+std::string input_name_;   /// 计算图输入节点的名称
+std::string output_name_;  /// 计算图输出节点的名称
+enum class GraphState {
     NeedInit = -2,
     NeedBuild = -1,
     Complete = 0,
-  };
-  GraphState graph_state_ = GraphState::NeedInit;  // 计算图构建状态
-  std::string input_name_;   /// 计算图输入节点的名称
-  std::string output_name_;  /// 计算图输出节点的名称
-  std::string param_path_;   /// 计算图的结构文件
-  std::string bin_path_;     /// 计算图的权重文件
-  std::map<std::string, std::shared_ptr<RuntimeOperator>>
-      input_operators_maps_;  /// 保存输入节点
-  std::map<std::string, std::shared_ptr<RuntimeOperator>>
-      output_operators_maps_;  /// 保存输出节点
-  std::vector<std::shared_ptr<RuntimeOperator>>
-      operators_;                       /// 计算图的计算节点
-  std::unique_ptr<pnnx::Graph> graph_;  /// pnnx的graph
+};
+GraphState graph_state_ = GraphState::NeedInit;  
+std::unique_ptr<pnnx::Graph> graph_;   //  pnnx的graph
+std::vector<std::shared_ptr<RuntimeOperator>> operators_;   // 计算图的计算节点
+std::map<std::string, std::shared_ptr<RuntimeOperator>> operators_maps_;   // 所有的计算节点，根据唯一的name索引
+std::vector<std::shared_ptr<RuntimeOperator>> topo_operators_;   // 经过拓扑排序的计算节点
 ```
 
 
@@ -306,33 +303,20 @@ PNNX具有以下特性：
 `RuntimeOperator`类设计如下：
 
 ```c++
-struct RuntimeOperator {
-  int32_t meet_num = 0;  /// 计算节点被相连接节点访问到的次数
-  virtual ~RuntimeOperator() {
-    for (auto& param : this->params) {
-      if (param.second != nullptr) {
-        delete param.second;
-        param.second = nullptr;
-      }
-    }
-  }
-  std::string name;              /// 计算节点的名称
-  std::string type;              /// 计算节点的类型
-  std::shared_ptr<Layer> layer;  /// 节点对应的计算Layer
-
-  std::vector<std::string> output_names;  /// 节点的输出节点名称
-  std::shared_ptr<RuntimeOperand> output_operands;  /// 节点的输出操作数
-
-  std::map<std::string, std::shared_ptr<RuntimeOperand>>
-      input_operands;  /// 节点的输入操作数
-  std::vector<std::shared_ptr<RuntimeOperand>>
-      input_operands_seq;  /// 节点的输入操作数，顺序排列
-  std::map<std::string, std::shared_ptr<RuntimeOperator>>
-      output_operators;  /// 输出节点的名字和节点对应
-
-  std::map<std::string, RuntimeParameter*> params;  /// 算子的参数信息
-  std::map<std::string, std::shared_ptr<RuntimeAttribute>>
-      attribute;  /// 算子的属性信息，内含权重信息
+struct RuntimeOperator{
+    virtual ~RuntimeOperator();
+    std::map<std::string, std::shared_ptr<RuntimeOperand>> input_operands;      // 输入操作数
+    std::vector<std::shared_ptr<RuntimeOperand>> input_operands_seq;            // 输入操作数，按顺序排列
+    std::shared_ptr<RuntimeOperand> output_operands;     // 输出操作数
+    std::vector<std::string> output_names;                                      // 后继节点的名称
+    std::map<std::string, std::shared_ptr<RuntimeOperator>> output_operators;   // 后继节点
+    std::string name;   // 计算节点的名称
+    std::string type;   // 计算节点的类型
+    std::shared_ptr<Layer> layer;  /// 计算节点对应的计算Layer
+    bool has_forward = false;   // 标记是否已经遍历，用于拓扑排序和前向推理过程
+    
+    std::map<std::string, RuntimeParameter*> params;  /// 计算节点的超参数
+    std::map<std::string, std::shared_ptr<RuntimeAttribute>> attribute;  /// 计算节点的属性，包含权重
 };
 ```
 
@@ -343,11 +327,11 @@ struct RuntimeOperator {
 操作数是每个节点的输入和输出数据，`RuntimeOperand`类设计如下：
 
 ```c++
-struct RuntimeOperand {
-  std::string name;                                     /// 操作数的名称
-  std::vector<int32_t> shapes;                          /// 操作数的形状
-  std::vector<std::shared_ptr<Tensor<float>>> datas;    /// 存储操作数
-  RuntimeDataType type = RuntimeDataType::kTypeUnknown; /// 操作数的类型，一般是float
+struct RuntimeOperand{
+    std::string name;  // 操作数的名字，即生产该操作数的计算节点名字
+    std::vector<int32_t> shapes; // 操作数的形状
+    RuntimeDataType type = RuntimeDataType::kTypeUnknown; // 操作数的数据类型，一般是float
+    std::vector<std::shared_ptr<Tensor<float>>> datas; // 操作数: 共有batch个数据，每个数据是一个张量
 };
 ```
 
@@ -398,11 +382,13 @@ SigmoidLayer layer(sigmoid_op);
 
 
 
-这里通过统一的**工厂方法**，实现了不同layer层的生成。步骤如下：
+这里通过统一的**工厂方法**，实现了不同layer层的统一生产。步骤如下：
 
 - 每个Layer会通过定义`LayerRegistererWrapper`对象来调用`RegisterCreator`方法：**注册器模式**
 
 ```c++
+// 全局变量的初始化在main函数之前
+
 LayerRegistererWrapper kSigmoidGetInstance("nn.Sigmoid", SigmoidLayer::GetInstance);
 
 class LayerRegistererWrapper {
@@ -488,6 +474,13 @@ for (const auto& current_op : operators_) {
 
 #### 对计算节点进行拓扑排序
 
+<ul> 
+<li markdown="1">
+每个计算节点必须要等它依赖的节点完成计算，才能进行计算，是一个拓扑排序的过程。也就是进行广度优先遍历，通过一个队列维护要遍历的计算节点，当某个计算节点的前驱节点都已加入队列中，则将该节点也加入到队列中。
+![]({{site.baseurl}}/img/kuiper/13.png) 
+</li> 
+</ul> 
+
 ```c++
 void RuntimeGraph::ReverseTopo(const std::shared_ptr<RuntimeOperator>& root_op) {
     CHECK(root_op != nullptr) << "current operator is nullptr";
@@ -509,7 +502,7 @@ void RuntimeGraph::ReverseTopo(const std::shared_ptr<RuntimeOperator>& root_op) 
 
 
 
-### 计算图的调度执行
+### 计算图的前向推理
 
 <ul> 
 <li markdown="1">
@@ -518,42 +511,77 @@ Graph在执行时在逻辑上可以分为两条路径，一条是控制流，另
 </li> 
 </ul> 
 
-<ul> 
-<li markdown="1">
-每个计算节点必须要等它依赖的节点完成计算，才能进行计算，是一个拓扑排序的过程。也就是进行广度优先遍历，通过一个队列维护要遍历的计算节点，当某个计算节点的前驱节点都已加入队列中，则将该节点也加入到队列中。
-![]({{site.baseurl}}/img/kuiper/13.png) 
-</li> 
-</ul> 
+```c++
+/**
+  * 计算图的前向推理,根据拓扑排序的顺序执行
+  * @param inputs 计算图的输入张量
+  * @param debug 是否调试，如果调试则输出一些中间信息
+  * @return 计算图的输出张量
+  */
+std::vector<std::shared_ptr<Tensor<float>>> RuntimeGraph::Forward(
+    const std::vector<std::shared_ptr<Tensor<float>>>& inputs, bool debug) {
 
-寻找并拷贝上一级的输出到后继节点
+	......
+
+  for (const auto& op : topo_operators_) {
+    op->has_forward = false;
+  }
+
+  for (const auto& current_op : topo_operators_) {
+    if (current_op->type == "pnnx.Input") {
+      current_op->has_forward = true;
+      ProbeNextLayer(current_op, inputs);
+    } else if (current_op->type == "pnnx.Output") {
+      current_op->has_forward = true;
+      CHECK(current_op->input_operands_seq.size() == 1);
+      current_op->output_operands = current_op->input_operands_seq.front();
+    } else {
+      InferStatus status = current_op->layer->Forward();
+      CHECK(status == InferStatus::kInferSuccess)
+          << current_op->layer->layer_name()
+          << " layer forward failed, error code: " << int(status);
+      current_op->has_forward = true;
+      ProbeNextLayer(current_op, current_op->output_operands->datas);
+    }
+  }
+
+	......
+  }
+
+```
 
 ```c++
-void RuntimeGraph::ProbeNextLayer(
-    const std::shared_ptr<RuntimeOperator> &current_op,
-    std::deque<std::shared_ptr<RuntimeOperator>> &operator_queue,
-    std::vector<std::shared_ptr<Tensor<float>>> layer_output_datas) {
-  const auto &next_ops = current_op->output_operators;
-
-  std::vector<std::vector<std::shared_ptr<ftensor>>> next_input_datas_arr;
-  for (const auto &next_op : next_ops) {
-    const auto &next_rt_operator = next_op.second;
-    const auto &next_input_operands = next_rt_operator->input_operands;
-    // 找到后继节点
-    if (next_input_operands.find(current_op->name) !=
-        next_input_operands.end()) {
-      std::vector<std::shared_ptr<ftensor>> next_input_datas =
-          next_input_operands.at(current_op->name)->datas;
-      next_input_datas_arr.push_back(next_input_datas);
-      next_rt_operator->meet_num += 1;
-      if (std::find(operator_queue.begin(), operator_queue.end(),
-                    next_rt_operator) == operator_queue.end()) {
-        if (CheckOperatorReady(next_rt_operator)) {
-          operator_queue.push_back(next_rt_operator);
-        }
+/**
+* 探查下一层的计算节点，把当前节点的输出赋值给下一层节点作为输入
+* @param current_op 当前计算节点
+* @param layer_output_data 当前节点的输出，赋予到下一层计算节点的输入张量中
+*/
+void RuntimeGraph::ProbeNextLayer(const std::shared_ptr<RuntimeOperator>& current_op,
+    const std::vector<std::shared_ptr<Tensor<float>>>& layer_output_datas) {
+  // 当前节点的后继节点next_ops
+  const auto& next_ops = current_op->output_operators;
+  // 对所有后继节点进行遍历
+  for (const auto& [_, next_rt_operator] : next_ops) {
+    // 得到后继节点的输入next_input_operands
+    const auto& next_input_operands = next_rt_operator->input_operands;
+    // 确定后继节点的输入来自于current_op
+    if (next_input_operands.find(current_op->name) != next_input_operands.end()) {
+      // 得到后继节点的关于current_op输出的输入空间 next_input_datas
+      /**
+       * next_input_operands:
+       * {
+       *    输入1 -- current_op.name: current_op对应的输出空间
+       *    输入2 -- other_op.name: other_op对应的输出空间
+       * }
+       */
+      std::vector<std::shared_ptr<ftensor>>& next_input_datas = next_input_operands.at(current_op->name)->datas;
+      CHECK(next_input_datas.size() == layer_output_datas.size());
+      // 将当前current_op的输出赋值到next_input_datas中
+      for (int i = 0; i < next_input_datas.size(); ++i) {
+        next_input_datas.at(i) = layer_output_datas.at(i);
       }
     }
   }
-  SetOpInputData(layer_output_datas, next_input_datas_arr);
 }
 ```
 

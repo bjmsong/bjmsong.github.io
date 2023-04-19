@@ -120,9 +120,11 @@ arma::fmat ConvolutionLayer::Im2Col(sftensor input, uint32_t kernel_w, uint32_t 
     CHECK(output->shapes() == input->shapes())
             << "The output size of relu is error";
 #ifndef __SSE2__
+      
     output->set_data(input->data());
     output->Transform([](float val) { return val > 0. ? val : 0.; });
 #else
+      
     float *in_ptr = const_cast<float *>(input->raw_ptr());
     float *out_ptr = const_cast<float *>(output->raw_ptr());
     __m128 _zero = _mm_setzero_ps();

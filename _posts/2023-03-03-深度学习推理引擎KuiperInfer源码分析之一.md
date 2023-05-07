@@ -19,7 +19,7 @@ tags:
 
 <ul> 
 <li markdown="1">
-作为深度学习推理框架的核心组件，推理引擎的整体流程如下图所示：
+KuiperInfer的整体流程如下图所示：
 ![]({{site.baseurl}}/img/kuiper/1.png) 
 </li> 
 </ul> 
@@ -41,30 +41,41 @@ tags:
 
 
 
-### `Tensor`类的设计
+### Arma::Cube
 
-成员变量：
+**Armadillo**是一个接口友好，高性能的线性代数库，底层可以调用`OpenBlas`、`MKL`。
+
+`KuiperInfer`的张量以**Armadillo**类中的**`cube`**(三维矩阵)作为数据的container，在`cube`之上实现了`Tensor`的接口，一个`cube`由多个**`mat`**（二维矩阵）在内存中连续存储组成。张量是**逻辑上的多维数组，底层数据结构为一维数组（内存连续）**。
+
+`mat`是列主序的，也就是同一列数据存放在内存中相邻的位置。因此`cube`的数据存储大致如下图所示：
+
+<ul> 
+<li markdown="1">
+![]({{site.baseurl}}/img/kuiper/30.png) 
+</li> 
+</ul> 
+
+### 成员变量
 
 ```c++
  private:
-  // 行优先的shape
-  void ReView(const std::vector<uint32_t>& shapes);
-  std::vector<uint32_t> raw_shapes_;  // 张量数据的实际尺寸大小
   arma::fcube data_;                  // 张量数据
+  std::vector<uint32_t> raw_shapes_;  // 张量的实际尺寸，可以通过raw_shapes_的长度判断张量是几维的
 ```
 
 
 
+### 构造、拷贝构造、赋值拷贝、移动构造、移动赋值
+
 <ul> 
 <li markdown="1">
-KuiperInfer的张量以Armadillo类中的cube(三维矩阵)作为数据的container，在cube之上实现了Tensor的接口，一个cube由多个mat（二维矩阵）在内存中连续存储组成。
-![]({{site.baseurl}}/img/kuiper/2.png) 
+![]({{site.baseurl}}/img/kuiper/31.png) 
 </li> 
 </ul> 
 
-**Armadillo**是一个接口友好，高性能的线性代数库，底层可以调用`OpenBlas`、`MKL`。
 
-张量是**逻辑上的多维数组，底层数据结构为一维数组（内存连续）**
+
+### 成员函数
 
 张量类提供的**数据读取**方法有：
 
@@ -84,34 +95,12 @@ KuiperInfer的张量以Armadillo类中的cube(三维矩阵)作为数据的contai
 </ul> 
 
 
-张量可以通过加载csv文件生成
-
-```c++
-class CSVDataLoader {
- public:
-    // 从csv文件中初始化张量
-  static arma::fmat LoadData(const std::string &file_path, char split_char = ',');
-
- private:
-    // 得到csv文件的尺寸大小，LoadData中根据这里返回的尺寸大小初始化返回的fmat
-  static std::pair<size_t, size_t> GetMatrixSize(std::ifstream &file, char split_char);
-};
-```
-
-
 
 ### 列主序
 
 <ul> 
 <li markdown="1">
-mat类是列主序的，也就是同一列数据存放在内存中相邻的位置。这个特性会影响很多对Tensor的操作。
-![]({{site.baseurl}}/img/kuiper/3.png) 
-</li> 
-</ul> 
-
-<ul> 
-<li markdown="1">
-例如Fill方法：以values中的数据去填充Tensor。如果将顺序的一组数据[0,1,2,3,4,5,...,15]填充到一个大小为4×4的Tensor中。默认情况下填充的结果是这样的:
+arma::cube列主序的特性会影响很多对Tensor的操作，例如Fill(vector<float>values)方法：以values中的数据去填充Tensor。如果将的一组数据[0,1,2,3,4,5,...,15]填充到一个大小为4×4的Tensor中。默认情况下填充的结果是这样的：
 ![]({{site.baseurl}}/img/kuiper/4.png) 
 </li> 
 </ul> 
@@ -127,7 +116,7 @@ mat类是列主序的，也就是同一列数据存放在内存中相邻的位�
 
 <ul> 
 <li markdown="1">
-还有Reshape方法：调整tensor的形状。默认的reshape结果是这样的：
+还有Reshape方法（调整tensor的形状），默认的reshape结果是这样的：
 ![]({{site.baseurl}}/img/kuiper/6.png) 
 </li> 
 </ul> 
@@ -140,7 +129,7 @@ mat类是列主序的，也就是同一列数据存放在内存中相邻的位�
 
 <ul> 
 <li markdown="1">
-如果想要实现行主序的reshape，不能直接调用cube的方法，只能通过位置计算的方式来对逐个元素进行搬运。
+如果想要实现行主序的reshape，只能通过位置计算的方式来对元素进行逐个搬运。
 ![]({{site.baseurl}}/img/kuiper/8.png) 
 </li> 
 </ul> 
@@ -151,28 +140,137 @@ void Tensor<float>::ReView(const std::vector<uint32_t>& shapes) {
   const uint32_t target_channels = shapes.at(0);
   const uint32_t target_rows = shapes.at(1);
   const uint32_t target_cols = shapes.at(2);
+  CHECK_EQ(this->data_.size(), target_channels * target_cols * target_rows);
   arma::fcube new_data(target_rows, target_cols, target_channels);
 
-  const uint32_t plane_size = target_rows * target_cols;
+  const uint32_t matrix_size = target_rows * target_cols;
+  // 逐个元素遍历原tensor
   for (uint32_t c = 0; c < this->data_.n_slices; ++c) {
     const arma::fmat& channel = this->data_.slice(c);
-    for (uint32_t c_ = 0; c_ < this->data_.n_cols; ++c_) {
-      const float* colptr = channel.colptr(c_);
-      for (uint32_t r = 0; r < this->data_.n_rows; ++r) {
-        const uint32_t pos_index =
-            c * data_.n_rows * data_.n_cols + r * data_.n_cols + c_;
-        const uint32_t ch = pos_index / plane_size;
-        const uint32_t row = (pos_index - ch * plane_size) / target_cols;
-        const uint32_t col = (pos_index - ch * plane_size - row * target_cols);
-        new_data.at(row, col, ch) = *(colptr + r);
+    // 先遍历列，再遍历行：因为是列主序的，同一列数据在内存中连续
+    for (uint32_t w = 0; w < this->data_.n_cols; ++w) {
+      const float* col_ptr = channel.colptr(w);  // Obtain a raw pointer to the memory used by elements in the specified column
+      for (uint32_t h = 0; h < this->data_.n_rows; ++h) {
+        // index：按照行优先顺序
+        const uint32_t pos_index = c * data_.n_rows * data_.n_cols + h * data_.n_cols + w; 
+        // 调整后的元素下标
+        const uint32_t ch = pos_index / matrix_size;
+        const uint32_t row = (pos_index - ch * matrix_size) / target_cols;
+        const uint32_t col = (pos_index - ch * matrix_size - row * target_cols);
+        CHECK(ch < new_data.n_slices && col < new_data.n_cols && row < new_data.n_rows);
+        new_data.at(row, col, ch) = *(col_ptr + h);
       }
     }
   }
-  this->data_ = new_data;
+  this->data_ = std::move(new_data);
 }
 ```
 
 
+
+### 张量间运算
+
+#### 深拷贝
+
+```c++
+std::shared_ptr<Tensor<float>> TensorClone(std::shared_ptr<Tensor<float>> tensor){
+    return std::make_shared<Tensor<float>>(*tensor);
+}   
+```
+
+
+
+#### Broadcast
+
+简化版本
+
+```c++
+std::tuple<sftensor, sftensor> TensorBroadcast(const sftensor& tensor1, const sftensor& tensor2){
+    CHECK(tensor1 != nullptr && tensor2 != nullptr);
+    if (tensor1->shapes() == tensor2->shapes()) {
+        return {tensor1, tensor2};
+    } else {
+    CHECK(tensor1->channels() == tensor2->channels());    // channel数量要一致
+    if (tensor2->rows() == 1 && tensor2->cols() == 1) {
+      sftensor new_tensor =
+          TensorCreate(tensor2->channels(), tensor1->rows(), tensor1->cols());
+      CHECK(tensor2->size() == tensor2->channels());
+      for (uint32_t c = 0; c < tensor2->channels(); ++c) {
+        new_tensor->slice(c).fill(tensor2->index(c));
+      }
+      return {tensor1, new_tensor};
+    } else if (tensor1->rows() == 1 && tensor1->cols() == 1) {
+      sftensor new_tensor =
+          TensorCreate(tensor1->channels(), tensor2->rows(), tensor2->cols());
+      CHECK(tensor1->size() == tensor1->channels());
+      for (uint32_t c = 0; c < tensor1->channels(); ++c) {
+        new_tensor->slice(c).fill(tensor1->index(c));
+      }
+      return {new_tensor, tensor2};
+    } else {
+      LOG(FATAL) << "Broadcast shape is not adapting!";
+      return {tensor1, tensor2};
+    }
+  }
+}
+```
+
+
+
+#### 加法
+
+```c++
+std::shared_ptr<Tensor<float>> TensorElementAdd(const std::shared_ptr<Tensor<float>>& tensor1,
+    const std::shared_ptr<Tensor<float>>& tensor2){
+        CHECK(tensor1 != nullptr && tensor2 != nullptr);
+        if (tensor1->shapes() == tensor2->shapes())
+            return std::make_shared<Tensor<float>>(*tensor1 + *tensor2);
+        else {
+            // broadcast
+            CHECK(tensor1->channels() == tensor2->channels())<< "Tensors shape are not adapting";
+            const auto& [input_tensor1, input_tensor2] =
+                TensorBroadcast(tensor1, tensor2);
+            CHECK(input_tensor1->shapes() == input_tensor2->shapes());
+            return std::make_shared<Tensor<float>>(*input_tensor1 + *input_tensor2);
+        }
+}
+```
+
+
+
+#### 乘法
+
+```c++
+std::shared_ptr<Tensor<float>> TensorElementMultiply(const std::shared_ptr<Tensor<float>>& tensor1,
+    const std::shared_ptr<Tensor<float>>& tensor2){
+        CHECK(tensor1 != nullptr && tensor2 != nullptr);
+        if (tensor1->shapes() == tensor2->shapes())
+            return std::make_shared<Tensor<float>>(*tensor1 % *tensor2);
+        else {
+            // broadcast
+            CHECK(tensor1->channels() == tensor2->channels())<< "Tensors shape are not adapting";
+            const auto& [input_tensor1, input_tensor2] =
+                TensorBroadcast(tensor1, tensor2);
+            CHECK(input_tensor1->shapes() == input_tensor2->shapes());
+            return std::make_shared<Tensor<float>>(*input_tensor1 % *input_tensor2);
+        }
+}
+```
+
+
+
+### 加载csv文件生成张量
+
+```c++
+class CSVDataLoader {
+ public:
+  static arma::fmat LoadData(const std::string &file_path, char split_char = ',');
+
+ private:
+  // 得到csv文件的尺寸大小，LoadData中根据这里返回的尺寸大小初始化返回的fmat
+  static std::pair<size_t, size_t> GetMatrixSize(std::ifstream &file, char split_char);
+};
+```
 
 
 

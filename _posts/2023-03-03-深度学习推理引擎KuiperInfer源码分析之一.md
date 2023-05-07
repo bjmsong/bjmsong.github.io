@@ -100,7 +100,7 @@ KuiperInfer的整体流程如下图所示：
 
 <ul> 
 <li markdown="1">
-arma::cube列主序的特性会影响很多对Tensor的操作，例如Fill(vector<float>values)方法：以values中的数据去填充Tensor。如果将的一组数据[0,1,2,3,4,5,...,15]填充到一个大小为4×4的Tensor中。默认情况下填充的结果是这样的：
+arma::cube列主序的特性会影响很多对Tensor的操作，例如Fill方法：以values中的数据去填充Tensor。如果将的一组数据[0,1,2,3,4,5,...,15]填充到一个大小为4×4的Tensor中。默认情况下填充的结果是这样的
 ![]({{site.baseurl}}/img/kuiper/4.png) 
 </li> 
 </ul> 

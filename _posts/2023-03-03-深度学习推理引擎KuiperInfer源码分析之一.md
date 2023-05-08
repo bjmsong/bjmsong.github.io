@@ -259,7 +259,9 @@ std::shared_ptr<Tensor<float>> TensorElementMultiply(const std::shared_ptr<Tenso
 
 
 
-### 加载csv文件生成张量
+### 加载csv文件生成矩阵
+
+遍历两遍，第一遍遍历得到行数和列数，这样才能分配`arma::fmat`的空间，第二遍遍历加载数据到`arma::fmat`。
 
 ```c++
 class CSVDataLoader {
@@ -278,7 +280,7 @@ class CSVDataLoader {
 
 <ul> 
 <li markdown="1">
-计算图是神经网络的中间表达。计算图根据训练好的神经网络结构，将Tensor和计算节点（Operator）有效的组织和连接形成一个整体，形成一个有向无环图（DAG），并描述如何将输入的数据通过各种层进行运算得到输出。
+计算图是神经网络的中间表达。计算图根据训练好的神经网络结构，将张量（Tensor）和计算节点（Operator）有效的组织和连接形成一个整体，形成一个有向无环图（DAG），并描述如何将输入的数据通过各种层进行运算得到输出。
 ![]({{site.baseurl}}/img/kuiper/9.png) 
 </li> 
 </ul> 
@@ -293,14 +295,15 @@ class CSVDataLoader {
 
 ### PNNX
 
-[PNNX](https://link.zhihu.com/?target=https%3A//github.com/Tencent/ncnn/tree/master/tools/pnnx) （PyTorch Neural Network eXchange）是PyTorch模型互操作性的开放标准。PNNX为PyTorch提供了一种开源的模型格式，它定义了与Pytorch相匹配的数据流图和运算图。Pytorch训练好一个模型之后，模型可以转换到pnnx格式文件，通过读取pnnx格式文件，形成计算图。
+[`PNNX`](https://link.zhihu.com/?target=https%3A//github.com/Tencent/ncnn/tree/master/tools/pnnx) （PyTorch Neural Network eXchange）为`PyTorch`提供了一种开源的模型格式，它定义了与`Pytorc`h相匹配的数据流图和运算图。`Pytorch`训练好一个模型之后，模型可以转换到`pnnx`格式文件，通过读取`pnnx`格式文件，形成计算图。
 
-- ONNX作为广泛应用的模型中间表达，具有以下一些问题：
-  - ONNX以ProtoBuffer作为模型表达的文件格式，对数据传输友好，但是可读性不友好，很难直接修改计算图
-  - 算子的定义和PyTorch不完全兼容，需要用很多小算子去拼接，使得计算图变得过于复杂，同时降低推理效率
-  - 因为ONNX要适配不同的深度学习框架，添加了大量的参数，增加了开发者负担
+`ONNX`作为最广泛应用的模型中间表达，具有以下一些问题：
 
-PNNX具有以下特性：
+- `ONNX`以`protobuffer`作为模型表达的文件格式，对数据传输友好，但是可读性不友好，很难直接修改计算图
+- 算子的定义和`PyTorch`不完全兼容，需要用很多小算子去拼接，使得计算图变得过于复杂，同时降低推理效率
+- 因为`ONNX`要适配不同的深度学习框架，添加了大量的参数，增加了开发者负担
+
+`PNNX`具有以下特性：
 
 - 模型文件用户可读，容易修改
 
@@ -328,13 +331,15 @@ PNNX具有以下特性：
 - ....
 
 
+
+### 计算节点（`RuntimeOperator`）、操作数（`RuntimeOperand`）
+
 <ul> 
 <li markdown="1">
-为了方便本项目的使用，作者对PNNX的计算图进行了封装。下面的示意图展示了PNNX中Operator类和Operand类的主要属性。
+为了方便本项目的使用，作者对PNNX的计算图进行了封装。下图展示了PNNX中Operator类和Operand类的主要属性。
 ![]({{site.baseurl}}/img/kuiper/25.png) 
 </li> 
 </ul> 
-
 
 <ul> 
 <li markdown="1">
@@ -343,68 +348,21 @@ PNNX具有以下特性：
 </li> 
 </ul> 
 
-
-### 计算图(`RuntimeGraph`)
-
-`RuntimeGraph`类负责计算图的初始化&构建：
-
-<ul> 
-<li markdown="1">
-![]({{site.baseurl}}/img/kuiper/27.png) 
-</li> 
-</ul> 
-
-<ul> 
-<li markdown="1">
-![]({{site.baseurl}}/img/kuiper/28.png) 
-</li> 
-</ul> 
-
-前向推理：
-
-<ul> 
-<li markdown="1">
-![]({{site.baseurl}}/img/kuiper/29.png) 
-</li> 
-</ul> 
-
-成员变量如下：
-
-```c++
-std::string param_path_;   // 计算图的模型结构文件路径
-std::string bin_path_;     // 计算图的模型权重文件路径
-std::string input_name_;   /// 计算图输入节点的名称
-std::string output_name_;  /// 计算图输出节点的名称
-enum class GraphState {
-    NeedInit = -2,
-    NeedBuild = -1,
-    Complete = 0,
-};
-GraphState graph_state_ = GraphState::NeedInit;  
-std::unique_ptr<pnnx::Graph> graph_;   //  pnnx的graph
-std::vector<std::shared_ptr<RuntimeOperator>> operators_;   // 计算图的计算节点
-std::map<std::string, std::shared_ptr<RuntimeOperator>> operators_maps_;   // 所有的计算节点，根据唯一的name索引
-std::vector<std::shared_ptr<RuntimeOperator>> topo_operators_;   // 经过拓扑排序的计算节点
-```
-
-
-
-### 计算节点（`RuntimeOperator`）
-
 计算节点是计算图中的一个节点，用来执行特定计算。如`Relu`，卷积、池化等。
 
-- 计算节点主要包含三部分内容：
-  1. 节点的输入、输出数据，节点的参数（如卷积核的大小），节点的权重（如卷积核的weight、bias）等；
-  2. 后继计算节点和前驱计算节点；
-  3. 层(Layer): 计算过程的具体执行者
+计算节点主要包含三部分内容：
+
+1. 节点的输入、输出数据，节点的参数（如卷积核的大小），节点的权重（如卷积核的weight、bias）等；
+2. 后继计算节点；
+3. 层(Layer): 计算过程的具体执行者
 
 `RuntimeOperator`类设计如下：
 
 ```c++
 struct RuntimeOperator{
     virtual ~RuntimeOperator();
-    std::map<std::string, std::shared_ptr<RuntimeOperand>> input_operands;      // 输入操作数
-    std::vector<std::shared_ptr<RuntimeOperand>> input_operands_seq;            // 输入操作数，按顺序排列
+    std::map<std::string, std::shared_ptr<RuntimeOperand>> input_operands;    // 输入操作数
+    std::vector<std::shared_ptr<RuntimeOperand>> input_operands_seq;          // 输入操作数，按顺序排列
     std::shared_ptr<RuntimeOperand> output_operands;     // 输出操作数
     std::vector<std::string> output_names;                                      // 后继节点的名称
     std::map<std::string, std::shared_ptr<RuntimeOperator>> output_operators;   // 后继节点
@@ -418,87 +376,111 @@ struct RuntimeOperator{
 };
 ```
 
-
-
-### 操作数（`RuntimeOperand`）
-
 操作数是每个节点的输入和输出数据，`RuntimeOperand`类设计如下：
 
 ```c++
 struct RuntimeOperand{
-    std::string name;  // 操作数的名字，即生产该操作数的计算节点名字
+    std::string name;  // 输出该操作数的计算节点的名字
     std::vector<int32_t> shapes; // 操作数的形状
     RuntimeDataType type = RuntimeDataType::kTypeUnknown; // 操作数的数据类型，一般是float
-    std::vector<std::shared_ptr<Tensor<float>>> datas; // 操作数: 共有batch个数据，每个数据是一个张量
+    std::vector<std::shared_ptr<Tensor<float>>> datas; // batch个数据，每个数据是一个张量
 };
 ```
 
 
 
-### 计算图的构建
+### 构建计算图：`RuntimeGraph::Build()`
 
-#### 加载PNNX模型文件，生成PNNX计算图
+#### 加载PNNX文件，生成计算图
 
 ```c++
 RuntimeGraph graph(param_path, weight_path);
 ```
 
+```c++
+graph_ = std::make_unique<pnnx::Graph>();
+int load_result = graph_->load(param_path_, bin_path_);
+```
 
 
-#### 通过PNNX的operators，构建计算节点
+
+#### 封装PNNX计算节点，构建Runtime计算节点
+
+计算图的计算节点相关的属性如下：
 
 ```c++
+std::vector<std::shared_ptr<RuntimeOperator>> operators_;   // 计算图的计算节点
+std::map<std::string, std::shared_ptr<RuntimeOperator>> operators_maps_;   // 所有的计算节点，根据唯一的name索引
+```
+
+主要通过下面的方法对这两个属性进行了初始化：
+
+```c++
+// 初始化计算节点的输入操作数：input_operands，input_operands_seq
 InitGraphOperatorsInput();
+// 初始化计算节点的后继节点（们）的名称：output_names
 InitGraphOperatorsOutput();
+// 初始化计算节点的模型权重：attribute
 InitGraphAttrs();    
+// 初始化计算节点的超参数：params
 InitGraphParams();
 ```
 
 
 
-#### 创建计算节点对应的Layer层
+#### 关联计算节点的后继计算节点（们）
 
 ```c++
-std::shared_ptr<Layer> RuntimeGraph::CreateLayer(
-    const std::shared_ptr<RuntimeOperator>& op) {
-  LOG_IF(FATAL, !op) << "Operator is empty!";
-  const auto& layer = LayerRegisterer::CreateLayer(op);
-  LOG_IF(FATAL, !layer) << "Layer init failed " << op->type;
-  return layer;
+for (const auto& current_op : operators_) {
+    // 遍历当前节点的所有后继节点，通过name检索next_op_name，找到后继节点
+    const std::vector<std::string>& output_names = current_op->output_names;
+    for (const auto& next_op_name : output_names) {
+        if (const auto& next_op_pair = this->operators_maps_.find(next_op_name);
+            next_op_pair != this->operators_maps_.end()) {
+            current_op->output_operators.insert({next_op_name, next_op_pair->second});
+        }
+    }
 }
 ```
 
 
 
-原本不同的layer层需要通过调用对应的layer类来构造，例如：
+#### 创建计算节点对应的Layer
+
+计算节点的计算逻辑包含在`Layer`类中，根据`RuntimeOperator`，生产对应的`layer`，例如：
 
 ```c++
-ReluLayer layer(relu_op);
-SigmoidLayer layer(sigmoid_op);
+ReluLayer(relu_op);
+SigmoidLayer(sigmoid_op);
 .....
 ```
 
-
-
-这里通过统一的**工厂方法**，实现了不同layer层的统一生产。步骤如下：
-
-- 每个Layer会通过定义`LayerRegistererWrapper`对象来调用`RegisterCreator`方法：**注册器模式**
+`layer`的类型很多，需要有统一的接口来生产不同的`layer`（就像下面这样），**工厂模式**适合这个场景。
 
 ```c++
-// 全局变量的初始化在main函数之前
+const auto& layer = LayerRegisterer::CreateLayer(op);
+```
 
+具体步骤如下：
+
+- 每个Layer通过定义`LayerRegistererWrapper`对象来调用`RegisterCreator`方法：
+
+```c++
+// 全局变量的初始化在main函数执行之前
 LayerRegistererWrapper kSigmoidGetInstance("nn.Sigmoid", SigmoidLayer::GetInstance);
 
 class LayerRegistererWrapper {
  public:
   LayerRegistererWrapper(const std::string &layer_type, const LayerRegisterer::Creator &creator) {
     LayerRegisterer::RegisterCreator(layer_type, creator);
-  }
+ }
 ```
 
-- `RegisterCreator`方法通过维护一个**静态的注册表**来注册layer。注册表是一个Map，key是对应的OpType，用来查找对应的value，value是用于创建该层的对应方法(Creator)：**单例模式**。
+- `RegisterCreator`方法通过维护一个的**静态的注册表**来注册`layer`。注册表全局唯一（**单例模式**），是一个Map，key是layer的名字，value是用于创建该层的方法(Creator)。
 
 ```c++
+typedef ParseParameterAttrStatus (*Creator)(const std::shared_ptr<RuntimeOperator> &op,
+                                                    std::shared_ptr<Layer> &layer);
 typedef std::map<OpType, Creator> CreateRegistry;
 
 void LayerRegisterer::RegisterCreator(const std::string &layer_type,
@@ -524,34 +506,10 @@ std::shared_ptr<Layer> LayerRegisterer::CreateLayer(
     const std::shared_ptr<RuntimeOperator> &op) {
   CreateRegistry &registry = Registry();
   const std::string &layer_type = op->type;
-  LOG_IF(FATAL, registry.count(layer_type) <= 0)
-      << "Can not find the layer type: " << layer_type;
   const auto &creator = registry.find(layer_type)->second;
-
-  LOG_IF(FATAL, !creator) << "Layer creator is empty!";
   std::shared_ptr<Layer> layer;
   const auto &status = creator(op, layer);
-  LOG_IF(FATAL, status != ParseParameterAttrStatus::kParameterAttrParseSuccess)
-      << "Create the layer: " << layer_type
-      << " failed, error code: " << int(status);
   return layer;
-}
-```
-
-
-
-#### 关联计算节点的后继计算节点
-
-```c++
-for (const auto& current_op : operators_) {
-    // 遍历当前节点的所有后继节点，通过name检索next_op_name，找到后继节点
-    const std::vector<std::string>& output_names = current_op->output_names;
-    for (const auto& next_op_name : output_names) {
-        if (const auto& next_op_pair = this->operators_maps_.find(next_op_name);
-            next_op_pair != this->operators_maps_.end()) {
-            current_op->output_operators.insert({next_op_name, next_op_pair->second});
-        }
-    }
 }
 ```
 
@@ -559,14 +517,18 @@ for (const auto& current_op : operators_) {
 
 #### 预分配计算节点的输入和输出空间
 
-根据计算图，可以得到算子的输入输出操作数大小，可以在计算图执行之前提前分配好内存
-
-由于每个节点的输入就是上一层节点的输出，因此除了输入节点之外，其他节点的输入可以复用它上一层节点的输出空间
+根据计算节点的输入操作数的`shapes`，可以在计算图执行之前提前分配好内存空间。
 
 ```c++
-  RuntimeOperatorUtils::InitOperatorInput(operators_);
-  RuntimeOperatorUtils::InitOperatorOutput(graph_->ops, operators_);
+RuntimeOperatorUtils::InitOperatorInput(operators_);
+RuntimeOperatorUtils::InitOperatorOutput(graph_->ops, operators_);
 ```
+
+```c++
+output_operand->datas.push_back(TensorCreate(1, operand_shapes.at(1), operand_shapes.at(2)));
+```
+
+由于每个节点的输入就是上一层节点的输出，因此除了输入节点之外，其他节点的输入可以复用它上一层节点的输出空间。
 
 
 
@@ -580,6 +542,14 @@ for (const auto& current_op : operators_) {
 </ul> 
 
 ```c++
+// 从输入节点开始  
+for (const auto& [_, op] : operators_maps_) {
+    if (op->type == "pnnx.Input" && !op->has_forward) {
+      ReverseTopo(op);
+    }
+}
+
+// 生成(反向的)拓扑排序
 void RuntimeGraph::ReverseTopo(const std::shared_ptr<RuntimeOperator>& root_op) {
     CHECK(root_op != nullptr) << "current operator is nullptr";
     root_op->has_forward = true;
@@ -596,11 +566,13 @@ void RuntimeGraph::ReverseTopo(const std::shared_ptr<RuntimeOperator>& root_op) 
     }
     topo_operators_.push_back(root_op);
 }
+
+std::reverse(topo_operators_.begin(), topo_operators_.end());
 ```
 
 
 
-### 计算图的前向推理
+### 前向推理
 
 <ul> 
 <li markdown="1">
@@ -610,16 +582,10 @@ Graph在执行时在逻辑上可以分为两条路径，一条是控制流，另
 </ul> 
 
 ```c++
-/**
-  * 计算图的前向推理,根据拓扑排序的顺序执行
-  * @param inputs 计算图的输入张量
-  * @param debug 是否调试，如果调试则输出一些中间信息
-  * @return 计算图的输出张量
-  */
 std::vector<std::shared_ptr<Tensor<float>>> RuntimeGraph::Forward(
     const std::vector<std::shared_ptr<Tensor<float>>>& inputs, bool debug) {
 
-	......
+	...
 
   for (const auto& op : topo_operators_) {
     op->has_forward = false;
@@ -643,35 +609,25 @@ std::vector<std::shared_ptr<Tensor<float>>> RuntimeGraph::Forward(
     }
   }
 
-	......
-  }
-
+	...
+}
 ```
 
 ```c++
 /**
 * 探查下一层的计算节点，把当前节点的输出赋值给下一层节点作为输入
 * @param current_op 当前计算节点
-* @param layer_output_data 当前节点的输出，赋予到下一层计算节点的输入张量中
+* @param layer_output_data 当前节点的输出，也是下一层节点的输入
 */
 void RuntimeGraph::ProbeNextLayer(const std::shared_ptr<RuntimeOperator>& current_op,
     const std::vector<std::shared_ptr<Tensor<float>>>& layer_output_datas) {
-  // 当前节点的后继节点next_ops
+  // 当前节点的后继节点
   const auto& next_ops = current_op->output_operators;
   // 对所有后继节点进行遍历
   for (const auto& [_, next_rt_operator] : next_ops) {
-    // 得到后继节点的输入next_input_operands
     const auto& next_input_operands = next_rt_operator->input_operands;
     // 确定后继节点的输入来自于current_op
     if (next_input_operands.find(current_op->name) != next_input_operands.end()) {
-      // 得到后继节点的关于current_op输出的输入空间 next_input_datas
-      /**
-       * next_input_operands:
-       * {
-       *    输入1 -- current_op.name: current_op对应的输出空间
-       *    输入2 -- other_op.name: other_op对应的输出空间
-       * }
-       */
       std::vector<std::shared_ptr<ftensor>>& next_input_datas = next_input_operands.at(current_op->name)->datas;
       CHECK(next_input_datas.size() == layer_output_datas.size());
       // 将当前current_op的输出赋值到next_input_datas中

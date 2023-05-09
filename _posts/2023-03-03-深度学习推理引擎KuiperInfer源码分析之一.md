@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      深度学习推理引擎KuiperInfer源码分析
-subtitle:   之一
+title:      深度学习推理引擎KuiperInfer源码分析之一
+subtitle:   
 date:       2023-03-03
 author:     bjmsong
 header-img: img/kuiper/logo2.jpg
@@ -13,16 +13,13 @@ tags:
 
 ## 概览
 
-`KuiperInfer`(**[项目地址](https://github.com/zjhellofss/KuiperInfer)**)是一个开源的深度学习推理引擎，感谢作者提供了一个这么好的项目，供大家学习。本文分享一下我对这个项目的理解，欢迎交流。
+`KuiperInfer`(**[项目地址](https://github.com/zjhellofss/KuiperInfer)**)是一个开源的深度学习推理引擎，感谢作者提供这个项目供大家学习。本文分享一下我对这个项目的理解，欢迎交流。
 
 训练好的深度学习模型，需要通过推理框架部署到不同的设备上，高效完成模型推理，服务应用场景。与训练框架不同的是，深度学习推理框架**没有梯度反向传播功能**，因为算法模型文件中的权重系数已经被固化，推理框架只需要读取、加载并完成对新数据的预测即可。
 
-<ul> 
-<li markdown="1">
 KuiperInfer的整体流程如下图所示：
-![]({{site.baseurl}}/img/kuiper/1.png) 
-</li> 
-</ul> 
+![](/img/kuiper/1.png) 
+
 
 下面介绍下`KuiperInfer`的核心模块。
 
@@ -32,12 +29,9 @@ KuiperInfer的整体流程如下图所示：
 
 **张量是存储数据(例如输入、输出、系数或参数)的主要容器**。张量是一种递归和自包含的定义，比如：4维Tensor由N个3维Tensor组成，3维Tensor由N个2维Tensor组成，2维Tensor由N个1维的Tensor组成，1维Tensor由N个0维Tensor组成，0维Tensor维为标量。 
 
-<ul> 
-<li markdown="1">
 典型的图像数据RGB为3维Tensor，RGB数据的保存方式有RGBRGBRGB....或者 RRR...GGG...BBB...，即NHWC或者NCHW，如下图所示。KuiperInfer采用的是NCHW格式（NCHW分别表示批次、通道和高宽）。
-![]({{site.baseurl}}/img/caffe/NCHW.png) 
-</li> 
-</ul> 
+![](/img/caffe/NCHW.png) 
+
 
 
 
@@ -49,11 +43,8 @@ KuiperInfer的整体流程如下图所示：
 
 `mat`是列主序的，也就是同一列数据存放在内存中相邻的位置。因此`cube`的数据存储大致如下图所示：
 
-<ul> 
-<li markdown="1">
-![]({{site.baseurl}}/img/kuiper/30.png) 
-</li> 
-</ul> 
+![](/img/kuiper/30.png) 
+
 
 ### 成员变量
 
@@ -67,11 +58,8 @@ KuiperInfer的整体流程如下图所示：
 
 ### 构造、拷贝构造、赋值拷贝、移动构造、移动赋值
 
-<ul> 
-<li markdown="1">
-![]({{site.baseurl}}/img/kuiper/31.png) 
-</li> 
-</ul> 
+
+![](/img/kuiper/31.png) 
 
 
 
@@ -79,60 +67,39 @@ KuiperInfer的整体流程如下图所示：
 
 张量类提供的**数据读取**方法有：
 
-<ul> 
-<li markdown="1">
-![]({{site.baseurl}}/img/kuiper/23.png) 
-</li> 
-</ul> 
+
+![](/img/kuiper/23.png) 
+
 
 
 提供的**数据操作**方法有：
 
-<ul> 
-<li markdown="1">
-![]({{site.baseurl}}/img/kuiper/24.png) 
-</li> 
-</ul> 
+
+![](/img/kuiper/24.png) 
 
 
 
 ### 列主序
 
-<ul> 
-<li markdown="1">
-arma::cube列主序的特性会影响很多对Tensor的操作，例如Fill方法：以values中的数据去填充Tensor。如果将的一组数据[0,1,2,3,4,5,...,15]填充到一个大小为4×4的Tensor中。默认情况下填充的结果是这样的
-![]({{site.baseurl}}/img/kuiper/4.png) 
-</li> 
-</ul> 
 
-<ul> 
-<li markdown="1">
+arma::cube列主序的特性会影响很多对Tensor的操作，例如Fill()方法：以values中的数据去填充Tensor。如果将的一组数据[0,1,2,3,4,5,...,15]填充到一个大小为4×4的Tensor中。默认情况下填充的结果是这样的
+![](/img/kuiper/4.png) 
+
+
 如果想要实现行主序的填充效果，需要对填充结果进行转置。
-![]({{site.baseurl}}/img/kuiper/5.png) 
-</li> 
-</ul> 
+![](/img/kuiper/5.png) 
 
 
-
-<ul> 
-<li markdown="1">
 还有Reshape方法（调整tensor的形状），默认的reshape结果是这样的：
-![]({{site.baseurl}}/img/kuiper/6.png) 
-</li> 
-</ul> 
+![](/img/kuiper/6.png) 
 
-<ul> 
-<li markdown="1">
-![]({{site.baseurl}}/img/kuiper/7.png) 
-</li> 
-</ul> 
 
-<ul> 
-<li markdown="1">
+![](/img/kuiper/7.png) 
+
+
 如果想要实现行主序的reshape，只能通过位置计算的方式来对元素进行逐个搬运。
-![]({{site.baseurl}}/img/kuiper/8.png) 
-</li> 
-</ul> 
+![](/img/kuiper/8.png) 
+
 
 ```c++
 void Tensor<float>::ReView(const std::vector<uint32_t>& shapes) {
@@ -278,19 +245,11 @@ class CSVDataLoader {
 
 ## 计算图
 
-<ul> 
-<li markdown="1">
 计算图是神经网络的中间表达。计算图根据训练好的神经网络结构，将张量（Tensor）和计算节点（Operator）有效的组织和连接形成一个整体，形成一个有向无环图（DAG），并描述如何将输入的数据通过各种层进行运算得到输出。
-![]({{site.baseurl}}/img/kuiper/9.png) 
-</li> 
-</ul> 
+![](/img/kuiper/9.png) 
 
-<ul> 
-<li markdown="1">
-![]({{site.baseurl}}/img/kuiper/10.png) 
-</li> 
-</ul> 
 
+![](/img/kuiper/10.png) 
 
 
 ### PNNX
@@ -316,12 +275,10 @@ class CSVDataLoader {
   pnnx.Output     output      1 0 2
   ```
 
-<ul> 
-<li markdown="1">
+
 算子跟PyTorch Python API完全对应
-![]({{site.baseurl}}/img/kuiper/11.png) 
-</li> 
-</ul> 
+![](/img/kuiper/11.png) 
+
 
 - expression operator
   - 完整的算术表达式，阅读方便，减少访存
@@ -334,19 +291,14 @@ class CSVDataLoader {
 
 ### 计算节点（`RuntimeOperator`）、操作数（`RuntimeOperand`）
 
-<ul> 
-<li markdown="1">
-为了方便本项目的使用，作者对PNNX的计算图进行了封装。下图展示了PNNX中Operator类和Operand类的主要属性。
-![]({{site.baseurl}}/img/kuiper/25.png) 
-</li> 
-</ul> 
 
-<ul> 
-<li markdown="1">
+为了方便本项目的使用，作者对PNNX的计算图进行了封装。下图展示了PNNX中Operator类和Operand类的主要属性。
+![](/img/kuiper/25.png) 
+
+
 经过封装之后的RuntimeOperator类和RuntimeOperand类的主要属性如下：
-![]({{site.baseurl}}/img/kuiper/26.png) 
-</li> 
-</ul> 
+![](/img/kuiper/26.png) 
+
 
 计算节点是计算图中的一个节点，用来执行特定计算。如`Relu`，卷积、池化等。
 
@@ -633,8 +585,6 @@ void RuntimeGraph::ProbeNextLayer(const std::shared_ptr<RuntimeOperator>& curren
   }
 }
 ```
-
-
 
 
 

@@ -25,7 +25,7 @@ OpenCV -> simpleocv
 
 ## Tensor
 
-本项目用到了`Eigen`库的[`Tensor`](https://eigen.tuxfamily.org/dox/unsupported/eigen_tensors.html)类，默认是行主序的，替代`armadillo`的`cube`类。`Eigen`提供的方法太丰富了，基本可以满足对`Tensor`的操作，因此不需要给`Tensor`创建新的方法。
+本项目用到了`Eigen`库的[`Tensor`](https://eigen.tuxfamily.org/dox/unsupported/eigen_tensors.html)类，默认是行主序的，替代`armadillo`的`cube`类。`Eigen`提供的方法丰富，基本可以满足对`Tensor`的操作，因此不需要给`Tensor`创建新的方法。
 
 ```c++
 // 模板：T表示数据类型，num_indices表示张量是几维的， Options默认是1，表示行主序

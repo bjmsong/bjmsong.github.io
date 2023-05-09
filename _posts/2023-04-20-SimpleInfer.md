@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      GEMM
+title:      SimpleInfer
 subtitle:   
 date:       2023-04-20
 author:     bjmsong

@@ -614,11 +614,6 @@ std::vector<std::shared_ptr<Tensor<float>>> RuntimeGraph::Forward(
 ```
 
 ```c++
-/**
-* 探查下一层的计算节点，把当前节点的输出赋值给下一层节点作为输入
-* @param current_op 当前计算节点
-* @param layer_output_data 当前节点的输出，也是下一层节点的输入
-*/
 void RuntimeGraph::ProbeNextLayer(const std::shared_ptr<RuntimeOperator>& current_op,
     const std::vector<std::shared_ptr<Tensor<float>>>& layer_output_datas) {
   // 当前节点的后继节点

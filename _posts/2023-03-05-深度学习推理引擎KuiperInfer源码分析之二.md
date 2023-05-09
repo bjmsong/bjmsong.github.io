@@ -27,14 +27,74 @@ tags:
 
 
 
+### `Relu`
+
+使用**OpenMP**进行多线程计算，一个线程计算一个batch的数据。 使用**SSE**指令集进行**SIMD**计算，同时对4个单精度浮点数做计算。替换成`AVX`指令集后，运行时间可以降低40%。
+
+```c++
+InferStatus ReluLayer::Forward(const std::vector<std::shared_ptr<Tensor<float>>>& inputs,
+    std::vector<std::shared_ptr<Tensor<float>>>& outputs) {
+  ...
+
+#pragma omp parallel for num_threads(batch_size)
+  for (uint32_t i = 0; i < batch_size; ++i) {
+    const std::shared_ptr<Tensor<float>>& input = inputs.at(i);
+    std::shared_ptr<Tensor<float>> output = outputs.at(i);
+      
+    float* in_ptr = const_cast<float*>(input->raw_ptr());
+    float* out_ptr = const_cast<float*>(output->raw_ptr());
+	// delcare vector of type __m128 with all elements set to zero
+    __m256 _zero = _mm256_setzero_ps();
+    const uint32_t size = output->size();
+    // 256(bit) / 32(bit/float) = 8 float number
+    const uint32_t packet_size = 8;
+    uint32_t j = 0;
+    for (j = 0; j < size - 3; j += packet_size) {
+    // Load 256-bits from memory into dst. mem_addr must be aligned on a 32-byte boundary
+        __m256 _p = _mm256_load_ps(in_ptr);
+        __m256 _value = _mm256_max_ps(_zero, _p);
+        _mm256_store_ps(out_ptr, _value);
+        in_ptr += packet_size;
+        out_ptr += packet_size;
+    }
+
+
+    if (j < size) {
+      while (j < size) {
+        float value = input->index(j);
+        output->index(j) = value > 0.f ? value : 0.f;
+        j += 1;
+      }
+    }
+  }
+  return InferStatus::kInferSuccess;
+}
+```
+
+
+
 ### 卷积
 
 使用im2col方法，也就是把卷积计算的过程转换成矩阵运算的过程。优点是只需要进行一次矩阵乘法运算，大大减少了内存的访问次数。同时矩阵乘法运算优化比较成熟，效率较高。
 
 <ul> 
 <li markdown="1">
-首先需要将卷积核、输入特征图进行展开，如下图所示
+首先需要将卷积核、输入特征图进行展开。先考虑单通道输入特征图，单个单通道卷积核的情况。下图红色的是输入特征图，灰色的是卷积核。
 ![]({{site.baseurl}}/img/kuiper/14.png) 
+</li> 
+</ul> 
+
+<ul> 
+<li markdown="1">
+再考虑多通道输入特征图，单个多通道卷积核的情况，不同颜色表示不同的输入通道。
+![]({{site.baseurl}}/img/kuiper/32.png) 
+</li> 
+</ul> 
+
+<ul> 
+<li markdown="1">
+最后考虑多通道输入特征图，多个多通道的卷积核的情况，即有多个输出通道。
+![]({{site.baseurl}}/img/kuiper/33.png) 
 </li> 
 </ul> 
 
@@ -69,6 +129,7 @@ void ConvolutionLayer::InitIm2ColWeight() {
 arma::fmat ConvolutionLayer::Im2Col(sftensor input, uint32_t kernel_w, uint32_t kernel_h,
                 uint32_t input_w, uint32_t input_h, uint32_t input_c_group,
                 uint32_t group, uint32_t row_len, uint32_t col_len) const {
+    // img2Col之后的输入特征图
     arma::fmat input_matrix(input_c_group * row_len, col_len);
     for (uint32_t ic = 0; ic < input_c_group; ++ic) {
         const arma::fmat& input_channel = input->slice(ic + group * input_c_group);
@@ -90,64 +151,7 @@ arma::fmat ConvolutionLayer::Im2Col(sftensor input, uint32_t kernel_w, uint32_t 
 }
 ```
 
-调用`openmp`进行多线程计算
-
-```c++
-#pragma omp parallel for num_threads(batch_size)
-```
-
 矩阵乘法底层调用`OpenBlas`的实现。此外还实现了分组卷积。
-
-
-
-### `Relu`
-
-使用**OpenMP**进行多线程计算，一个线程计算一个batch的数据。 使用**SSE**指令集进行**SIMD**计算，同时对4个单精度浮点数做计算。
-
-```c++
-#pragma omp parallel for num_threads(batch_size)
-  for (uint32_t i = 0; i < batch_size; ++i) {
-    const std::shared_ptr<Tensor<float>> &input = inputs.at(i);
-    CHECK(input == nullptr || !input->empty())
-            << "The input feature map of relu layer is empty";
-
-    std::shared_ptr<Tensor<float>> output = outputs.at(i);
-    if (output == nullptr || output->empty()) {
-      DLOG(ERROR) << "The output size of relu is error";
-      output = std::make_shared<Tensor<float>>(input->shapes());
-      outputs.at(i) = output;
-    }
-    CHECK(output->shapes() == input->shapes())
-            << "The output size of relu is error";
-#ifndef __SSE2__
-      
-    output->set_data(input->data());
-    output->Transform([](float val) { return val > 0. ? val : 0.; });
-#else
-      
-    float *in_ptr = const_cast<float *>(input->raw_ptr());
-    float *out_ptr = const_cast<float *>(output->raw_ptr());
-    __m128 _zero = _mm_setzero_ps();
-    const uint32_t size = output->size();
-    const uint32_t packet_size = 4;
-    uint32_t j = 0;
-    for (j = 0; j < size - 3; j += packet_size) {
-      __m128 _p = _mm_load_ps(in_ptr);
-      __m128 _value = _mm_max_ps(_zero, _p);
-      _mm_store_ps(out_ptr, _value);
-      in_ptr += 4;
-      out_ptr += 4;
-    }
-
-    if (j < size) {
-      while (j < size) {
-        float value = input->index(j);
-        output->index(j) = value > 0.f ? value : 0.f;
-        j += 1;
-      }
-    }
-#endif
-```
 
 
 
@@ -164,7 +168,7 @@ output = output_mid * input3
 
 <ul> 
 <li markdown="1">
-用图形来表达就是这样的：
+如下图所示：
 ![]({{site.baseurl}}/img/kuiper/15.png) 
 </li> 
 </ul> 

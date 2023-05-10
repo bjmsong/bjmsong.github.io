@@ -1,0 +1,67 @@
+## TensorRT的优化
+
+![1682386782005](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1682386782005.png)
+
+从图上可以看到，TensorRT主要做了下面几件事，来提升模型的运行速度。
+
+- TensorRT支持FP16和INT8的计算。我们知道深度学习在训练的时候一般是应用32位或者16位数据，TensorRT在推理的时候可以降低模型参数的位宽来进行低精度推理，以达到加速推断的目的。这在后面的文章中是重点内容，笔者经过一周的研究，大概明白了TensorRT INT8量化的一些细节，后面会逐渐和大家一起分享讨论。
+- TensorRT对于网络结构进行重构，把一些能够合并的运算合并在了一起，针对GPU的特性做了优化。**大家如果了解GPU的话会知道，在GPU上跑的函数叫Kernel，TensorRT是存在Kernel的调用的。在绝大部分框架中，比如一个卷积层、一个偏置层和一个reload层，这三层是需要调用三次cuDNN对应的API，但实际上这三层的实现完全是可以合并到一起的，TensorRT会对一些可以合并网络进行合并；再比如说，目前的网络一方面越来越深，另一方面越来越宽，可能并行做若干个相同大小的卷积，这些卷积计算其实也是可以合并到一起来做的。**(加粗的话转载自参考链接1)。
+- 然后Concat层是可以去掉的，因为TensorRT完全可以实现直接接到需要的地方。
+- **Kernel Auto-Tuning**：网络模型在推理计算时，是调用GPU的CUDA核进行计算的。TensorRT可以针对不同的算法，不同的网络模型，不同的GPU平台，进行 CUDA核的调整，以保证当前模型在特定平台上以最优性能计算。
+- **Dynamic Tensor Memory** 在每个tensor的使用期间，TensorRT会为其指定显存，避免显存重复申请，减少内存占用和提高重复使用效率。
+- 不同的硬件如P4卡还是V100卡甚至是嵌入式设备的卡，TensorRT都会做优化，得到优化后的engine。
+
+没有经过优化的Inception Block如Figure1所示：
+
+![1682386009108](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1682386009108.png)
+
+对于网络结构进行垂直整合，即将神经网络的`conv、BN、Relu`三个层融合为了一个层，所谓`CBR`，合并后就成了Figure2的结构：
+
+![1682386019980](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1682386019980.png)
+
+TensorRT还可以对网络做水平组合，水平组合是指将输入为相同张量和执行相同操作的层融合一起，Figure3即是将三个相连的的CBR为一个大的的CBR：
+
+![1682386031767](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1682386031767.png)
+
+最后，对于concat层，将contact层的输入直接送入下面的算子中，不用单独进行concat后在输入计算，相当于减少了一次传输吞吐，然后就获得了如Figure4所示的最终计算图:
+
+![1682386067271](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1682386067271.png)
+
+除了计算图和底层优化，最重要的就是低精度推理了，这个后面会细讲的，我们先来看一下使用了INT8低精度模式进行推理的结果展示：包括精度和速度。
+
+![1682386301853](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1682386301853.png)
+
+
+
+## 部署流程概述
+
+`TensorRT`的部署主要包括两个阶段，`Build Phase` 和`Runtime Phase`。
+
+在`Build`阶段会完成前面所述优化过程中的**计算图融合**，**精度校准**。这一步的输出是一个针对特定GPU平台和网络模型的优化过的TensorRT模型。这个TensorRT模型可以序列化的存储到磁盘或者内存中。存储到磁盘中的文件叫`plan file`。
+
+![1682386688970](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1682386688970.png)
+
+`Runtime`阶段就是完成前向推理过程了，上面提到的**Kernel Auto-Tuning** 和 **Dynamic Tensor Memory**应该是也是在这个步骤中完成的。这里将Build过程中获得的plan文件首先反序列化，并创建一个`runtime engine`，然后就可以输入数据，然后输出分类向量结果或检测结果。
+
+![1682386838685](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1682386838685.png)
+
+为了适配不同深度学习框架(`TensorFlow`，`PyTorch`...)，满足不同开发场景(`Python`,`C++`)，`TensorRT`提供了多种部署流程。
+
+![1682390959947](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1682390959947.png)
+
+![1682037993078](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1682037993078.png)
+
+以`PyTorch`模型为例，主要的路径如下图所示：
+
+- 导出`PyTorch`模型为ONNX，再用`trtexec`工具生成`engine`，最后由`Runtime`进行推理。（推荐！）
+- 通过`C++ API`定义模型，加载模型参数，由`Runtime`进行推理。
+- 通过`torch2trt`直接转换模型，然后由`Python Runtime`进行推理。
+
+![1682165732267](C:\Users\宋伟清\AppData\Roaming\Typora\typora-user-images\1682165732267.png)
+
+
+
+## 参考资料
+
+- https://mp.weixin.qq.com/s?__biz=MzA4MjY4NTk0NQ==&mid=2247485161&idx=1&sn=ea1fa549729dfa8d5a3771a87aebd05c&chksm=9f80bc7fa8f735690cc0b9dd8fb0013a8f37efbf592385d4ae9c07a497cd6abd3cc99fb1f618&cur_album_id=1344202981092294658&scene=189#wechat_redirect
+- https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html

@@ -275,14 +275,9 @@ Valgrind输出信息包含程序在堆上分配内存的情况：
  
 
 - 速度比较慢，请耐心等待
-  - https://stackoverflow.com/questions/50817085/valgrind-works-slowly
-  - https://stackoverflow.com/questions/13547654/it-is-taking-forever-for-valgrind-to-find-memory-leaks-but-its-takes-seconds-for
 
 - `openMP`会引起`possibly lost`，并不是真正的内存泄漏
-  - https://medium.com/@auraham/pseudo-memory-leaks-when-using-openmp-11a383cc4cf9
-  - https://stackoverflow.com/questions/6973489/valgrind-and-openmp-still-reachable-and-possibly-lost-is-that-bad
-  - https://gcc.gnu.org/bugzilla/show_bug.cgi?id=36298
-  - https://stackoverflow.com/questions/3537713/valgrind-can-possibly-lost-be-treated-as-definitely-lost
+
 
 
 

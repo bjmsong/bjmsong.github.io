@@ -1,5 +1,5 @@
 # Basic
-title: 宋伟清
+title: AI杂货铺
 subtitle: 个人站
 description: 欢迎来到我的个人站~
 # 头像里面的标题
@@ -69,7 +69,6 @@ nav:
     - {title: 标签, description: tags, url: '/tags'}      
     - {title: 技术支持, description: support, url: '/support'}      
     - {title: 关于我, description: about, url: '/about'}   
-    
 
 # Pagination
 gems: [jekyll-paginate,jekyll-sitemap]

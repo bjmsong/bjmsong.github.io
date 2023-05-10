@@ -7,7 +7,7 @@ author:     bjmsong
 header-img: img/ai.jpg
 catalog: true
 tags:
-    - 深度学习推理系统
+    - 模型推理
 ---
 
 ## 总览

@@ -7,8 +7,7 @@ author:     bjmsong
 header-img: img/kuiper/logo2.jpg
 catalog: true
 tags:
-
-    - 深度学习推理系统
+    - 模型推理
 ---
 
 ## 算子

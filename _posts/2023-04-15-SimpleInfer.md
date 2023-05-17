@@ -2,7 +2,7 @@
 layout:     post
 title:      SimpleInfer
 subtitle:   
-date:       2023-04-20
+date:       2023-04-15
 author:     bjmsong
 header-img: img/ai.jpg
 catalog: true

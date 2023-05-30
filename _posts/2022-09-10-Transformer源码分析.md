@@ -38,13 +38,9 @@ tags:
 
 ```python
 d_model = 512  # Embedding Size  
-
 d_ff = 2048  # FeedForward dimension  
-
 d_k = d_v = 64  # dimension of K(=Q), V
-
 n_layers = 6  # number of Encoder of Decoder Layer
-
 n_heads = 8  # number of heads in Multi-Head Attention
 ```
 
@@ -64,7 +60,6 @@ class Transformer(nn.Module):
     def forward(self, enc_inputs, dec_inputs):
         # enc_inputs : [batch_size, src_len], encoder的输入
 		# dec_inputs : [batch_size, tgt_len], decoder的输入
-        
         enc_outputs, enc_self_attns = self.encoder(enc_inputs)
         dec_outputs, dec_self_attns, dec_enc_attns = self.decoder(dec_inputs, enc_inputs, enc_outputs)
         dec_logits = self.projection(dec_outputs) # dec_logits : [batch_size x src_vocab_size x tgt_vocab_size]

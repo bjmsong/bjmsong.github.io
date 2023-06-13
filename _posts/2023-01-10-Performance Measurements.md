@@ -243,7 +243,29 @@ BENCHMARK_MAIN();
 
 
 
-## 内存泄漏检测：`Valgrind`
+## 内存分析
+
+### Gperf
+
+https://gperftools.github.io/gperftools/heapprofile.html
+
+https://blog.csdn.net/weixin_41644391/article/details/107993639
+
+
+
+### heaptrack
+
+依赖第三方库较多，而且大多有版本要求
+
+https://github.com/KDE/heaptrack
+
+
+
+
+
+## 内存泄漏检测
+
+### `Valgrind`
 
  编译时需要打开调式
 
@@ -278,6 +300,9 @@ Valgrind输出信息包含程序在堆上分配内存的情况：
 
 - `openMP`会引起`possibly lost`，并不是真正的内存泄漏
 
+
+
+### Sanitizers
 
 
 

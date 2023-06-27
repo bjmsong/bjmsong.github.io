@@ -10,7 +10,9 @@ tags:
     - 深度学习
 ---
 
-## 自注意力机制（self-attention）
+## Self-attention
+
+### 问题背景
 
 很多问题的输入是一组向量，并且向量的数量可能不一样，例如nlp、语音识别、graph等。
 
@@ -38,6 +40,8 @@ tags:
 ![]({{site.baseurl}}/img/transformer/3.png) 
 </li> 
 </ul> 
+
+### 计算逻辑
 
 因此提出了self-attention机制，输入经过self-attention转换，获得了上下文信息。
 
@@ -162,7 +166,7 @@ Q和K进行点积后，除以$$\sqrt{d_k}$$, 这样可以避免不同输入点�
 
 ### self-attention vs CNN
 
-CNN是self-attention的特例，CNN的问题：相隔较远的时序信息很难关联
+CNN的问题：相隔较远的时序信息很难关联
 
 <ul> 
 <li markdown="1">
@@ -188,7 +192,7 @@ self-attention需要更多的训练数据
 
 ### self-attention vs RNN
 
-RNN的问题：无法并行效率低，相隔较远的时序信息很难关联
+RNN的问题：无法并行效率低，相隔较远的信息很难关联
 
 <ul> 
 <li markdown="1">
@@ -197,10 +201,9 @@ RNN的问题：无法并行效率低，相隔较远的时序信息很难关联
 </ul> 
 
 
-
 ## Transformer
 
-### Seq2seq问题应用广泛
+### Seq2seq应用场景
 
 <ul> 
 <li markdown="1">
@@ -227,8 +230,7 @@ RNN的问题：无法并行效率低，相隔较远的时序信息很难关联
 </ul> 
 
 
-
-### Encoder
+### Encoder-Decoder
 
 <ul> 
 <li markdown="1">
@@ -236,21 +238,23 @@ RNN的问题：无法并行效率低，相隔较远的时序信息很难关联
 </li> 
 </ul> 
 
+### Encoder
+
 <ul> 
 <li markdown="1">
 ![]({{site.baseurl}}/img/transformer/29.png) 
 </li> 
 </ul> 
 
-Residual：残差连接
-
 Feed Forward：全连接网络
 
-Layer Normalization和Batch Normalization都是深度神经网络中常用的归一化方法，用于减少梯度消失和梯度爆炸等问题。它们的主要区别在于归一化的对象不同。
+#### Layer Normalization
 
-Batch Normalization在训练阶段计算同一个batch内**同一个特征**的均值和方差，在预测阶段计算所有样本**同一个特征**的均值和方差，然后进行归一化。
+Layer Normalization和Batch Normalization都是深度神经中常用的归一化方法，用于减少梯度消失和梯度爆炸等问题，它们的主要区别在于归一化的对象不同。
 
-Layer Normalization在训练阶段计算同一个batch内**同一个样本**的均值和方差，在预测阶段计算**同一个样本**的均值和方差，然后进行归一化。。
+- Batch Normalization在训练阶段计算同一个batch内不同的样本、不同特征、同一个dimension的均值和方差，在预测阶段计算所有的样本、不同特征、同一个dimension的均值和方差，然后进行归一化。
+- Layer Normalization在训练/预测阶段计算相同样本、相同特征，不同的dimension的均值和方差，然后进行归一化，不需要考虑batch。
+
 
 <ul> 
 <li markdown="1">
@@ -262,13 +266,8 @@ Layer Normalization在训练阶段计算同一个batch内**同一个样本**的�
 
 ### Decoder
 
-<ul> 
-<li markdown="1">
-![]({{site.baseurl}}/img/transformer/31.png) 
-</li> 
-</ul> 
-
-Decoder有两种模式：Autoregressive(AT)，Non-Autoregressive(NAT)
+#### 两种模式
+Autoregressive(AT)，Non-Autoregressive(NAT)
 
 <ul> 
 <li markdown="1">
@@ -282,15 +281,22 @@ Decoder有两种模式：Autoregressive(AT)，Non-Autoregressive(NAT)
 </li> 
 </ul> 
 
-masked self-attention：因为decoder是按顺序产生的，在计算输出的时候要把之后的数据屏蔽掉
+#### 架构
+
+![](/img/transformer/31.png) 
+
+
+#### Masked Self-attention
+
+因为decoder是按顺序产生的，在计算attention的时候要把之后的数据屏蔽掉
 
 <ul> 
 <li markdown="1">
-![]({{site.baseurl}}/img/transformer/34.png) 
+![]({{site.baseurl}}/img/transformer/44.png) 
 </li> 
 </ul> 
 
-Cross-attention
+#### Cross-attention
 
 <ul> 
 <li markdown="1">
